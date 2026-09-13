@@ -6,7 +6,7 @@
 
 Aplicação web utilizada pelos parceiros da plataforma para gerenciamento de produtos, pedidos e operação das lojas.
 
-[![Java](https://skillicons.dev/icons?i=react,next,ts,vite,tailwind,docker)](https://skillicons.dev)
+[![Java](https://skillicons.dev/icons?i=react,next,ts,tailwind,docker)](https://skillicons.dev)
 
 </div>
 
