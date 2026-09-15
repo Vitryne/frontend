@@ -30,7 +30,7 @@ const Register = () => {
                 stepIndex={stepIndex}
                 selectStep={(i) => setStepIndex(i)}
             />
-            <main className="flex-1 bg-screen py-16 px-20">
+            <main className="flex-1 bg-screen py-16 px-56">
                 <Component 
                     onNext={nextStep}
                 />

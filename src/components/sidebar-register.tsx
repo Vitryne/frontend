@@ -14,7 +14,7 @@ interface Props {
 
 const SidebarRegister: React.FC<Props> = ({steps, stepIndex, selectStep}) => {
     return (
-        <div className="sticky top-0 flex h-screen w-85 shrink-0 flex-col gap-8 px-6 py-8 shadow-[4px_0_16px_rgba(0,0,0,0.04)]">
+        <div className="sticky top-0 flex h-screen w-100 shrink-0 flex-col gap-8 px-6 py-8 shadow-[4px_0_16px_rgba(0,0,0,0.04)]">
             <div className="w-42.5">
                 <LogoSvg color="black" />
             </div>
