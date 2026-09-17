@@ -3,12 +3,20 @@ import ButtonGoogle from "@/components/button-google";
 import { FcGoogle } from "react-icons/fc";
 import Input from "@/components/input";
 import Button from "../button";
+import { useState } from "react";
+import SelectUf from "../select-uf";
+import MaskedInput from "../masked-input";
 
 interface Props {
   onNext: () => void;
 }
 
 const StepStore: React.FC<Props> = ({ onNext }) => {
+
+  const [uf, setUf] = useState('');
+  const [cep, setCep] = useState('');
+  const [cnpj, setCnpj] = useState('');
+
   return (
     <div>
       <span className="bg-primary-soft rounded-xl uppercase p-1.5 text-[.8rem] font-semibold text-primary-hover tracking-wider">
@@ -68,7 +76,13 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
         </div>
 
         <div className="col-span-12">
-          <Input title="CNPJ *" placeholder="34.221.876/0001-44" type="text" />
+          <MaskedInput
+            mask="00.000.000/0000-00"
+            value={cnpj}
+            onAccept={setCnpj}
+            placeholder="34.221.876/0001-44"
+            title="CNPJ *"
+          />
         </div>
 
         <div className="col-span-12">
@@ -88,7 +102,13 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
         </div>
 
         <div className="col-span-3">
-          <Input title="CEP *" placeholder="01310-200" type="text" />
+          <MaskedInput
+            mask="00000-000"
+            value={cep}
+            onAccept={setCep}
+            placeholder="01310-200"
+            title="CEP *"
+          />
         </div>
         <div className="col-span-7">
           <Input title="Endereço *" placeholder="Av. Brasil, 123" type="text" />
@@ -104,7 +124,7 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
           <Input title="Cidade *" placeholder="Maringá" type="text" />
         </div>
         <div className="col-span-2">
-          <Input title="UF *" placeholder="PR" type="text" />
+          <SelectUf title="UF *" value={uf} onChange={setUf} />
         </div>
 
         <div className="col-span-12">
