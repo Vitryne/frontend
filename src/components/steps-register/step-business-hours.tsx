@@ -1,4 +1,4 @@
-import StepHeader from "@/components/steps-register/step-header"
+import StepHeader from "@/components/steps-register/header"
 
 interface Props {
     onNext: () => void

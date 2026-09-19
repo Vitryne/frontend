@@ -6,7 +6,7 @@ import Button from "../button";
 import { useState } from "react";
 import SelectUf from "../select-uf";
 import MaskedInput from "../masked-input";
-import StepHeader from "@/components/steps-register/step-header"
+import StepHeader from "@/components/steps-register/header"
 
 interface Props {
   onNext: () => void;

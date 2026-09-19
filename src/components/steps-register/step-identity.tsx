@@ -1,5 +1,5 @@
 import Image from "next/image"
-import StepHeader from "@/components/steps-register/step-header"
+import StepHeader from "@/components/steps-register/header"
 import { FiArrowLeft, FiArrowRight, FiUpload } from "react-icons/fi"
 import Button from "../button"
 
