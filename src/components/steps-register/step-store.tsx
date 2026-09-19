@@ -6,9 +6,11 @@ import Button from "../button";
 import { useState } from "react";
 import SelectUf from "../select-uf";
 import MaskedInput from "../masked-input";
+import StepHeader from "@/components/steps-register/step-header"
 
 interface Props {
   onNext: () => void;
+  onBack?: () => void;
 }
 
 const StepStore: React.FC<Props> = ({ onNext }) => {
@@ -16,19 +18,15 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
   const [uf, setUf] = useState('');
   const [cep, setCep] = useState('');
   const [cnpj, setCnpj] = useState('');
+  const [tel, setTel] = useState('');
 
   return (
     <div>
-      <span className="bg-primary-soft rounded-xl uppercase p-1.5 text-[.8rem] font-semibold text-primary-hover tracking-wider">
-        passo 1 de 6
-      </span>
-
-      <h1 className="text-text-primary font-display font-bold text-4xl pt-10">
-        Conte sobre a sua loja
-      </h1>
-      <p className="text-text-secondary text-[1rem] mt-3 mb-10">
-        Esses dados aparecem para os clientes no perfil público da loja.
-      </p>
+      <StepHeader
+        steps="passo 1 de 5"
+        title="Conte sobre a sua loja"
+        subtitle="Esses dados aparecem para os clientes no perfil público da loja."
+      />
 
       <div className="bg-primary-soft p-10 rounded-2xl ">
         <div className="flex justify-between pb-5">
@@ -46,12 +44,17 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
         <p className="text-center text-text-secondary py-5">
           Ou com email e senha
         </p>
-        <Input title="Email *" placeholder="digite seu email..." type="email" />
+
+        <Input 
+          title="Email *" 
+          placeholder="Digite seu email..." 
+          type="email" 
+        />
         <div className="grid grid-cols-2 gap-5 pt-5">
           <div className="flex flex-col">
             <Input
-              title="Senha *"
-              placeholder="digite sua senha..."
+              title=" Senha *"
+              placeholder="Digite sua senha..."
               type="password"
             />
             <p className="text-[.8rem] text-text-secondary pt-3">
@@ -60,7 +63,7 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
           </div>
           <Input
             title="Confirmar senha *"
-            placeholder="confirme sua senha..."
+            placeholder="Confirme sua senha..."
             type="password"
           />
         </div>
@@ -128,10 +131,12 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
         </div>
 
         <div className="col-span-12">
-          <Input
-            title="Telefone de contato *"
+          <MaskedInput
+            mask="(00)00000-0000"
+            value={tel}
+            onAccept={setTel}
             placeholder="(11) 99421-8842"
-            type="tel"
+            title="Telefone de contato *"
           />
         </div>
       </form>
@@ -142,7 +147,7 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
           title="Próximo"
           titleClassName="text-[1rem]"
           buttonIcon={<FiArrowRight size={20} />}
-          className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] bg-primary w-37.5 py-2 font-body font-semibold text-[14px] text-white transition-all duration-200 ease-in-out shadow-[0_8px_24px_rgba(149,48,217,0.35)] hover:bg-primary-hover hover:scale-[1.02] active:scale-95"
+          className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] bg-primary w-35 py-2 font-body font-semibold text-[14px] text-white transition-all duration-200 ease-in-out shadow-[0_8px_24px_rgba(149,48,217,0.35)] hover:bg-primary-hover hover:scale-[1.02] active:scale-95"
         />
       </div>
     </div>

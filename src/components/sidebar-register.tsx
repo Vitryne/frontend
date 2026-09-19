@@ -21,7 +21,7 @@ const SidebarRegister: React.FC<Props> = ({steps, stepIndex, selectStep}) => {
             
             <div className="h-auto w-auto bg-primary-soft rounded-xl py-3 px-4">
                 <p className="text-primary-hover text-[.8rem]">
-                    Vamos preparar sua loja na Vitryne em 6 passos rápidos.
+                    Vamos preparar sua loja na Vitryne em 5 passos rápidos.
                 </p>
             </div>
 
@@ -42,7 +42,7 @@ const SidebarRegister: React.FC<Props> = ({steps, stepIndex, selectStep}) => {
                                             <span className="flex size-7 justify-center items-center rounded-full bg-success text-white">
                                                 <FaCheck size={14}/>
                                             </span>
-                                            <span className="text-text-secondary font-bold">
+                                            <span className="text-text-tertiary font-bold">
                                                 {step.label}
                                             </span>
                                         </div>
@@ -53,7 +53,7 @@ const SidebarRegister: React.FC<Props> = ({steps, stepIndex, selectStep}) => {
                                             }`}
                                         >
                                             <span
-                                                className={`flex size-7 justify-center items-center rounded-full ${
+                                                className={`flex size-7 justify-center items-center text-text-disabled rounded-full ${
                                                     currentStep
                                                         ? "bg-primary text-white font-bold"
                                                         : "bg-gray-200 text-text-terciary font-bold"
@@ -65,7 +65,7 @@ const SidebarRegister: React.FC<Props> = ({steps, stepIndex, selectStep}) => {
                                                 className={
                                                     currentStep
                                                         ? "font-bold text-primary-hover"
-                                                        : "text-text-terciary font-bold"
+                                                        : "text-text-disabled font-bold"
                                                 }
                                             >
                                                 {step.label}

@@ -1,4 +1,4 @@
-
+import StepHeader from "@/components/steps-register/step-header"
 
 interface Props {
     onNext: () => void
@@ -7,10 +7,16 @@ interface Props {
 const StepBankDetails: React.FC<Props> = ({onNext}) => {
     return (
         <div>
-            <h1>Tela componente dados bancario</h1>
+            <StepHeader
+                steps="passo 5 de 5"
+                title="Dados bancários"
+                subtitle="É para onde transferimos seus repasses em D+2 após cada venda confirmada."
+            />
+
+            
 
             <button onClick={onNext} className="cursor-pointer">
-                proximo
+                Finalizar
             </button>
         </div>
     )
