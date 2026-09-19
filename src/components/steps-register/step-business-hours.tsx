@@ -1,4 +1,4 @@
-
+import StepHeader from "@/components/steps-register/step-header"
 
 interface Props {
     onNext: () => void
@@ -7,7 +7,11 @@ interface Props {
 const StepBusinessHours: React.FC<Props> = ({onNext}) => {
     return (
         <div>
-            <h1>Tela componente horarios</h1>
+            <StepHeader
+                steps="passo 4 de 5"
+                title="Horário de funcionamento"
+                subtitle="Fora destes horários, a Vitryne fecha a loja automaticamente."
+            />
 
             <button onClick={onNext} className="cursor-pointer">
                 proximo
