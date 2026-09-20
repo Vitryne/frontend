@@ -146,7 +146,7 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
           title="Próximo"
           titleClassName="text-[1rem]"
           buttonIcon={<FiArrowRight size={20} />}
-          className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] bg-primary w-35 py-2 font-body font-semibold text-[14px] text-white transition-all duration-200 ease-in-out shadow-[0_8px_24px_rgba(149,48,217,0.35)] hover:bg-primary-hover hover:scale-[1.02] active:scale-95"
+          className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] bg-primary w-35 py-2 font-semibold text-[14px] text-white transition-all duration-200 ease-in-out shadow-[0_8px_24px_rgba(149,48,217,0.35)] hover:bg-primary-hover hover:scale-[1.02] active:scale-95"
         />
       </div>
     </div>

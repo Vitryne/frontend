@@ -19,7 +19,7 @@ const MaskedInput: React.FC<Props> = ({
 }) => {
   return (
     <div className="w-full">
-      <label className="block font-body font-semibold uppercase tracking-wider text-[11px] leading-snug text-text-primary mb-1.5">
+      <label className="block font-semibold uppercase tracking-wider text-[11px] leading-snug text-text-primary mb-1.5">
         {title}
       </label>
       <div className="relative">
@@ -31,7 +31,7 @@ const MaskedInput: React.FC<Props> = ({
           className={
             className
               ? className
-              : "w-full rounded-[10px] bg-surface border border-border px-4 py-3 pr-10 font-body text-[14px] text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-text-terciary"
+              : "w-full rounded-[10px] bg-surface border border-border px-4 py-3 pr-10 text-[14px] text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-text-terciary"
           }
         />
       </div>

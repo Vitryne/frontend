@@ -58,7 +58,7 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
                                 type="button"
                                 onClick={() => toggleCategory(category)}
                                 aria-pressed={active}
-                                className={`flex items-center gap-2 cursor-pointer rounded-full border px-6 py-2 font-body text-[1rem] transition-colors ${
+                                className={`flex items-center gap-2 cursor-pointer rounded-full border px-6 py-2 text-[1rem] transition-colors ${
                                     active
                                         ? "bg-primary border-primary text-white"
                                         : "bg-surface border-border-strong text-text-primary hover:border-text-terciary"
@@ -120,7 +120,7 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
                                     type="button"
                                     onClick={() => setPrepTime(time)}
                                     aria-pressed={active}
-                                    className={`cursor-pointer border border-border rounded-2xl px-6 py-3 font-body text-[1rem] transition-colors ${
+                                    className={`cursor-pointer border border-border rounded-2xl px-6 py-3 text-[1rem] transition-colors ${
                                     active
                                         ? "bg-black text-white"
                                         : "bg-surface border-border text-text-primary hover:border-text-terciary"
@@ -137,7 +137,7 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
             <div className="flex justify-between pt-17">
                 <button 
                     onClick={onBack}
-                    className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] border  border-border-brand w-35 py-2 font-body font-semibold text-[1rem] text-text-brand transition-all duration-200 ease-in-out hover:bg-screen hover:scale-[1.02] active:scale-95"
+                    className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] border  border-border-brand w-35 py-2 font-semibold text-[1rem] text-text-brand transition-all duration-200 ease-in-out hover:bg-screen hover:scale-[1.02] active:scale-95"
                 >
                     <FiArrowLeft size={20}/>
                     Voltar
@@ -148,7 +148,7 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
                     title="Próximo"
                     titleClassName="text-[1rem]"
                     buttonIcon={<FiArrowRight size={20} />}
-                    className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] bg-primary w-35 py-2 font-body font-semibold text-[14px] text-white transition-all duration-200 ease-in-out shadow-[0_8px_24px_rgba(149,48,217,0.35)] hover:bg-primary-hover hover:scale-[1.02] active:scale-95"
+                    className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] bg-primary w-35 py-2 font-semibold text-[14px] text-white transition-all duration-200 ease-in-out shadow-[0_8px_24px_rgba(149,48,217,0.35)] hover:bg-primary-hover hover:scale-[1.02] active:scale-95"
                 />
             </div>
         </div>
