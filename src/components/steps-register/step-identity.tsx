@@ -4,7 +4,7 @@ import { FiArrowLeft, FiArrowRight, FiUpload } from "react-icons/fi"
 import Button from "../button"
 
 interface Props {
-    onNext: () => void
+    onNext: () => void;
     onBack?: () => void;
 }
 

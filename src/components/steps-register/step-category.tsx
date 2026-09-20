@@ -15,11 +15,11 @@ const PREP_TIMER = [
 ]
 
 interface Props {
-    onNext: () => void
-    onBack: () => void
+    onNext: () => void;
+    onBack?: () => void;
 }
 
-const StepCategory: React.FC<Props> = ({onNext, onBack}) => {
+const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
 
     const [categories, setCategories] = useState<string[]>([]);
     const [radius, setRadius] = useState(12);

@@ -37,7 +37,7 @@ const SidebarRegister: React.FC<Props> = ({steps, stepIndex, selectStep}) => {
                                     stepCompleted ? (
                                         <div 
                                             onClick={() => selectStep(i)} 
-                                            className="flex items-center gap-3 rounded-xl px-3 py-2.5 w-full cursor-pointer hover:bg-screen transition-colors"
+                                            className="flex items-center gap-3 rounded-xl px-3 py-2.5 w-full cursor-pointer hover:bg-surface-subtle transition-colors"
                                         >
                                             <span className="flex size-7 justify-center items-center rounded-full bg-success text-white">
                                                 <FaCheck size={14}/>

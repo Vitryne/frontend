@@ -1,7 +1,8 @@
 import StepHeader from "@/components/steps-register/header"
 
 interface Props {
-    onNext: () => void
+    onNext: () => void;
+    onBack?: () => void;
 }
 
 const StepBankDetails: React.FC<Props> = ({onNext}) => {

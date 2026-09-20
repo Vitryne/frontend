@@ -10,7 +10,6 @@ import StepHeader from "@/components/steps-register/header"
 
 interface Props {
   onNext: () => void;
-  onBack?: () => void;
 }
 
 const StepStore: React.FC<Props> = ({ onNext }) => {
