@@ -1,24 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Bai+Jamjuree:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Bai+Jamjuree:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #9530D9;
-  --color-primary-hover: #631B97;
-  --color-primary-soft: #F7F0FB;
-  --color-secondary-soft: #ECDDF6;
-  --color-text-primary: #15131C;
-  --color-text-secondary: #6C6779;
-  --color-text-terciary: #9C97A7;
-  --color-screen: #FAFAF7;
-  --color-surface: #FFFFFF;
-  --color-border: #ECE9E3;
-  --color-success: #1F9D5B;
-  --color-warning: #D98A1F;
-  --color-danger: #D8345B;
-  --font-display: "Poppins", system-ui, sans-serif;
-  --font-body: "Bai Jamjuree", system-ui, sans-serif;
+  /* ---------- Marca ---------- */
+  --color-primary:            #9530D9;  
+  --color-primary-hover:      #7E22BC;  
+  --color-primary-strong:     #631B97;  
+  --color-primary-deep:       #2F0E47;   
+  --color-primary-soft:       #F7F0FB;  
+  --color-primary-soft-2:     #ECDDF6;  
+
+  /* ---------- Texto ---------- */
+  --color-text-primary:       #15131C;  
+  --color-text-secondary:     #3D3949;  
+  --color-text-tertiary:      #6C6779;  
+  --color-text-disabled:      #9C97A7;  
+  --color-text-brand:         #7E22BC; 
+  --color-text-on-brand:      #FFFFFF; 
+
+  /* ---------- Fundo ---------- */
+  --color-screen:             #FAFAF7;  
+  --color-surface:            #FFFFFF;  
+  --color-surface-subtle:     #F3F1ED;  
+  --color-avatar:             #ECDDF6; 
+  --color-scrim:              rgba(15, 11, 20, 0.4);  
+  --color-nav-float:          rgba(255, 255, 255, 0.94);  
+
+  /* ---------- Borda ---------- */
+  --color-border:             #ECE9E3;  
+  --color-border-strong:      #E0DBD2;  
+  --color-border-brand:       #D6B7EC;  
+  --color-border-subtle:      rgba(0, 0, 0, 0.06); 
+
+  /* ---------- Feedback ---------- */
+  --color-success:            #1F9D5B;  
+  --color-success-soft:       #E5F5EC;  
+  --color-warning:            #D98A1F;  
+  --color-warning-soft:       #FBF1DF;  
+  --color-danger:             #D8345B;  
+  --color-danger-soft:        #FBE7EC;  
+  --color-info:               #3380E0;  
+
+  /* ---------- Editorial ---------- */
+  --color-cream:              #F3EBDC;  
+  --color-sand:               #E6D9C2;  
+  --color-plum:               #4A1063;  
+
+  /* ---------- Tipografia ---------- */
+  --font-display: "Poppins", system-ui, sans-serif;      
+  --font-body:    "Bai Jamjuree", system-ui, sans-serif;  
+  --font-mono:    "Geist Mono", ui-monospace, monospace;  
 }
 
 body {
   font-family: var(--font-body);
+  background-color: var(--color-screen);
+  color: var(--color-text-primary);
 }

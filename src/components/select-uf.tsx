@@ -59,7 +59,7 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
 
   return (
     <div className="w-full" ref={containerRef}>
-      <label className="block font-body font-semibold uppercase tracking-wider text-[11px] leading-snug text-text-primary mb-1.5">
+      <label className="block font-semibold uppercase tracking-wider text-[11px] leading-snug text-text-primary mb-1.5">
         {title}
       </label>
 
@@ -67,7 +67,7 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="w-full flex items-center justify-between rounded-[10px] bg-surface border border-border px-4 py-3 font-body text-[14px] text-text-primary outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-text-terciary"
+          className="w-full flex items-center justify-between rounded-[10px] bg-surface border border-border px-4 py-3 text-[14px] text-text-primary outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-text-terciary"
         >
           <span className={selected ? "text-text-primary" : "text-text-secondary"}>
             {selected ? selected.acronym : "UF"}
@@ -90,7 +90,7 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
                     onChange(state.acronym);
                     setOpen(false);
                   }}
-                  className={`w-full px-4 py-2.5 text-left font-body text-[14px] transition-colors hover:bg-primary-soft hover:text-primary-hover ${
+                  className={`w-full px-4 py-2.5 text-left text-[14px] transition-colors hover:bg-primary-soft hover:text-primary-hover ${
                     state.acronym === value
                       ? "bg-primary-soft text-primary-hover font-semibold"
                       : "text-text-primary"

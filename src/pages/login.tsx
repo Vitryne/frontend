@@ -26,30 +26,30 @@ const Login: React.FC = ({}) => {
             <LogoSvg color="white" />
           </div>
           <div>
-            <span className="inline-block rounded-full border border-white/30 px-3 py-1 font-body text-[11px] font-semibold uppercase tracking-wider text-white/90">
+            <span className="inline-block rounded-full border border-white/30 px-3 py-1  text-[11px] font-semibold uppercase tracking-wider text-white/90">
               Portal do parceiro
             </span>
             <h2 className="font-display font-bold text-[34px] leading-[1.15] mt-4">
               Gerencie sua loja em um só lugar.
             </h2>
-            <p className="font-body text-[15px] leading-relaxed text-white/80 mt-4 max-w-105">
+            <p className="text-[15px] leading-relaxed text-white/80 mt-4 max-w-105">
               Catálogo, pedidos em tempo real, financeiro e entrega — desenhado
               para quem vive de moda.
             </p>
             <div className="flex items-center gap-8 mt-8">
               <div>
                 <p className="font-display font-bold text-2xl">+12k</p>
-                <p className="font-body text-[13px] text-white/70">
+                <p className=" text-[13px] text-white/70">
                   lojas ativas
                 </p>
               </div>
               <div>
                 <p className="font-display font-bold text-2xl">94%</p>
-                <p className="font-body text-[13px] text-white/70">aprovação</p>
+                <p className="text-[13px] text-white/70">aprovação</p>
               </div>
               <div>
                 <p className="font-display font-bold text-2xl">45min</p>
-                <p className="font-body text-[13px] text-white/70">
+                <p className="text-[13px] text-white/70">
                   entrega média
                 </p>
               </div>
@@ -63,7 +63,7 @@ const Login: React.FC = ({}) => {
           <h1 className="font-display font-bold text-[32px] leading-tight text-text-primary">
             Entrar
           </h1>
-          <p className="font-body text-[14px] leading-normal text-text-secondary mt-2 mb-8">
+          <p className=" text-[14px] leading-normal text-text-secondary mt-2 mb-8">
             Acesse o painel da sua loja.
           </p>
 
@@ -93,13 +93,13 @@ const Login: React.FC = ({}) => {
                   defaultChecked
                   className="w-4 h-4 rounded border-border text-primary"
                 />
-                <span className="font-body text-[13px] text-text-primary">
+                <span className=" text-[13px] text-text-primary">
                   Lembrar este dispositivo
                 </span>
               </label>
               <a
                 href="#"
-                className="font-body text-[13px] text-primary font-semibold hover:underline"
+                className=" text-[13px] text-primary font-semibold hover:underline"
               >
                 Problemas ao acessar?
               </a>
@@ -109,7 +109,7 @@ const Login: React.FC = ({}) => {
 
           <div className="flex items-center gap-4 my-6">
             <div className="h-px flex-1 bg-border" />
-            <span className="font-body text-[13px] text-text-secondary">
+            <span className=" text-[13px] text-text-secondary">
               ou
             </span>
             <div className="h-px flex-1 bg-border" />
@@ -120,7 +120,7 @@ const Login: React.FC = ({}) => {
             title="Entrar com o Google"
           />
 
-          <p className="text-center font-body text-[13px] text-text-secondary mt-8">
+          <p className="text-center  text-[13px] text-text-secondary mt-8">
             Ainda não vende na Vitryne?{" "}
             <Link
               href="/register"

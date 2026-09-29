@@ -1,7 +1,6 @@
 import StepBankDetails from "@/components/steps-register/step-bank-details";
 import StepBusinessHours from "@/components/steps-register/step-business-hours";
 import StepCategory from "@/components/steps-register/step-category";
-import StepFirstProduct from "@/components/steps-register/step-first-product";
 import StepIdentity from "@/components/steps-register/step-identity";
 import StepStore from "@/components/steps-register/step-store";
 import SidebarRegister from "@/components/sidebar-register";
@@ -14,7 +13,6 @@ const STEPS = [
     {id: 2, label: "Categoria & entrega", Component: StepCategory},
     {id: 3, label: "Horários", Component: StepBusinessHours},
     {id: 4, label: "Dados bancários", Component: StepBankDetails},
-    {id: 5, label: "Primeiro produto", Component: StepFirstProduct}
 ]
 
 const Register = () => {
@@ -22,6 +20,7 @@ const Register = () => {
     const { Component } = STEPS[stepIndex];
 
     const nextStep = () => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1))
+    const previousStep = () => setStepIndex((i) => (i > 0 ? i - 1 : i));
 
     return(
         <div className="flex min-h-screen">
@@ -33,6 +32,7 @@ const Register = () => {
             <main className="flex-1 bg-screen py-16 px-56">
                 <Component 
                     onNext={nextStep}
+                    onBack={stepIndex > 0 ? previousStep : undefined}
                 />
             </main>
         </div>
