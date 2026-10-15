@@ -7,7 +7,7 @@ import Input from "@/components/input";
 
 interface Props {
     onNext?: () => void;
-    onBack: () => void;
+    onBack?: () => void;
 }
 
 const ACC_TYPE = [
