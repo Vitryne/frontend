@@ -73,7 +73,7 @@ const StepBankDetails: React.FC<Props> = ({onBack}) => {
                                         className={`cursor-pointer border border-border rounded-2xl px-6 py-3 text-[1rem] font-semibold  ${
                                         active
                                             ? "bg-black text-white"
-                                            : "bg-surface border-border text-text-primary hover:border-text-terciary"
+                                            : "bg-surface border-border text-text-primary hover:border-border-strong"
                                     }`}
                                     >
                                         {type}

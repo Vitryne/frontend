@@ -63,7 +63,7 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
                                 className={`flex items-center gap-2 cursor-pointer rounded-full border px-6 py-2 text-[1rem] transition-colors ${
                                     active
                                         ? "bg-primary border-primary text-white"
-                                        : "bg-surface border-border-strong text-text-primary hover:border-text-terciary"
+                                        : "bg-surface border-border-strong text-text-primary hover:border-border-strong"
                                 }`}
                             >
                                 {active && <FiCheck size={14} />}
@@ -125,7 +125,7 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
                                     className={`cursor-pointer border border-border rounded-2xl px-6 py-3 text-[1rem] transition-colors ${
                                     active
                                         ? "bg-black text-white"
-                                        : "bg-surface border-border text-text-primary hover:border-text-terciary"
+                                        : "bg-surface border-border text-text-primary hover:border-border-strong"
                                 }`}
                                 >
                                     {time}

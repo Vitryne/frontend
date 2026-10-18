@@ -120,19 +120,17 @@ const Products: React.FC = ({}) => {
                 onToggleStatus={handleToggleStatus}
                 onClearFilters={handleClearFilters}
                 footer={
-                    filteredProducts.length > 0 && (
+                    totalPages > 1 && (
                         <>
-                            <p className="text-[.8rem] text-text-secondary">
+                            <p className="text-[.75rem] text-text-tertiary">
                                 Mostrando {pageStart + 1}–{pageStart + pagedProducts.length} de{" "}
                                 {pluralize(filteredProducts.length, "produto", "produtos")}
                             </p>
-                            {totalPages > 1 && (
-                                <Pagination
-                                    page={currentPage}
-                                    totalPages={totalPages}
-                                    onPageChange={handlePageChange}
-                                />
-                            )}
+                            <Pagination
+                                page={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={handlePageChange}
+                            />
                         </>
                     )
                 }

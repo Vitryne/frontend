@@ -30,8 +30,8 @@ const ProductTable: React.FC<Props> = ({
         <div className="overflow-hidden rounded-2xl border border-border bg-white">
             <table className="w-full">
                 <thead className="bg-surface-subtle">
-                    <tr className="text-left text-[.7rem] font-bold uppercase tracking-wider text-text-secondary">
-                        <th scope="col" className="w-12 py-3 pl-5">
+                    <tr className="text-left text-[.8rem] font-semibold uppercase tracking-wider text-text-secondary">
+                        <th scope="col" className="w-px py-3 pl-5 pr-2">
                             <CheckBox
                                 checked={allSelected}
                                 indeterminate={someSelected}
@@ -40,13 +40,13 @@ const ProductTable: React.FC<Props> = ({
                                 label="Selecionar todos os produtos da página"
                             />
                         </th>
-                        <th scope="col" className="px-5 py-3">Produto</th>
-                        <th scope="col" className="px-5 py-3">Categoria</th>
-                        <th scope="col" className="px-5 py-3">Preço</th>
-                        <th scope="col" className="px-5 py-3">Estoque por tamanho</th>
-                        <th scope="col" className="px-5 py-3">Total</th>
-                        <th scope="col" className="px-5 py-3">Status</th>
-                        <th scope="col" className="px-5 py-3"></th>
+                        <th scope="col" className="px-2 py-3">Produto</th>
+                        <th scope="col" className="px-2 py-3">Categoria</th>
+                        <th scope="col" className="px-2 py-3">Preço</th>
+                        <th scope="col" className="px-2 py-3">Estoque por tamanho</th>
+                        <th scope="col" className="w-px whitespace-nowrap px-2 py-3 text-right">Total</th>
+                        <th scope="col" className="w-px whitespace-nowrap px-2 py-3">Status</th>
+                        <th scope="col" className="w-px py-3 pl-2 pr-5"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,8 +83,8 @@ const ProductTable: React.FC<Props> = ({
             </table>
 
             {footer && (
-                <div className="flex items-center justify-between border-t border-border px-5 py-3">
-                    { footer }
+                <div className="flex items-center justify-between gap-3 border-t border-border px-4.5 py-2.75">
+                    {footer}
                 </div>
             )}
         </div>

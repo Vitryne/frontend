@@ -57,3 +57,9 @@ body {
   background-color: var(--color-screen);
   color: var(--color-text-primary);
 }
+
+@layer base {
+  th {
+    font-weight: inherit;
+  }
+}

@@ -29,14 +29,14 @@ const PanelTopbar: React.FC<Props> = ({ title, subtitle }) => {
                     <input
                         type="search"
                         placeholder="Buscar produtos, pedidos..."
-                        className="h-9 w-72 rounded-[10px] border border-border bg-screen pl-9 pr-3 text-[13px] text-text-primary outline-none transition-colors focus:border-primary"
+                        className="h-9 w-72 rounded-[10px] border border-transparent bg-surface-subtle pl-9 pr-3 text-[13px] text-text-primary outline-none transition-colors duration-200 placeholder:text-text-secondary hover:bg-border/80 focus:border-primary focus:bg-surface"
                     />
                 </label>
 
                 <button
                     type="button"
                     aria-label="Notificações"
-                    className="relative flex size-9 cursor-pointer items-center justify-center rounded-[10px] border border-border bg-white text-text-primary transition-colors hover:bg-surface-subtle"
+                    className="relative flex size-9 cursor-pointer items-center justify-center rounded-[10px] bg-surface-subtle text-text-primary transition-colors duration-200 hover:bg-border/80"
                 >
                     <LuBell size={16} aria-hidden="true" />
                     <span className="absolute right-2 top-2 size-1.5 rounded-full bg-primary" />

@@ -29,8 +29,8 @@ const ProductRow: React.FC<Props> = ({product, selected, onToggleSelect, onToggl
     const dimmed = product.active ? "" : "opacity-50";
 
     return (
-        <tr className={`border-t border-border transition-colors ${selected ? "bg-primary-soft/50" : ""}`}>
-            <td className={`w-12 py-3 pl-5 ${dimmed}`}>
+        <tr className={`border-t border-border transition-colors ${selected ? "bg-primary-soft" : ""}`}>
+            <td className="w-px py-3 pl-5 pr-2">
                 <CheckBox
                     checked={selected}
                     onChange={(checked) => onToggleSelect(product.sku, checked)}
@@ -38,9 +38,9 @@ const ProductRow: React.FC<Props> = ({product, selected, onToggleSelect, onToggl
                 />
             </td>
 
-            <td className={`px-5 py-3 ${dimmed}`}>
+            <td className={`px-2 py-3 ${dimmed}`}>
                 <div className="flex items-center gap-3">
-                    <div className="relative size-10 shrink-0 overflow-hidden rounded-lg bg-surface-subtle">
+                    <div className="relative h-13 w-10 shrink-0 overflow-hidden rounded-lg bg-surface-subtle">
                         <Image
                             src={product.image}
                             alt=""
@@ -50,34 +50,38 @@ const ProductRow: React.FC<Props> = ({product, selected, onToggleSelect, onToggl
                         />
                     </div>
                     <div>
-                        <p className="text-[.85rem] font-bold text-text-primary">
+                        <p className="text-[.9rem] font-semibold text-text-primary">
                             {product.name}
                         </p>
-                        <p className="text-[.75rem] text-text-secondary">
+                        <p className="text-[.75rem] text-text-tertiary">
                             SKU {product.sku}
                         </p>
                     </div>
                 </div>
             </td>
 
-            <td className={`px-5 py-3 ${dimmed}`}>
+            <td className={`px-2 py-3 ${dimmed}`}>
                 <Badge title={product.category}/>
             </td>
 
-            <td className={`whitespace-nowrap px-5 py-3 text-[.85rem] font-bold text-text-primary ${dimmed}`}>
+            <td className={`whitespace-nowrap px-2 py-3 text-[.9rem] font-bold text-text-primary ${dimmed}`}>
                 R$ {reais},<span className="text-[.7rem]">{cents}</span>
             </td>
 
-            <td className={`px-5 py-3 ${dimmed}`}>
-                <StockBySize stock={product.stock} alertThreshold={product.stockAlertThreshold} />
+            <td className={`px-2 py-3 ${dimmed}`}>
+                <StockBySize
+                    stock={product.stock}
+                    alertThreshold={product.stockAlertThreshold}
+                    showCritical={product.active}
+                />
             </td>
 
-            <td className={`whitespace-nowrap px-5 py-3 text-[.85rem] font-bold text-text-primary ${dimmed}`}>
+            <td className={`whitespace-nowrap px-2 py-3 text-right text-[.9rem] font-bold text-text-primary ${dimmed}`}>
                 {total}{" "}
-                <span className="text-[.75rem] font-normal text-text-secondary">un.</span>
+                <span className="text-[.75rem] font-normal text-text-tertiary">un.</span>
             </td>
 
-            <td className={`px-5 py-3 ${dimmed}`}>
+            <td className="whitespace-nowrap px-2 py-3">
                 <div className="flex items-center gap-2">
                     <Switch
                         checked={product.active}
@@ -86,7 +90,7 @@ const ProductRow: React.FC<Props> = ({product, selected, onToggleSelect, onToggl
                     />
                     <span
                         className={`text-[.8rem] ${
-                            product.active ? "text-text-primary" : "text-text-secondary"
+                            product.active ? "text-text-primary" : "text-text-tertiary"
                         }`}
                     >
                         {product.active ? "Ativo" : "Inativo"}
@@ -94,13 +98,13 @@ const ProductRow: React.FC<Props> = ({product, selected, onToggleSelect, onToggl
                 </div>
             </td>
 
-            <td className={`px-5 py-3 text-right ${dimmed}`}>
+            <td className="py-3 pl-2 pr-5">
                 <Link
                     href={`/products/${product.sku.toLowerCase()}/edit`}
                     aria-label={`Editar ${product.name}`}
                     className="inline-flex size-8 items-center justify-center rounded-full text-text-primary transition-colors hover:bg-surface-subtle"
-                >   
-                    <LuPencil size={15}/>
+                >
+                    <LuPencil size={15} aria-hidden="true" />
                 </Link>
             </td>
         </tr>

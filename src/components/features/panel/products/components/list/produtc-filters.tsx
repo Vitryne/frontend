@@ -37,7 +37,7 @@ const ProductFilters: React.FC<Props> = ({
         { value: "", label: "Todas" },
         ...categories.map((item) => ({ value: item, label: item })),
     ]
-    
+
     return (
         <div className="mb-5 flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
@@ -57,15 +57,16 @@ const ProductFilters: React.FC<Props> = ({
 
                 <button
                     type="button"
+                    aria-pressed={criticalOnly}
                     onClick={() => onCriticalOnlyChange(!criticalOnly)}
-                    className={`inline-flex h-10 cursor-pointer items-center gap-2 rounded-[10px] border px-3 text-[.85rem] transition-colors ${
+                    className={`inline-flex h-10 cursor-pointer items-center gap-2.5 rounded-[10px] border px-3 text-[14px] outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary/20 ${
                         criticalOnly
-                            ? "border-primary bg-primary-soft text-primary-hover"
-                            : "border-border bg-white text-text-primary hover:bg-surface-subtle"
+                            ? "border-primary bg-primary-soft text-primary-hover hover:border-primary-hover"
+                            : "border-border bg-surface text-text-primary hover:border-border-strong hover:bg-surface-subtle"
                     }`}
                 >
                     Estoque crítico
-                    <Badge title={String(criticalCount)} variant="danger" />
+                    <Badge title={String(criticalCount)} variant="danger" size="md" />
                 </button>
             </div>
 
