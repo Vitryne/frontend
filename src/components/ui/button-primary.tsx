@@ -1,13 +1,12 @@
 interface Props {
-  title?: string;
-  className?: string;
-  titleClassName?: string;
-  onClick?: () => void;
-  btnIcon?: React.ReactElement;
-  iconPosition?: "left" | "right";
-  type?: "button" | "submit";
+    title?: string;
+    className?: string;
+    titleClassName?: string;
+    onClick?: () => void;
+    btnIcon?: React.ReactElement;
+    iconPosition?: "left" | "right";
+    type?: "button" | "submit";
 }
-
 
 const ButtonPrimary: React.FC<Props> = ({
     title,
@@ -26,13 +25,13 @@ const ButtonPrimary: React.FC<Props> = ({
         >
             {iconPosition === "left" && btnIcon}
             {titleClassName ? (
-                <p className={titleClassName}>{ title }</p>
+                <p className={titleClassName}>{title}</p>
             ) : (
-                <p>{ title }</p>
+                <p>{title}</p>
             )}
             {iconPosition === "right" && btnIcon}
         </button>
-    )
-}
+    );
+};
 
 export default ButtonPrimary;

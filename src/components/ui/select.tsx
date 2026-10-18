@@ -1,25 +1,23 @@
-import { useEffect, useRef, useState } from "react"
-import { FiChevronDown } from "react-icons/fi"
-
+import { useEffect, useRef, useState } from "react";
+import { FiChevronDown } from "react-icons/fi";
 
 interface Option {
-    value: string
-    label: string
+    value: string;
+    label: string;
 }
 
 interface Props {
-    label: string
-    value: string
-    options: Option[]
-    onChange: (value: string) => void
+    label: string;
+    value: string;
+    options: Option[];
+    onChange: (value: string) => void;
 }
 
-const Select: React.FC<Props> = ({label, value, options, onChange}) => {
+const Select: React.FC<Props> = ({ label, value, options, onChange }) => {
+    const [open, setOpen] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const [open, setOpen] = useState(false)
-    const containerRef = useRef<HTMLDivElement>(null)
-
-    const selected = options.find((option) => option.value === value)
+    const selected = options.find((option) => option.value === value);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -27,26 +25,24 @@ const Select: React.FC<Props> = ({label, value, options, onChange}) => {
                 containerRef.current &&
                 !containerRef.current.contains(event.target as Node)
             ) {
-                setOpen(false)
+                setOpen(false);
             }
-        }
+        };
 
         const handleEscape = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
-                setOpen(false)
+                setOpen(false);
             }
-        }
+        };
 
         document.addEventListener("mousedown", handleClickOutside);
         document.addEventListener("keydown", handleEscape);
-        
+
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
             document.removeEventListener("keydown", handleEscape);
         };
-    })
-
-
+    });
 
     return (
         <div className="relative" ref={containerRef}>
@@ -57,7 +53,9 @@ const Select: React.FC<Props> = ({label, value, options, onChange}) => {
                 className="flex h-10 cursor-pointer items-center gap-2 rounded-[10px] bg-surface border border-border px-3 text-[14px] text-text-primary outline-none transition-colors duration-200 hover:border-border-strong hover:bg-surface-subtle focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
             >
                 <span className="text-text-secondary">{label}</span>
-                <span className="font-semibold">{selected ? selected.label : ""}</span>
+                <span className="font-semibold">
+                    {selected ? selected.label : ""}
+                </span>
 
                 <FiChevronDown
                     size={16}
@@ -74,8 +72,8 @@ const Select: React.FC<Props> = ({label, value, options, onChange}) => {
                             <button
                                 type="button"
                                 onClick={() => {
-                                    onChange(option.value)
-                                    setOpen(false)
+                                    onChange(option.value);
+                                    setOpen(false);
                                 }}
                                 className={`w-full px-4 py-2.5 text-left text-[14px] transition-colors cursor-pointer hover:bg-primary-soft hover:text-primary-hover ${
                                     option.value === value
@@ -83,15 +81,14 @@ const Select: React.FC<Props> = ({label, value, options, onChange}) => {
                                         : "text-text-primary"
                                 }`}
                             >
-                                { option.label }
+                                {option.label}
                             </button>
                         </li>
                     ))}
-
                 </ul>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default Select
+export default Select;

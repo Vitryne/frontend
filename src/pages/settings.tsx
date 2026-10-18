@@ -1,6 +1,5 @@
 import PainelLayout from "@/components/features/panel/components/panel-layout";
 
-
 const Configuracao: React.FC = ({}) => {
     return (
         <PainelLayout title="Configuracao" subtitle="Tela de Configuracao">
@@ -9,6 +8,6 @@ const Configuracao: React.FC = ({}) => {
             </h1>
         </PainelLayout>
     );
-}
+};
 
 export default Configuracao;

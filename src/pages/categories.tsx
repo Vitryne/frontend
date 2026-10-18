@@ -1,6 +1,5 @@
 import PainelLayout from "@/components/features/panel/components/panel-layout";
 
-
 const Categoria: React.FC = ({}) => {
     return (
         <PainelLayout title="Categoria" subtitle="Tela de Categoria">
@@ -9,6 +8,6 @@ const Categoria: React.FC = ({}) => {
             </h1>
         </PainelLayout>
     );
-}
+};
 
 export default Categoria;

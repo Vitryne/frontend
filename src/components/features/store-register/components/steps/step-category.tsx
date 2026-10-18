@@ -1,28 +1,30 @@
-import StepHeader from "@/components/features/store-register/components/header"
-import { FiCheck } from "react-icons/fi"
-import { useState } from "react"
-import ButtonSecondary from "@/components/ui/button-secondary"
-import ButtonPrimary from "@/components/ui/button-primary"
-import { LuArrowLeft, LuArrowRight } from "react-icons/lu"
+import StepHeader from "@/components/features/store-register/components/header";
+import { FiCheck } from "react-icons/fi";
+import { useState } from "react";
+import ButtonSecondary from "@/components/ui/button-secondary";
+import ButtonPrimary from "@/components/ui/button-primary";
+import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 
 const CATEGORIES = [
-    "Vestidos", "Saias", "Camisas", 
-    "Calças", "Blazers", "Tricô", 
-    "Acessórios", "Calçados", "Lingerie", 
-    "Fitness"
-]
-const PREP_TIMER = [
-    "20 min", "30 min", "45 min",
-    "60 min", "Personalizado"
-]
+    "Vestidos",
+    "Saias",
+    "Camisas",
+    "Calças",
+    "Blazers",
+    "Tricô",
+    "Acessórios",
+    "Calçados",
+    "Lingerie",
+    "Fitness",
+];
+const PREP_TIMER = ["20 min", "30 min", "45 min", "60 min", "Personalizado"];
 
 interface Props {
     onNext: () => void;
     onBack?: () => void;
 }
 
-const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
-
+const StepCategory: React.FC<Props> = ({ onNext, onBack }) => {
     const [categories, setCategories] = useState<string[]>([]);
     const [radius, setRadius] = useState(12);
     const [prepTime, setPrepTime] = useState("30 min");
@@ -30,12 +32,12 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
     const toggleCategory = (category: string) => {
         setCategories((current) => {
             if (current.includes(category)) {
-                return current.filter((c) => c !== category)
+                return current.filter((c) => c !== category);
             } else {
-                return [...current, category]
+                return [...current, category];
             }
-        })
-    }
+        });
+    };
 
     return (
         <div>
@@ -88,8 +90,8 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
                             </span>
                         </div>
 
-                        <input 
-                            type="range" 
+                        <input
+                            type="range"
                             min={1}
                             max={50}
                             value={radius}
@@ -105,8 +107,6 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
                     </div>
                 </div>
 
-
-
                 <div className="pt-10">
                     <h2 className="text-xl font-bold text-primary-deep pb-4">
                         Tempo médio de preparação
@@ -114,7 +114,7 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
 
                     <div className="flex gap-3">
                         {PREP_TIMER.map((time) => {
-                            const active = prepTime === time
+                            const active = prepTime === time;
 
                             return (
                                 <button
@@ -123,26 +123,34 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack} ) => {
                                     onClick={() => setPrepTime(time)}
                                     aria-pressed={active}
                                     className={`cursor-pointer border border-border rounded-2xl px-6 py-3 text-[1rem] transition-colors ${
-                                    active
-                                        ? "bg-black text-white"
-                                        : "bg-surface border-border text-text-primary hover:border-border-strong"
-                                }`}
+                                        active
+                                            ? "bg-black text-white"
+                                            : "bg-surface border-border text-text-primary hover:border-border-strong"
+                                    }`}
                                 >
                                     {time}
                                 </button>
-                            )
+                            );
                         })}
                     </div>
                 </div>
             </div>
 
             <div className="flex justify-between pt-17">
-                <ButtonSecondary title="Voltar" btnIcon={<LuArrowLeft/>} onClick={onBack}/>
+                <ButtonSecondary
+                    title="Voltar"
+                    btnIcon={<LuArrowLeft />}
+                    onClick={onBack}
+                />
 
-                <ButtonPrimary title="Próximo" btnIcon={<LuArrowRight/>} onClick={onNext}/>
+                <ButtonPrimary
+                    title="Próximo"
+                    btnIcon={<LuArrowRight />}
+                    onClick={onNext}
+                />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default StepCategory
+export default StepCategory;

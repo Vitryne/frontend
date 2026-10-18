@@ -1,6 +1,5 @@
 import PainelLayout from "@/components/features/panel/components/panel-layout";
 
-
 const Dashboard: React.FC = ({}) => {
     return (
         <PainelLayout title="Dashboard" subtitle="Tela de dashboard">
@@ -9,6 +8,6 @@ const Dashboard: React.FC = ({}) => {
             </h1>
         </PainelLayout>
     );
-}
+};
 
 export default Dashboard;

@@ -1,6 +1,5 @@
 import PainelLayout from "@/components/features/panel/components/panel-layout";
 
-
 const Promocoes: React.FC = ({}) => {
     return (
         <PainelLayout title="Promocoes" subtitle="Tela de Promocoes">
@@ -9,6 +8,6 @@ const Promocoes: React.FC = ({}) => {
             </h1>
         </PainelLayout>
     );
-}
+};
 
 export default Promocoes;

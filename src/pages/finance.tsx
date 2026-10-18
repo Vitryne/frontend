@@ -1,6 +1,5 @@
 import PainelLayout from "@/components/features/panel/components/panel-layout";
 
-
 const Financeiro: React.FC = ({}) => {
     return (
         <PainelLayout title="Financeiro" subtitle="Tela de Financeiro">
@@ -9,6 +8,6 @@ const Financeiro: React.FC = ({}) => {
             </h1>
         </PainelLayout>
     );
-}
+};
 
 export default Financeiro;

@@ -13,4 +13,4 @@ export interface Product {
     active: boolean;
 }
 
-export type ProductStatusFilter = "all" | "active" | "inactive"
+export type ProductStatusFilter = "all" | "active" | "inactive";

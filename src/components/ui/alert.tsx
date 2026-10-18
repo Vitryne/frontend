@@ -21,18 +21,28 @@ const VARIANTS = {
     },
 };
 
-const Alert: React.FC<Props> = ({ message, title, variant = "warning"}) => {
-
+const Alert: React.FC<Props> = ({ message, title, variant = "warning" }) => {
     const style = VARIANTS[variant];
     const Icon = style.Icon;
 
     return (
-        <div role="status" className={`flex items-start gap-3 rounded-xl border px-4 py-3 ${style.box}`}>
-            <Icon size={18} aria-hidden="true" className={`mt-0.5 shrink-0 ${style.icon}`} />
+        <div
+            role="status"
+            className={`flex items-start gap-3 rounded-xl border px-4 py-3 ${style.box}`}
+        >
+            <Icon
+                size={18}
+                aria-hidden="true"
+                className={`mt-0.5 shrink-0 ${style.icon}`}
+            />
 
             <div>
-                {title && (<p className={`text-[.85rem] font-bold ${style.title}`}>{title}</p>)}
-                
+                {title && (
+                    <p className={`text-[.85rem] font-bold ${style.title}`}>
+                        {title}
+                    </p>
+                )}
+
                 <p className="text-[.8rem] text-text-primary">{message}</p>
             </div>
         </div>

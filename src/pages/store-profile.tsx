@@ -1,6 +1,5 @@
 import PainelLayout from "@/components/features/panel/components/panel-layout";
 
-
 const PerfilLoja: React.FC = ({}) => {
     return (
         <PainelLayout title="Perfil Loja" subtitle="Tela de Perfil Loja">
@@ -9,6 +8,6 @@ const PerfilLoja: React.FC = ({}) => {
             </h1>
         </PainelLayout>
     );
-}
+};
 
 export default PerfilLoja;

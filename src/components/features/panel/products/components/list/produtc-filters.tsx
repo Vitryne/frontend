@@ -4,7 +4,6 @@ import Select from "@/components/ui/select";
 import Link from "next/link";
 import { LuPlus } from "react-icons/lu";
 
-
 interface Props {
     categories: string[];
     category: string;
@@ -20,7 +19,7 @@ const STATUS_OPTIONS = [
     { value: "all", label: "Todos" },
     { value: "active", label: "Ativos" },
     { value: "inactive", label: "Inativos" },
-]
+];
 
 const ProductFilters: React.FC<Props> = ({
     categories,
@@ -32,11 +31,10 @@ const ProductFilters: React.FC<Props> = ({
     onCriticalOnlyChange,
     criticalCount,
 }) => {
-
-     const categoryOptions = [
+    const categoryOptions = [
         { value: "", label: "Todas" },
         ...categories.map((item) => ({ value: item, label: item })),
-    ]
+    ];
 
     return (
         <div className="mb-5 flex items-center justify-between gap-4">
@@ -52,7 +50,9 @@ const ProductFilters: React.FC<Props> = ({
                     label="Status"
                     value={status}
                     options={STATUS_OPTIONS}
-                    onChange={(value) => onStatusChange(value as ProductStatusFilter)}
+                    onChange={(value) =>
+                        onStatusChange(value as ProductStatusFilter)
+                    }
                 />
 
                 <button
@@ -66,7 +66,11 @@ const ProductFilters: React.FC<Props> = ({
                     }`}
                 >
                     Estoque crítico
-                    <Badge title={String(criticalCount)} variant="danger" size="md" />
+                    <Badge
+                        title={String(criticalCount)}
+                        variant="danger"
+                        size="md"
+                    />
                 </button>
             </div>
 
@@ -74,12 +78,11 @@ const ProductFilters: React.FC<Props> = ({
                 href="/products/new"
                 className="inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary hover:bg-primary-hover text-white font-semibold text-[14px] px-5 py-2.5 shadow-lg shadow-primary/30 transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-95"
             >
-                <LuPlus size={16}/>
+                <LuPlus size={16} />
                 Novo produto
             </Link>
         </div>
-    )
-}
-
+    );
+};
 
 export default ProductFilters;

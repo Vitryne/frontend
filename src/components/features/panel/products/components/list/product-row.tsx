@@ -7,12 +7,11 @@ import Switch from "@/components/ui/switch";
 import { LuPencil } from "react-icons/lu";
 import CheckBox from "@/components/ui/checkbox";
 
-
 interface Props {
-    product: Product
-    selected: boolean
-    onToggleSelect: (sku: string, selected: boolean) => void
-    onToggleStatus: (sku: string, active: boolean) => void
+    product: Product;
+    selected: boolean;
+    onToggleSelect: (sku: string, selected: boolean) => void;
+    onToggleStatus: (sku: string, active: boolean) => void;
 }
 
 const formatPrice = (priceInCents: number) => {
@@ -22,14 +21,20 @@ const formatPrice = (priceInCents: number) => {
     return { reais, cents };
 };
 
-const ProductRow: React.FC<Props> = ({product, selected, onToggleSelect, onToggleStatus}) => {
-
-    const { reais, cents } = formatPrice(product.priceInCents)
-    const total = product.stock.reduce((sum, item) => sum + item.quantity, 0)
+const ProductRow: React.FC<Props> = ({
+    product,
+    selected,
+    onToggleSelect,
+    onToggleStatus,
+}) => {
+    const { reais, cents } = formatPrice(product.priceInCents);
+    const total = product.stock.reduce((sum, item) => sum + item.quantity, 0);
     const dimmed = product.active ? "" : "opacity-50";
 
     return (
-        <tr className={`border-t border-border transition-colors ${selected ? "bg-primary-soft" : ""}`}>
+        <tr
+            className={`border-t border-border transition-colors ${selected ? "bg-primary-soft" : ""}`}
+        >
             <td className="w-px py-3 pl-5 pr-2">
                 <CheckBox
                     checked={selected}
@@ -61,10 +66,12 @@ const ProductRow: React.FC<Props> = ({product, selected, onToggleSelect, onToggl
             </td>
 
             <td className={`px-2 py-3 ${dimmed}`}>
-                <Badge title={product.category}/>
+                <Badge title={product.category} />
             </td>
 
-            <td className={`whitespace-nowrap px-2 py-3 text-[.9rem] font-bold text-text-primary ${dimmed}`}>
+            <td
+                className={`whitespace-nowrap px-2 py-3 text-[.9rem] font-bold text-text-primary ${dimmed}`}
+            >
                 R$ {reais},<span className="text-[.7rem]">{cents}</span>
             </td>
 
@@ -76,21 +83,29 @@ const ProductRow: React.FC<Props> = ({product, selected, onToggleSelect, onToggl
                 />
             </td>
 
-            <td className={`whitespace-nowrap px-2 py-3 text-right text-[.9rem] font-bold text-text-primary ${dimmed}`}>
+            <td
+                className={`whitespace-nowrap px-2 py-3 text-right text-[.9rem] font-bold text-text-primary ${dimmed}`}
+            >
                 {total}{" "}
-                <span className="text-[.75rem] font-normal text-text-tertiary">un.</span>
+                <span className="text-[.75rem] font-normal text-text-tertiary">
+                    un.
+                </span>
             </td>
 
             <td className="whitespace-nowrap px-2 py-3">
                 <div className="flex items-center gap-2">
                     <Switch
                         checked={product.active}
-                        onChange={(checked) => onToggleStatus(product.sku, checked)}
+                        onChange={(checked) =>
+                            onToggleStatus(product.sku, checked)
+                        }
                         label={`Status do produto ${product.name}`}
                     />
                     <span
                         className={`text-[.8rem] ${
-                            product.active ? "text-text-primary" : "text-text-tertiary"
+                            product.active
+                                ? "text-text-primary"
+                                : "text-text-tertiary"
                         }`}
                     >
                         {product.active ? "Ativo" : "Inativo"}
@@ -102,13 +117,13 @@ const ProductRow: React.FC<Props> = ({product, selected, onToggleSelect, onToggl
                 <Link
                     href={`/products/${product.sku.toLowerCase()}/edit`}
                     aria-label={`Editar ${product.name}`}
-                    className="inline-flex size-8 items-center justify-center rounded-full text-text-primary transition-colors hover:bg-surface-subtle"
+                    className={`inline-flex size-8 items-center justify-center rounded-full text-text-primary transition-colors hover:bg-surface-subtle ${selected ? "bg-surface shadow-sm" : ""}`}
                 >
                     <LuPencil size={15} aria-hidden="true" />
                 </Link>
             </td>
         </tr>
-    )
-}
+    );
+};
 
 export default ProductRow;

@@ -1,6 +1,5 @@
 import PainelLayout from "@/components/features/panel/components/panel-layout";
 
-
 const Entregas: React.FC = ({}) => {
     return (
         <PainelLayout title="Entregas" subtitle="Tela de Entregas">
@@ -9,6 +8,6 @@ const Entregas: React.FC = ({}) => {
             </h1>
         </PainelLayout>
     );
-}
+};
 
 export default Entregas;

@@ -3,13 +3,13 @@ import type { Product } from "@/components/features/panel/products/types";
 import ProductRow from "@/components/features/panel/products/components/list/product-row";
 
 interface Props {
-    products: Product[]
-    selectedSkus: string[]
-    onToggleSelect: (sku: string, selected: boolean) => void
-    onToggleSelectAll: (selected: boolean) => void
-    onToggleStatus: (sku: string, active: boolean) => void
-    onClearFilters: () => void
-    footer?: React.ReactNode
+    products: Product[];
+    selectedSkus: string[];
+    onToggleSelect: (sku: string, selected: boolean) => void;
+    onToggleSelectAll: (selected: boolean) => void;
+    onToggleStatus: (sku: string, active: boolean) => void;
+    onClearFilters: () => void;
+    footer?: React.ReactNode;
 }
 
 const ProductTable: React.FC<Props> = ({
@@ -21,9 +21,11 @@ const ProductTable: React.FC<Props> = ({
     onClearFilters,
     footer,
 }) => {
-
-    const selectedOnPage = products.filter((product) => selectedSkus.includes(product.sku)).length;
-    const allSelected = products.length > 0 && selectedOnPage === products.length;
+    const selectedOnPage = products.filter((product) =>
+        selectedSkus.includes(product.sku),
+    ).length;
+    const allSelected =
+        products.length > 0 && selectedOnPage === products.length;
     const someSelected = selectedOnPage > 0 && !allSelected;
 
     return (
@@ -40,12 +42,30 @@ const ProductTable: React.FC<Props> = ({
                                 label="Selecionar todos os produtos da página"
                             />
                         </th>
-                        <th scope="col" className="px-2 py-3">Produto</th>
-                        <th scope="col" className="px-2 py-3">Categoria</th>
-                        <th scope="col" className="px-2 py-3">Preço</th>
-                        <th scope="col" className="px-2 py-3">Estoque por tamanho</th>
-                        <th scope="col" className="w-px whitespace-nowrap px-2 py-3 text-right">Total</th>
-                        <th scope="col" className="w-px whitespace-nowrap px-2 py-3">Status</th>
+                        <th scope="col" className="px-2 py-3">
+                            Produto
+                        </th>
+                        <th scope="col" className="px-2 py-3">
+                            Categoria
+                        </th>
+                        <th scope="col" className="px-2 py-3">
+                            Preço
+                        </th>
+                        <th scope="col" className="px-2 py-3">
+                            Estoque por tamanho
+                        </th>
+                        <th
+                            scope="col"
+                            className="w-px whitespace-nowrap px-2 py-3 text-right"
+                        >
+                            Total
+                        </th>
+                        <th
+                            scope="col"
+                            className="w-px whitespace-nowrap px-2 py-3"
+                        >
+                            Status
+                        </th>
                         <th scope="col" className="w-px py-3 pl-2 pr-5"></th>
                     </tr>
                 </thead>
@@ -67,7 +87,8 @@ const ProductTable: React.FC<Props> = ({
                                     Nenhum produto encontrado
                                 </p>
                                 <p className="mt-1 text-[.8rem] text-text-secondary">
-                                    Nenhum produto corresponde aos filtros selecionados.
+                                    Nenhum produto corresponde aos filtros
+                                    selecionados.
                                 </p>
                                 <button
                                     type="button"
@@ -88,7 +109,7 @@ const ProductTable: React.FC<Props> = ({
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
 
 export default ProductTable;

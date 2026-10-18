@@ -1,9 +1,20 @@
-import LogoSvg from "@/components/ui/logo-svg"
-import Switch from "@/components/ui/switch"
-import { useRouter } from "next/router"
-import Image from "next/image"
+import LogoSvg from "@/components/ui/logo-svg";
+import Switch from "@/components/ui/switch";
+import { useRouter } from "next/router";
+import Image from "next/image";
 import Link from "next/link";
-import { LuClipboardList, LuLayoutDashboard, LuLayoutGrid, LuLogOut, LuPackage, LuSettings, LuStore, LuTag, LuTruck, LuWallet } from "react-icons/lu"
+import {
+    LuClipboardList,
+    LuLayoutDashboard,
+    LuLayoutGrid,
+    LuLogOut,
+    LuPackage,
+    LuSettings,
+    LuStore,
+    LuTag,
+    LuTruck,
+    LuWallet,
+} from "react-icons/lu";
 
 const STEPS = [
     {
@@ -30,12 +41,12 @@ const STEPS = [
             { href: "/store-profile", label: "Perfil da loja", icon: LuStore },
         ],
     },
-]
+];
 
 interface Props {
-    storeName: string
-    storeOpen: boolean
-    onToggleStore: (open: boolean) => void
+    storeName: string;
+    storeOpen: boolean;
+    onToggleStore: (open: boolean) => void;
 }
 
 const PanelSidebar: React.FC<Props> = ({
@@ -43,11 +54,10 @@ const PanelSidebar: React.FC<Props> = ({
     storeOpen,
     onToggleStore,
 }) => {
-    
-    const router = useRouter()
+    const router = useRouter();
 
     const isActive = (href: string) =>
-        router.pathname === href || router.pathname.startsWith(`${href}/`)
+        router.pathname === href || router.pathname.startsWith(`${href}/`);
 
     return (
         <div className="sticky top-0 flex h-screen w-60 shrink-0 flex-col gap-6 bg-white px-4 py-6 shadow-[4px_0_16px_rgba(0,0,0,0.04)]">
@@ -88,8 +98,12 @@ const PanelSidebar: React.FC<Props> = ({
                         />
                         {storeOpen ? "Loja aberta" : "Loja fechada"}
                     </span>
-                    <Switch checked={storeOpen} onChange={onToggleStore} label="Status da loja" />
-                </div> 
+                    <Switch
+                        checked={storeOpen}
+                        onChange={onToggleStore}
+                        label="Status da loja"
+                    />
+                </div>
             </div>
 
             <nav className="flex flex-1 flex-col gap-5 overflow-y-auto">
@@ -101,10 +115,10 @@ const PanelSidebar: React.FC<Props> = ({
 
                         <ul className="flex flex-col gap-y-1">
                             {group.items.map((i) => {
-                                const active = isActive(i.href)
-                                const Icon = i.icon
+                                const active = isActive(i.href);
+                                const Icon = i.icon;
 
-                                return(
+                                return (
                                     <li key={i.href}>
                                         <Link
                                             href={i.href}
@@ -114,11 +128,16 @@ const PanelSidebar: React.FC<Props> = ({
                                                     : "text-text-primary hover:bg-surface-subtle"
                                             }`}
                                         >
-                                            <Icon size={16} aria-hidden="true" />
-                                            <span className="flex-1">{i.label}</span>
+                                            <Icon
+                                                size={16}
+                                                aria-hidden="true"
+                                            />
+                                            <span className="flex-1">
+                                                {i.label}
+                                            </span>
                                         </Link>
                                     </li>
-                                )
+                                );
                             })}
                         </ul>
                     </div>
@@ -130,19 +149,23 @@ const PanelSidebar: React.FC<Props> = ({
                     ME
                 </span>
                 <div className="flex-1">
-                    <p className="text-[.85rem] font-bold text-text-primary">Maria Estrela</p>
-                    <p className="text-[.7rem] text-text-disabled">Administradora</p>
+                    <p className="text-[.85rem] font-bold text-text-primary">
+                        Maria Estrela
+                    </p>
+                    <p className="text-[.7rem] text-text-disabled">
+                        Administradora
+                    </p>
                 </div>
                 <Link
                     href="/login"
                     aria-label="Sair"
                     className="rounded-lg p-1.5 text-text-disabled transition-colors hover:bg-surface-subtle hover:text-text-primary"
                 >
-                    <LuLogOut size={16}/>
+                    <LuLogOut size={16} />
                 </Link>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default PanelSidebar;

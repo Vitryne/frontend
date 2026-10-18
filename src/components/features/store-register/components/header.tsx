@@ -1,14 +1,10 @@
 interface Props {
-    steps: string,
-    title: string,
-    subtitle: string
+    steps: string;
+    title: string;
+    subtitle: string;
 }
 
-const StepHeader: React.FC<Props> = ({
-    steps,
-    title,
-    subtitle
-}) => {
+const StepHeader: React.FC<Props> = ({ steps, title, subtitle }) => {
     return (
         <header>
             <span className="bg-primary-soft rounded-xl uppercase p-1.5 text-[.8rem] font-semibold text-primary-hover tracking-wider">
