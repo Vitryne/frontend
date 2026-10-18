@@ -27,7 +27,7 @@ const ProductRow: React.FC<Props> = ({product, onToggleStatus}) => {
 
     return (
         <tr className="border-t border-border">
-            <td className="px-5 py-3">
+            <td className={`px-5 py-3 ${dimmed}`}>
                 <div className="flex items-center gap-3">
                     <div className="relative size-10 shrink-0 overflow-hidden rounded-lg bg-surface-subtle">
                         <Image

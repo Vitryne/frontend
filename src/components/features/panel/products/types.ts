@@ -2,7 +2,6 @@ export interface ProductStock {
     size: string;
     quantity: number;
 }
-
 export interface Product {
     sku: string;
     name: string;
@@ -13,3 +12,5 @@ export interface Product {
     stockAlertThreshold: number;
     active: boolean;
 }
+
+export type ProductStatusFilter = "all" | "active" | "inactive"
