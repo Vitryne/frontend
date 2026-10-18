@@ -1,10 +1,13 @@
+import PainelLayout from "@/components/features/panel/components/panel-layout";
 
 
-const Dashboard = () => {
+const Dashboard: React.FC = ({}) => {
     return (
-        <main className="flex min-h-screen items-center justify-center bg-screen">
-        <h1 className="text-[24px] font-semibold text-text-primary">Dashboard</h1>
-        </main>
+        <PainelLayout title="Dashboard" subtitle="Tela de dashboard">
+            <h1 className="font-display text-[24px] font-bold text-text-primary">
+                <p className="text-text-secondary">Em construção.</p>
+            </h1>
+        </PainelLayout>
     );
 }
 
