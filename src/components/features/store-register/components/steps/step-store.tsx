@@ -1,12 +1,13 @@
-import { FiUser, FiArrowRight } from "react-icons/fi";
-import ButtonGoogle from "@/components/button-google";
+import { FiUser } from "react-icons/fi";
+import ButtonGoogle from "@/components/ui/button-google";
 import { FcGoogle } from "react-icons/fc";
-import Input from "@/components/input";
-import Button from "../button";
+import Input from "@/components/ui/input";
 import { useState } from "react";
-import SelectUf from "../select-uf";
-import MaskedInput from "../masked-input";
-import StepHeader from "@/components/steps-register/header"
+import SelectUf from "../../../../ui/select-uf";
+import MaskedInput from "../../../../ui/masked-input";
+import StepHeader from "@/components/features/store-register/components/header"
+import ButtonPrimary from "@/components/ui/button-primary";
+import { LuArrowRight } from "react-icons/lu";
 
 interface Props {
   onNext: () => void;
@@ -141,13 +142,7 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
       </form>
 
       <div className="flex justify-end pt-8">
-        <Button
-          onClick={onNext} 
-          title="Próximo"
-          titleClassName="text-[1rem]"
-          buttonIcon={<FiArrowRight size={20} />}
-          className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] bg-primary w-35 py-2 font-semibold text-[14px] text-white transition-all duration-200 ease-in-out shadow-[0_8px_24px_rgba(149,48,217,0.35)] hover:bg-primary-hover hover:scale-[1.02] active:scale-95"
-        />
+        <ButtonPrimary title="Próximo" btnIcon={<LuArrowRight/>} onClick={onNext}/>
       </div>
     </div>
   );

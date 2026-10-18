@@ -1,12 +1,12 @@
-import Button from "@/components/button";
-import ButtonGoogle from "@/components/button-google";
-import Input from "@/components/input";
+import ButtonGoogle from "@/components/ui/button-google";
+import Input from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
 import { IoEyeOutline } from "react-icons/io5";
 import { HiOutlineMail } from "react-icons/hi";
 import Image from "next/image";
 import Link from "next/link";
-import LogoSvg from "@/components/logo-svg";
+import LogoSvg from "@/components/ui/logo-svg";
+import ButtonSecondary from "@/components/ui/button-secondary";
 
 const Login: React.FC = ({}) => {
   return (
@@ -103,8 +103,17 @@ const Login: React.FC = ({}) => {
               >
                 Problemas ao acessar?
               </a>
+              
             </div>
-            <Button title="Entrar no painel" />
+            
+            <div className="flex justify-center">
+              <Link
+                href="/dashboard"
+                className="w-full cursor-pointer inline-flex items-center justify-center gap-2 rounded-[10px] border border-primary/30 bg-white hover:bg-primary/5 text-primary font-semibold text-[14px] py-3.5 transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-95"
+              >
+                Entrar no painel
+              </Link>
+            </div>
           </form>
 
           <div className="flex items-center gap-4 my-6">
