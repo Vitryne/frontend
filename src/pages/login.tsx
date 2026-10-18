@@ -6,7 +6,6 @@ import { HiOutlineMail } from "react-icons/hi";
 import Image from "next/image";
 import Link from "next/link";
 import LogoSvg from "@/components/ui/logo-svg";
-import ButtonSecondary from "@/components/ui/button-secondary";
 
 const Login: React.FC = ({}) => {
   return (
