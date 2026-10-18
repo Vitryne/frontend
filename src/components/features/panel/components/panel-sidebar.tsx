@@ -10,24 +10,24 @@ const STEPS = [
         title: "Operação",
         items: [
             { href: "/dashboard", label: "Dashboard", icon: LuLayoutDashboard },
-            { href: "/pedidos", label: "Pedidos", icon: LuClipboardList },
-            { href: "/produtos", label: "Produtos", icon: LuPackage },
-            { href: "/categorias", label: "Categorias", icon: LuLayoutGrid },
+            { href: "/orders", label: "Pedidos", icon: LuClipboardList },
+            { href: "/products", label: "Produtos", icon: LuPackage },
+            { href: "/categories", label: "Categorias", icon: LuLayoutGrid },
         ],
     },
     {
         title: "Gestão",
         items: [
-            { href: "/financeiro", label: "Financeiro", icon: LuWallet },
-            { href: "/entregas", label: "Entregas", icon: LuTruck },
-            { href: "/promocoes", label: "Promoções", icon: LuTag },
+            { href: "/finance", label: "Financeiro", icon: LuWallet },
+            { href: "/deliveries", label: "Entregas", icon: LuTruck },
+            { href: "/promotions", label: "Promoções", icon: LuTag },
         ],
     },
     {
         title: "Configurações",
         items: [
-            { href: "/configuracoes", label: "Configurações", icon: LuSettings },
-            { href: "/perfil-loja", label: "Perfil da loja", icon: LuStore },
+            { href: "/settings", label: "Configurações", icon: LuSettings },
+            { href: "/store-profile", label: "Perfil da loja", icon: LuStore },
         ],
     },
 ]
