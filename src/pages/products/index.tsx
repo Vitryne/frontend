@@ -1,4 +1,5 @@
 import PanelLayout from "@/components/features/panel/components/panel-layout";
+import ProductEmpty from "@/components/features/panel/products/components/list/product-empty";
 import ProductTable from "@/components/features/panel/products/components/list/product-table";
 import ProductFilters from "@/components/features/panel/products/components/list/produtc-filters";
 import { PRODUCTS_MOCK } from "@/components/features/panel/products/products-mock";
@@ -69,6 +70,14 @@ const Products: React.FC = ({}) => {
         setStatus("all")
         setCriticalOnly(false)
         setPage(1)
+    }
+
+    if (products.length === 0) {
+        return (
+            <PanelLayout title="Produtos" subtitle="Nenhum produto cadastrado">
+                <ProductEmpty storeName="Atelier Norte"/>
+            </PanelLayout>
+        )
     }
 
     return (
