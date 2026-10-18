@@ -1,4 +1,4 @@
-import LogoSvg from "@/components/logo-svg";
+import LogoSvg from "@/components/ui/logo-svg";
 import { FaCheck } from "react-icons/fa"
 
 

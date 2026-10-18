@@ -1,9 +1,9 @@
-import StepBankDetails from "@/components/steps-register/step-bank-details";
-import StepBusinessHours from "@/components/steps-register/step-business-hours";
-import StepCategory from "@/components/steps-register/step-category";
-import StepIdentity from "@/components/steps-register/step-identity";
-import StepStore from "@/components/steps-register/step-store";
-import SidebarRegister from "@/components/steps-register/sidebar-register";
+import StepBankDetails from "@/components/features/store-register/components/steps/step-bank-details";
+import StepBusinessHours from "@/components/features/store-register/components/steps/step-business-hours";
+import StepCategory from "@/components/features/store-register/components/steps/step-category";
+import StepIdentity from "@/components/features/store-register/components/steps/step-identity";
+import StepStore from "@/components/features/store-register/components/steps/step-store";
+import SidebarRegister from "@/components/features/store-register/components/sidebar-register";
 import { useState } from "react";
 
 
