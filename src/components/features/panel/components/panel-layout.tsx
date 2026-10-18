@@ -8,7 +8,7 @@ interface Props {
     children: React.ReactNode
 }
 
-const PainelLayout: React.FC<Props> = ({title, subtitle, children }) => {
+const PanelLayout: React.FC<Props> = ({title, subtitle, children }) => {
     
     const [storeOpen, setStoreOpen] = useState(true)
 
@@ -29,4 +29,4 @@ const PainelLayout: React.FC<Props> = ({title, subtitle, children }) => {
     )
 }
 
-export default PainelLayout;
+export default PanelLayout;
