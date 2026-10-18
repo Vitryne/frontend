@@ -19,6 +19,7 @@ const Products: React.FC = ({}) => {
     const [status, setStatus] = useState<ProductStatusFilter>("all")
     const [criticalOnly, setCriticalOnly] = useState(false)
     const [page, setPage] = useState(1)
+    const [selectedSkus, setSelectedSkus] = useState<string[]>([]);
 
     const categories = [...new Set(products.map((product) => product.category))].sort()
     const criticalCount = products.filter(hasCriticalStock).length
@@ -50,19 +51,37 @@ const Products: React.FC = ({}) => {
         )
     }
 
+    const handleToggleSelect = (sku: string, selected: boolean) => {
+        setSelectedSkus((current) =>
+            selected ? [...current, sku] : current.filter((item) => item !== sku)
+        );
+    };
+
+    const handleToggleSelectAll = (selected: boolean) => {
+        setSelectedSkus(selected ? pagedProducts.map((product) => product.sku) : []);
+    };
+
     const handleCategoryChange = (value: string) => {
         setCategory(value)
         setPage(1)
+        setSelectedSkus([])
     }
 
     const handleStatusChange = (value: ProductStatusFilter) => {
         setStatus(value)
         setPage(1)
+        setSelectedSkus([])
     }
 
     const handleCriticalOnlyChange = (value: boolean) => {
         setCriticalOnly(value)
         setPage(1)
+        setSelectedSkus([])
+    }
+
+    const handlePageChange = (value: number) => {
+        setPage(value);
+        setSelectedSkus([]);
     }
 
     const handleClearFilters = () => {
@@ -70,6 +89,7 @@ const Products: React.FC = ({}) => {
         setStatus("all")
         setCriticalOnly(false)
         setPage(1)
+        setSelectedSkus([])
     }
 
     if (products.length === 0) {
@@ -94,6 +114,9 @@ const Products: React.FC = ({}) => {
             />
             <ProductTable
                 products={pagedProducts}
+                selectedSkus={selectedSkus}
+                onToggleSelect={handleToggleSelect}
+                onToggleSelectAll={handleToggleSelectAll}
                 onToggleStatus={handleToggleStatus}
                 onClearFilters={handleClearFilters}
                 footer={
@@ -107,7 +130,7 @@ const Products: React.FC = ({}) => {
                                 <Pagination
                                     page={currentPage}
                                     totalPages={totalPages}
-                                    onPageChange={setPage}
+                                    onPageChange={handlePageChange}
                                 />
                             )}
                         </>

@@ -1,20 +1,45 @@
+import CheckBox from "@/components/ui/checkbox";
 import type { Product } from "@/components/features/panel/products/types";
-import ProductRow from "./product-row";
+import ProductRow from "@/components/features/panel/products/components/list/product-row";
 
 interface Props {
     products: Product[]
+    selectedSkus: string[]
+    onToggleSelect: (sku: string, selected: boolean) => void
+    onToggleSelectAll: (selected: boolean) => void
     onToggleStatus: (sku: string, active: boolean) => void
     onClearFilters: () => void
     footer?: React.ReactNode
 }
 
-const ProductTable: React.FC<Props> = ({products, onToggleStatus, onClearFilters, footer}) => {
+const ProductTable: React.FC<Props> = ({
+    products,
+    selectedSkus,
+    onToggleSelect,
+    onToggleSelectAll,
+    onToggleStatus,
+    onClearFilters,
+    footer,
+}) => {
+
+    const selectedOnPage = products.filter((product) => selectedSkus.includes(product.sku)).length;
+    const allSelected = products.length > 0 && selectedOnPage === products.length;
+    const someSelected = selectedOnPage > 0 && !allSelected;
 
     return (
         <div className="overflow-hidden rounded-2xl border border-border bg-white">
             <table className="w-full">
                 <thead className="bg-surface-subtle">
                     <tr className="text-left text-[.7rem] font-bold uppercase tracking-wider text-text-secondary">
+                        <th scope="col" className="w-12 py-3 pl-5">
+                            <CheckBox
+                                checked={allSelected}
+                                indeterminate={someSelected}
+                                disabled={products.length === 0}
+                                onChange={onToggleSelectAll}
+                                label="Selecionar todos os produtos da página"
+                            />
+                        </th>
                         <th scope="col" className="px-5 py-3">Produto</th>
                         <th scope="col" className="px-5 py-3">Categoria</th>
                         <th scope="col" className="px-5 py-3">Preço</th>
@@ -30,12 +55,14 @@ const ProductTable: React.FC<Props> = ({products, onToggleStatus, onClearFilters
                             <ProductRow
                                 key={product.sku}
                                 product={product}
+                                selected={selectedSkus.includes(product.sku)}
+                                onToggleSelect={onToggleSelect}
                                 onToggleStatus={onToggleStatus}
                             />
                         ))
                     ) : (
                         <tr className="border-t border-border">
-                            <td colSpan={7} className="px-5 py-12 text-center">
+                            <td colSpan={8} className="px-5 py-12 text-center">
                                 <p className="text-[.9rem] font-bold text-text-primary">
                                     Nenhum produto encontrado
                                 </p>
