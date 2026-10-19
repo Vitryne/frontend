@@ -11,4 +11,4 @@ concurrency:
 
 jobs:
   qualidade:
-    uses: vitryne/.github/.github/workflows/node-quality.yml@ci/ETI-292-workflow-qualidade-node
+    uses: vitryne/.github/.github/workflows/node-quality.yml@main
