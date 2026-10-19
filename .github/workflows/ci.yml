@@ -7,4 +7,4 @@ on:
 
 jobs:
   governanca:
-    uses: vitryne/.github/.github/workflows/governance.yml@ci/ETI-291-workflow-governanca
+    uses: vitryne/.github/.github/workflows/governance.yml@main
