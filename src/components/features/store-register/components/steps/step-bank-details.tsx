@@ -1,9 +1,13 @@
-import StepHeader from "@/components/steps-register/header"
-import Button from "@/components/button";
+import StepHeader from "@/components/features/store-register/components/header"
+import Button from "@/components/ui/button-secondary";
 import { FiArrowLeft, FiArrowRight, FiCheck } from "react-icons/fi";
-import MaskedInput from "@/components/masked-input";
+import MaskedInput from "@/components/ui/masked-input";
 import { useState } from "react";
-import Input from "@/components/input";
+import Input from "@/components/ui/input";
+import ButtonSecondary from "@/components/ui/button-secondary";
+import ButtonPrimary from "@/components/ui/button-primary";
+import { LuArrowLeft, LuArrowRight, LuCheck } from "react-icons/lu";
+import Link from "next/link";
 
 interface Props {
     onNext?: () => void;
@@ -86,7 +90,7 @@ const StepBankDetails: React.FC<Props> = ({onNext, onBack}) => {
                     <Input
                         title="Banco *"
                         type="text"
-                        placeholder="237 — Bradesco S.A."
+                        placeholder="00264 — Bradesco S.A."
                     />
                 </div>
 
@@ -133,22 +137,19 @@ const StepBankDetails: React.FC<Props> = ({onNext, onBack}) => {
             </div>
 
             <div className="flex justify-between pt-17">
-                <button 
-                    onClick={onBack}
-                    className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] border  border-border-brand w-35 py-2 font-semibold text-[1rem] text-text-brand transition-all duration-200 ease-in-out hover:bg-screen hover:scale-[1.02] active:scale-95"
-                >
-                    <FiArrowLeft size={20}/>
-                    Voltar
-                </button>
+                <ButtonSecondary title="Voltar" btnIcon={<LuArrowLeft />} onClick={onBack} />
 
-                <Button
-                    onClick={onNext} 
-                    title="Finalizar configuração"
-                    titleClassName="text-[1rem]"
-                    buttonIcon={<FiArrowRight size={20} />}
-                    className="cursor-pointer flex items-center justify-center gap-1 rounded-[10px] bg-primary w-60 py-2 font-semibold text-[14px] text-white transition-all duration-200 ease-in-out shadow-[0_8px_24px_rgba(149,48,217,0.35)] hover:bg-primary-hover hover:scale-[1.02] active:scale-95"
-                />
+                <Link
+                    href="/dashboard"
+                    replace
+                    className="inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary hover:bg-primary-hover text-white font-semibold text-[14px] px-5 py-2.5 shadow-lg shadow-primary/30 transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-95"
+                >
+                    Cadastrar loja
+                    <LuCheck/>
+                </Link>
             </div>
+
+            
         </div>
     )
 }
