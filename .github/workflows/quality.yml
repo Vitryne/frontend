@@ -1,0 +1,14 @@
+name: Qualidade
+
+on:
+  pull_request:
+    branches: [dev, main]
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: qualidade-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  qualidade:
+    uses: vitryne/.github/.github/workflows/node-quality.yml@ci/ETI-292-workflow-qualidade-node
