@@ -1,16 +1,13 @@
 import StepHeader from "@/components/features/store-register/components/header"
-import Button from "@/components/ui/button-secondary";
-import { FiArrowLeft, FiArrowRight, FiCheck } from "react-icons/fi";
+import { FiCheck } from "react-icons/fi";
 import MaskedInput from "@/components/ui/masked-input";
 import { useState } from "react";
 import Input from "@/components/ui/input";
 import ButtonSecondary from "@/components/ui/button-secondary";
-import ButtonPrimary from "@/components/ui/button-primary";
-import { LuArrowLeft, LuArrowRight, LuCheck } from "react-icons/lu";
+import { LuArrowLeft, LuCheck } from "react-icons/lu";
 import Link from "next/link";
 
 interface Props {
-    onNext?: () => void;
     onBack?: () => void;
 }
 
@@ -18,7 +15,7 @@ const ACC_TYPE = [
     "Conta corrente", "Conta poupança" ,"Conta pagamento"
 ]
 
-const StepBankDetails: React.FC<Props> = ({onNext, onBack}) => {
+const StepBankDetails: React.FC<Props> = ({onBack}) => {
 
     const [accType, setAccType] = useState("Conta corrente")
     const [cnpj, setCnpj] = useState('')

@@ -3,7 +3,7 @@ import StepBusinessHours from "@/components/features/store-register/components/s
 import StepCategory from "@/components/features/store-register/components/steps/step-category";
 import StepIdentity from "@/components/features/store-register/components/steps/step-identity";
 import StepStore from "@/components/features/store-register/components/steps/step-store";
-import SidebarRegister from "@/components/features/store-register/components/sidebar-register";
+import SidebarRegister from "@/components/features/store-register/components/register-sidebar";
 import { useState } from "react";
 
 
