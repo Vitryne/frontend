@@ -6,7 +6,7 @@
 
 Aplicação web utilizada pelos parceiros da plataforma para gerenciamento de produtos, pedidos e operação das lojas.
 
-[![Java](https://skillicons.dev/icons?i=react,next,ts,vite,tailwind,docker)](https://skillicons.dev)
+[![Java](https://skillicons.dev/icons?i=react,next,ts,tailwind,docker)](https://skillicons.dev)
 
 </div>
 
@@ -73,3 +73,7 @@ A documentação da plataforma, incluindo arquitetura, regras de negócio e deci
 | [Frontend](https://github.com/Vitryne/frontend) | Aplicação Web |
 | [Mobile](https://github.com/Vitryne/mobile) | Aplicativo Mobile |
 | [Docs](https://github.com/Vitryne/docs) | Documentação técnica |
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais informações.

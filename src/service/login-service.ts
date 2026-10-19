@@ -1,8 +1,7 @@
-import { useHttp } from "@/hooks/use-http";
+import { useHttp } from "@/components/hooks/use-http";
 
 const LoginService = () => {
   const http = useHttp();
-
   return {};
 };
 
