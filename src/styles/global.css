@@ -2,64 +2,64 @@
 @import "tailwindcss";
 
 @theme {
-    /* ---------- Marca ---------- */
-    --color-primary: #9530d9;
-    --color-primary-hover: #7e22bc;
-    --color-primary-strong: #631b97;
-    --color-primary-deep: #2f0e47;
-    --color-primary-soft: #f7f0fb;
-    --color-primary-soft-2: #ecddf6;
+  /* ---------- Marca ---------- */
+  --color-primary: #9530d9;
+  --color-primary-hover: #7e22bc;
+  --color-primary-strong: #631b97;
+  --color-primary-deep: #2f0e47;
+  --color-primary-soft: #f7f0fb;
+  --color-primary-soft-2: #ecddf6;
 
-    /* ---------- Texto ---------- */
-    --color-text-primary: #15131c;
-    --color-text-secondary: #3d3949;
-    --color-text-tertiary: #6c6779;
-    --color-text-disabled: #9c97a7;
-    --color-text-brand: #7e22bc;
-    --color-text-on-brand: #ffffff;
+  /* ---------- Texto ---------- */
+  --color-text-primary: #15131c;
+  --color-text-secondary: #3d3949;
+  --color-text-tertiary: #6c6779;
+  --color-text-disabled: #9c97a7;
+  --color-text-brand: #7e22bc;
+  --color-text-on-brand: #ffffff;
 
-    /* ---------- Fundo ---------- */
-    --color-screen: #fafaf7;
-    --color-surface: #ffffff;
-    --color-surface-subtle: #f3f1ed;
-    --color-avatar: #ecddf6;
-    --color-scrim: rgba(15, 11, 20, 0.4);
-    --color-nav-float: rgba(255, 255, 255, 0.94);
+  /* ---------- Fundo ---------- */
+  --color-screen: #fafaf7;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f3f1ed;
+  --color-avatar: #ecddf6;
+  --color-scrim: rgba(15, 11, 20, 0.4);
+  --color-nav-float: rgba(255, 255, 255, 0.94);
 
-    /* ---------- Borda ---------- */
-    --color-border: #ece9e3;
-    --color-border-strong: #e0dbd2;
-    --color-border-brand: #d6b7ec;
-    --color-border-subtle: rgba(0, 0, 0, 0.06);
+  /* ---------- Borda ---------- */
+  --color-border: #ece9e3;
+  --color-border-strong: #e0dbd2;
+  --color-border-brand: #d6b7ec;
+  --color-border-subtle: rgba(0, 0, 0, 0.06);
 
-    /* ---------- Feedback ---------- */
-    --color-success: #1f9d5b;
-    --color-success-soft: #e5f5ec;
-    --color-warning: #d98a1f;
-    --color-warning-soft: #fbf1df;
-    --color-danger: #d8345b;
-    --color-danger-soft: #fbe7ec;
-    --color-info: #3380e0;
+  /* ---------- Feedback ---------- */
+  --color-success: #1f9d5b;
+  --color-success-soft: #e5f5ec;
+  --color-warning: #d98a1f;
+  --color-warning-soft: #fbf1df;
+  --color-danger: #d8345b;
+  --color-danger-soft: #fbe7ec;
+  --color-info: #3380e0;
 
-    /* ---------- Editorial ---------- */
-    --color-cream: #f3ebdc;
-    --color-sand: #e6d9c2;
-    --color-plum: #4a1063;
+  /* ---------- Editorial ---------- */
+  --color-cream: #f3ebdc;
+  --color-sand: #e6d9c2;
+  --color-plum: #4a1063;
 
-    /* ---------- Tipografia ---------- */
-    --font-display: "Poppins", system-ui, sans-serif;
-    --font-body: "Bai Jamjuree", system-ui, sans-serif;
-    --font-mono: "Geist Mono", ui-monospace, monospace;
+  /* ---------- Tipografia ---------- */
+  --font-display: "Poppins", system-ui, sans-serif;
+  --font-body: "Bai Jamjuree", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
 }
 
 body {
-    font-family: var(--font-body);
-    background-color: var(--color-screen);
-    color: var(--color-text-primary);
+  font-family: var(--font-body);
+  background-color: var(--color-screen);
+  color: var(--color-text-primary);
 }
 
 @layer base {
-    th {
-        font-weight: inherit;
-    }
+  th {
+    font-weight: inherit;
+  }
 }
