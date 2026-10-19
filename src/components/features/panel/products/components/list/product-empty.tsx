@@ -9,9 +9,9 @@ interface Props {
 
 const ProductEmpty: React.FC<Props> = ({ storeName }) => {
     return (
-        <div className="flex flex-col items-center px-6 py-24 text-center">
-            <span className="flex size-14 items-center justify-center rounded-2xl bg-surface-subtle text-primary">
-                <LuPackage size={24} />
+        <div className="flex flex-col items-center p-19 text-center">
+            <span className="flex size-14 items-center justify-center rounded-[22px] bg-cream text-plum">
+                <LuPackage size={30}/>
             </span>
 
             <h2 className="mt-5 font-display text-[22px] font-bold text-text-primary">

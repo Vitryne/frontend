@@ -8,7 +8,7 @@ interface Props {
 
 const VARIANTS = {
     warning: {
-        box: "border-orange-300 bg-orange-50",
+        box: "border-warning bg-warning-soft",
         icon: "text-orange-500",
         title: "text-orange-700",
         Icon: LuCircleAlert,

@@ -14,7 +14,7 @@ import Pagination from "@/components/ui/pagination";
 import { useState } from "react";
 
 const Products: React.FC = ({}) => {
-    const [products, setProducts] = useState<Product[]>(PRODUCTS_MOCK);
+    const [products, setProducts] = useState<Product[]>([]);
     const [category, setCategory] = useState("");
     const [status, setStatus] = useState<ProductStatusFilter>("all");
     const [criticalOnly, setCriticalOnly] = useState(false);
