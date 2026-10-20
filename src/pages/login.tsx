@@ -98,7 +98,6 @@ const Login: React.FC = ({}) => {
               >
                 Problemas ao acessar?
               </a>
-              
             </div>
 
             <div className="flex justify-center">
