@@ -1,6 +1,5 @@
-
 interface Props {
-    color: string;
+  color: string;
 }
 
 const LogoSvg: React.FC<Props> = ({ color }) => {
