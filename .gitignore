@@ -2,3 +2,10 @@
 node_modules/
 .next/
 *.tsbuildinfo
+
+# variáveis de ambiente (o exemplo continua versionado)
+.env*
+!.env.example
+
+# vercel
+.vercel
