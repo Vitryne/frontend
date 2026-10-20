@@ -98,6 +98,16 @@ const Login: React.FC = ({}) => {
               >
                 Problemas ao acessar?
               </a>
+              
+            </div>
+            
+            <div className="flex justify-center">
+              <Link
+                href="/dashboard"
+                className="w-full cursor-pointer inline-flex items-center justify-center gap-2 rounded-[10px] border border-primary/30 bg-white hover:bg-primary/5 text-primary font-semibold text-[14px] py-3.5 transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-95"
+              >
+                Entrar no painel
+              </Link>
             </div>
 
             <div className="flex justify-center">

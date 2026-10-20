@@ -1,6 +1,6 @@
-import Image from "next/image";
-import StepHeader from "@/components/features/store-register/components/header";
-import { FiUpload } from "react-icons/fi";
+import Image from "next/image"
+import StepHeader from "@/components/features/store-register/components/header"
+import { FiUpload } from "react-icons/fi"
 import ButtonSecondary from "@/components/ui/button-secondary";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 import ButtonPrimary from "@/components/ui/button-primary";
