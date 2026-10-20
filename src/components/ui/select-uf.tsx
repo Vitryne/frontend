@@ -67,9 +67,11 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="w-full flex items-center justify-between rounded-[10px] bg-surface border border-border px-4 py-3 text-[14px] text-text-primary outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-text-terciary"
+          className="w-full flex items-center justify-between rounded-[10px] bg-surface border border-border px-4 py-3 text-[14px] text-text-primary outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border-strong"
         >
-          <span className={selected ? "text-text-primary" : "text-text-secondary"}>
+          <span
+            className={selected ? "text-text-primary" : "text-text-secondary"}
+          >
             {selected ? selected.acronym : "UF"}
           </span>
           <FiChevronDown

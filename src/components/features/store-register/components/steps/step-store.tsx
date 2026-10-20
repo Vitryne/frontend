@@ -5,7 +5,7 @@ import Input from "@/components/ui/input";
 import { useState } from "react";
 import SelectUf from "../../../../ui/select-uf";
 import MaskedInput from "../../../../ui/masked-input";
-import StepHeader from "@/components/features/store-register/components/header"
+import StepHeader from "@/components/features/store-register/components/header";
 import ButtonPrimary from "@/components/ui/button-primary";
 import { LuArrowRight } from "react-icons/lu";
 
@@ -14,11 +14,10 @@ interface Props {
 }
 
 const StepStore: React.FC<Props> = ({ onNext }) => {
-
-  const [uf, setUf] = useState('');
-  const [cep, setCep] = useState('');
-  const [cnpj, setCnpj] = useState('');
-  const [tel, setTel] = useState('');
+  const [uf, setUf] = useState("");
+  const [cep, setCep] = useState("");
+  const [cnpj, setCnpj] = useState("");
+  const [tel, setTel] = useState("");
 
   return (
     <div>
@@ -45,11 +44,7 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
           Ou com email e senha
         </p>
 
-        <Input 
-          title="Email *" 
-          placeholder="Digite seu email..." 
-          type="email" 
-        />
+        <Input title="Email *" placeholder="Digite seu email..." type="email" />
         <div className="grid grid-cols-2 gap-5 pt-5">
           <div className="flex flex-col">
             <Input
@@ -142,7 +137,11 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
       </form>
 
       <div className="flex justify-end pt-8">
-        <ButtonPrimary title="Próximo" btnIcon={<LuArrowRight/>} onClick={onNext}/>
+        <ButtonPrimary
+          title="Próximo"
+          btnIcon={<LuArrowRight />}
+          onClick={onNext}
+        />
       </div>
     </div>
   );

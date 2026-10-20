@@ -38,9 +38,7 @@ const Login: React.FC = ({}) => {
             <div className="flex items-center gap-8 mt-8">
               <div>
                 <p className="font-display font-bold text-2xl">+12k</p>
-                <p className=" text-[13px] text-white/70">
-                  lojas ativas
-                </p>
+                <p className=" text-[13px] text-white/70">lojas ativas</p>
               </div>
               <div>
                 <p className="font-display font-bold text-2xl">94%</p>
@@ -48,9 +46,7 @@ const Login: React.FC = ({}) => {
               </div>
               <div>
                 <p className="font-display font-bold text-2xl">45min</p>
-                <p className="text-[13px] text-white/70">
-                  entrega média
-                </p>
+                <p className="text-[13px] text-white/70">entrega média</p>
               </div>
             </div>
           </div>
@@ -102,9 +98,8 @@ const Login: React.FC = ({}) => {
               >
                 Problemas ao acessar?
               </a>
-              
             </div>
-            
+
             <div className="flex justify-center">
               <Link
                 href="/dashboard"
@@ -117,9 +112,7 @@ const Login: React.FC = ({}) => {
 
           <div className="flex items-center gap-4 my-6">
             <div className="h-px flex-1 bg-border" />
-            <span className=" text-[13px] text-text-secondary">
-              ou
-            </span>
+            <span className=" text-[13px] text-text-secondary">ou</span>
             <div className="h-px flex-1 bg-border" />
           </div>
 
