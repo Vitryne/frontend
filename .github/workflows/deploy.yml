@@ -1,0 +1,87 @@
+name: Deploy
+
+on:
+  pull_request:
+    branches: [dev, main]
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [dev, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  deploy:
+    name: Deploy
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event_name == 'pull_request' && 'preview' || (github.ref_name == 'main' && 'producao' || 'homologacao') }}
+      url: ${{ steps.publicar.outputs.site }}
+    env:
+      AMBIENTE: ${{ github.event_name == 'pull_request' && 'preview' || (github.ref_name == 'main' && 'producao' || 'homologacao') }}
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_TELEMETRY_DISABLED: 1
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v7
+
+      - name: Configurar o Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar o Vercel CLI
+        run: npm install --global vercel@64.7.0
+
+      - name: Baixar configuração do Vercel
+        run: |
+          if [ "$AMBIENTE" = "producao" ]; then
+            vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          else
+            vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
+          fi
+
+      - name: Build
+        run: |
+          if [ "$AMBIENTE" = "producao" ]; then
+            vercel build --prod --token="$VERCEL_TOKEN"
+          else
+            vercel build --token="$VERCEL_TOKEN"
+          fi
+
+      - name: Publicar
+        id: publicar
+        run: |
+          case "$AMBIENTE" in
+            producao)
+              vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+              site="https://www.vitrynes.com"
+              ;;
+            homologacao)
+              url="$(vercel deploy --prebuilt --token="$VERCEL_TOKEN")"
+              vercel alias set "$url" homolog.vitrynes.com --token="$VERCEL_TOKEN"
+              site="https://homolog.vitrynes.com"
+              ;;
+            *)
+              site="$(vercel deploy --prebuilt --token="$VERCEL_TOKEN")"
+              ;;
+          esac
+          echo "site=$site" >> "$GITHUB_OUTPUT"
+          echo "Publicado em: $site" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Smoke test
+        env:
+          SITE: ${{ steps.publicar.outputs.site }}
+        run: |
+          curl --fail --silent --show-error --location \
+            --retry 5 --retry-delay 10 --retry-all-errors \
+            --output /dev/null "$SITE/login"
+          echo "$SITE/login respondeu com sucesso."
