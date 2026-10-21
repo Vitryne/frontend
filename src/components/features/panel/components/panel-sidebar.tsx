@@ -94,7 +94,7 @@ const PanelSidebar: React.FC<Props> = ({
             }`}
           >
             <span
-              className={`size-1.5 rounded-full ${storeOpen ? "bg-success" : "bg-gray-400"}`}
+              className={`size-1.5 rounded-full ${storeOpen ? "bg-success" : "bg-text-disabled"}`}
             />
             {storeOpen ? "Loja aberta" : "Loja fechada"}
           </span>
