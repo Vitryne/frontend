@@ -200,7 +200,7 @@ const Products: React.FC = ({}) => {
             <>
               <p className="text-[.75rem] text-text-tertiary">
                 Mostrando {pageStart + 1}–{pageStart + pagedProducts.length} de{" "}
-                {products.length} produtos
+                {filteredProducts.length} produtos
               </p>
               <Pagination
                 page={currentPage}
