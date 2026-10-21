@@ -42,7 +42,7 @@ const Select: React.FC<Props> = ({ label, value, options, onChange }) => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscape);
     };
-  });
+  }, []);
 
   return (
     <div className="relative" ref={containerRef}>

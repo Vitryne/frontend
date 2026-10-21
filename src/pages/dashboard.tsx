@@ -4,7 +4,7 @@ const Dashboard: React.FC = ({}) => {
   return (
     <PainelLayout title="Dashboard" subtitle="Tela de dashboard">
       <h1 className="font-display text-[24px] font-bold text-text-primary">
-        <p className="text-text-secondary">Em construção.</p>
+        Em construção.
       </h1>
     </PainelLayout>
   );
