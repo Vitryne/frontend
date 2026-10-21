@@ -27,7 +27,7 @@ const StepBankDetails: React.FC<Props> = ({ onBack }) => {
       />
 
       <div className="flex gap-3 bg-primary-soft py-4 px-5 border border-border-brand rounded-2xl ">
-        <FiCheck size={24} color="#9530D9" />
+        <FiCheck size={24} className="shrink-0 text-primary" />
         <p className="text-primary-hover text-[16px]">
           O CNPJ <span className="font-bold">34.221.876/0001-44</span> e o
           titular precisam coincidir com a conta abaixo. Pagamentos são feitos

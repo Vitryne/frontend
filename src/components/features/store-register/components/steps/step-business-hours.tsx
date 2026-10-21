@@ -264,10 +264,10 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
         <div className="flex items-center gap-8 border-b border-border py-2">
           <span className="w-24" />
           <span className="w-32" />
-          <span className="flex-1 text-[11px] uppercase tracking-wider text-center text-text-terciary">
+          <span className="flex-1 text-[11px] uppercase tracking-wider text-center text-text-tertiary">
             Manhã
           </span>
-          <span className="flex-1 text-[11px] uppercase tracking-wider text-center text-text-terciary">
+          <span className="flex-1 text-[11px] uppercase tracking-wider text-center text-text-tertiary">
             Tarde
           </span>
         </div>
@@ -309,7 +309,7 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
                 value={day.openMorning}
                 disabled={!day.open}
                 onChange={(e) => changeHour(i, "openMorning", e.target.value)}
-                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-terciary"
+                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-tertiary"
               />
               <span className="shrink-0 text-[13px] text-text-secondary">
                 até
@@ -319,7 +319,7 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
                 value={day.closeMorning}
                 disabled={!day.open}
                 onChange={(e) => changeHour(i, "closeMorning", e.target.value)}
-                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-terciary"
+                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-tertiary"
               />
             </div>
 
@@ -329,7 +329,7 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
                 value={day.openAfternoon}
                 disabled={!day.open}
                 onChange={(e) => changeHour(i, "openAfternoon", e.target.value)}
-                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-terciary"
+                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-tertiary"
               />
               <span className="shrink-0 text-[13px] text-text-secondary">
                 até
@@ -341,7 +341,7 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
                 onChange={(e) =>
                   changeHour(i, "closeAfternoon", e.target.value)
                 }
-                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-terciary"
+                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-tertiary"
               />
             </div>
           </div>

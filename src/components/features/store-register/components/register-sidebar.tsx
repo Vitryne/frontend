@@ -50,10 +50,10 @@ const SidebarRegister: React.FC<Props> = ({ steps, stepIndex, selectStep }) => {
                   }`}
                 >
                   <span
-                    className={`flex size-7 justify-center items-center text-text-disabled rounded-full ${
+                    className={`flex size-7 justify-center items-center rounded-full ${
                       currentStep
                         ? "bg-primary text-white font-bold"
-                        : "bg-gray-200 text-text-terciary font-bold"
+                        : "bg-surface-subtle text-text-tertiary font-bold"
                     }`}
                   >
                     {i + 1}
