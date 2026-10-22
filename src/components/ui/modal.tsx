@@ -44,7 +44,6 @@ const Modal: React.FC<Props> = ({
   return (
     <dialog
       ref={dialogRef}
-      aria-labelledby={titleId}
       onClose={onClose}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -54,7 +53,6 @@ const Modal: React.FC<Props> = ({
       <div className="flex flex-col gap-5 p-6">
         <div className="flex items-center gap-4">
           <span
-            aria-hidden="true"
             className={`flex size-12 shrink-0 items-center justify-center rounded-xl ${TONES[tone]}`}
           >
             {icon}

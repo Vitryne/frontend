@@ -128,7 +128,7 @@ const PanelSidebar: React.FC<Props> = ({
                           : "text-text-primary hover:bg-surface-subtle"
                       }`}
                     >
-                      <Icon size={16} aria-hidden="true" />
+                      <Icon size={16} />
                       <span className="flex-1">{i.label}</span>
                     </Link>
                   </li>
@@ -151,7 +151,6 @@ const PanelSidebar: React.FC<Props> = ({
         </div>
         <Link
           href="/login"
-          aria-label="Sair"
           className="rounded-lg p-1.5 text-text-disabled transition-colors hover:bg-surface-subtle hover:text-text-primary"
         >
           <LuLogOut size={16} />

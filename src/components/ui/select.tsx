@@ -48,7 +48,6 @@ const Select: React.FC<Props> = ({ label, value, options, onChange }) => {
     <div className="relative" ref={containerRef}>
       <button
         type="button"
-        aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
         className="flex h-10 cursor-pointer items-center gap-2 rounded-[10px] bg-surface border border-border px-3 text-[14px] text-text-primary outline-none transition-colors duration-200 hover:border-border-strong hover:bg-surface-subtle focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
       >

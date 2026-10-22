@@ -5,6 +5,7 @@ import StepIdentity from "@/components/features/store-register/components/steps/
 import StepStore from "@/components/features/store-register/components/steps/step-store";
 import SidebarRegister from "@/components/features/store-register/components/register-sidebar";
 import { useState } from "react";
+import Head from "next/head";
 
 const STEPS = [
   { id: 0, label: "Dados da loja", Component: StepStore },
@@ -23,6 +24,10 @@ const Register = () => {
 
   return (
     <div className="flex min-h-screen">
+      <Head>
+        <title>{`${STEPS[stepIndex].label} · Cadastro · Vitryne`}</title>
+      </Head>
+
       <SidebarRegister
         steps={STEPS}
         stepIndex={stepIndex}

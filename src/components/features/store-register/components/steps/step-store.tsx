@@ -38,7 +38,7 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
 
         <ButtonGoogle
           icon={<FcGoogle size={20} />}
-          title="Cadastrar com o google"
+          title="Cadastrar com o Google"
         />
         <p className="text-center text-text-secondary py-5">
           Ou com email e senha

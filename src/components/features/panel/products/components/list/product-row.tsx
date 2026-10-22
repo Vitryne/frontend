@@ -112,10 +112,9 @@ const ProductRow: React.FC<Props> = ({
       <td className="py-3 pl-2 pr-5">
         <Link
           href={`/products/${product.sku.toLowerCase()}/edit`}
-          aria-label={`Editar ${product.name}`}
           className={`inline-flex size-8 items-center justify-center rounded-full text-text-primary transition-colors hover:bg-surface-subtle ${selected ? "bg-surface shadow-sm" : ""}`}
         >
-          <LuPencil size={15} aria-hidden="true" />
+          <LuPencil size={15}/>
         </Link>
       </td>
     </tr>
