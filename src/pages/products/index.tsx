@@ -5,7 +5,7 @@ import DeleteBlockedModal from "@/components/features/panel/products/components/
 import ProductEmpty from "@/components/features/panel/products/components/list/product-empty";
 import ProductTable from "@/components/features/panel/products/components/list/product-table";
 import ProductFilters from "@/components/features/panel/products/components/list/product-filters";
-import { PRODUCTS_MOCK } from "@/components/features/panel/products/products-mock";
+import { PRODUCTS_MOCK } from "@/mocks/products-mock";
 import { hasCriticalStock } from "@/components/features/panel/products/stock";
 import {
   Product,
