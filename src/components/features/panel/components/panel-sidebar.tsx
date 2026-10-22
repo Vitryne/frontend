@@ -101,7 +101,6 @@ const PanelSidebar: React.FC<Props> = ({
           <Switch
             checked={storeOpen}
             onChange={onToggleStore}
-            label="Status da loja"
           />
         </div>
       </div>
@@ -114,14 +113,14 @@ const PanelSidebar: React.FC<Props> = ({
             </p>
 
             <ul className="flex flex-col gap-y-1">
-              {group.items.map((i) => {
-                const active = isActive(i.href);
-                const Icon = i.icon;
+              {group.items.map((item) => {
+                const active = isActive(item.href);
+                const Icon = item.icon;
 
                 return (
-                  <li key={i.href}>
+                  <li key={item.href}>
                     <Link
-                      href={i.href}
+                      href={item.href}
                       className={`flex items-center gap-3 rounded-xl px-3 py-2 text-[.85rem] transition-colors ${
                         active
                           ? "bg-primary-soft font-bold text-primary-hover"
@@ -129,7 +128,7 @@ const PanelSidebar: React.FC<Props> = ({
                       }`}
                     >
                       <Icon size={16} />
-                      <span className="flex-1">{i.label}</span>
+                      <span className="flex-1">{item.label}</span>
                     </Link>
                   </li>
                 );

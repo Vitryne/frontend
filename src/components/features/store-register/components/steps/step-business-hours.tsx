@@ -286,7 +286,6 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
               <Switch
                 checked={day.open}
                 onChange={() => alternateDays(i)}
-                label={day.name}
               />
 
               <span className="text-[13px] text-text-secondary">

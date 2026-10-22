@@ -4,7 +4,6 @@ import { FaCheck, FaMinus } from "react-icons/fa";
 interface Props {
   checked?: boolean;
   onChange?: (checked: boolean) => void;
-  label?: string;
   indeterminate?: boolean;
   disabled?: boolean;
 }
@@ -12,7 +11,6 @@ interface Props {
 const CheckBox: React.FC<Props> = ({
   checked,
   onChange,
-  label,
   indeterminate = false,
   disabled,
 }) => {
