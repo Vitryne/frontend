@@ -6,6 +6,7 @@ import StockBySize from "./stock-by-size";
 import Switch from "@/components/ui/switch";
 import { LuPencil } from "react-icons/lu";
 import CheckBox from "@/components/ui/checkbox";
+import { formatPrice } from "@/lib/format";
 
 interface Props {
   product: Product;
@@ -13,13 +14,6 @@ interface Props {
   onToggleSelect: (sku: string, selected: boolean) => void;
   onToggleStatus: (sku: string, active: boolean) => void;
 }
-
-const formatPrice = (priceInCents: number) => {
-  const reais = Math.floor(priceInCents / 100).toLocaleString("pt-BR");
-  const cents = String(priceInCents % 100).padStart(2, "0");
-
-  return { reais, cents };
-};
 
 const ProductRow: React.FC<Props> = ({
   product,

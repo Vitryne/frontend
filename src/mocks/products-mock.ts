@@ -1,4 +1,4 @@
-import type { Product } from "./types";
+import type { Product } from "../components/features/panel/products/types";
 
 export const PRODUCTS_MOCK: Product[] = [
   {

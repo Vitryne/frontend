@@ -38,7 +38,6 @@ const ProductTable: React.FC<Props> = ({
                 indeterminate={someSelected}
                 disabled={products.length === 0}
                 onChange={onToggleSelectAll}
-                label="Selecionar todos os produtos da página"
               />
             </th>
             <th scope="col" className="px-2 py-3">
