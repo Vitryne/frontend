@@ -6,10 +6,15 @@ import { HiOutlineMail } from "react-icons/hi";
 import Image from "next/image";
 import Link from "next/link";
 import LogoSvg from "@/components/ui/logo-svg";
+import Head from "next/head";
 
 const Login: React.FC = ({}) => {
   return (
     <div className="flex min-h-screen">
+      <Head>
+        <title>Entrar · Vitryne</title>
+      </Head>
+
       <div className="hidden lg:block lg:w-[46%] relative overflow-hidden">
         <Image
           src="/partner_hero.jpg"

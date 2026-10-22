@@ -4,6 +4,7 @@ import { useState } from "react";
 import ButtonSecondary from "@/components/ui/button-secondary";
 import ButtonPrimary from "@/components/ui/button-primary";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
+import Switch from "@/components/ui/switch";
 
 interface Props {
   onNext: () => void;
@@ -71,7 +72,7 @@ const DAYS_MODELS = [
 
 const PRESETS = [
   {
-    name: "Comerical (Seg-Sex 9h-18h)",
+    name: "Comercial (Seg-Sex 9h-18h)",
     days: [
       {
         name: "Segunda",
@@ -247,7 +248,6 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
               key={preset.name}
               type="button"
               onClick={() => applyPreset(preset)}
-              aria-pressed={active}
               className={`cursor-pointer px-5 py-3 border rounded-xl font-semibold text-primary-deep text-[.9rem] ${
                 active
                   ? "border-primary bg-primary-soft text-primary-strong"
@@ -283,20 +283,11 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
               {day.name}
             </span>
             <div className="flex w-32 items-center gap-2">
-              <button
-                type="button"
-                onClick={() => alternateDays(i)}
-                aria-pressed={day.open}
-                className={`relative h-6 w-11 shrink-0 cursor-pointer rounded-full transition-colors ${
-                  day.open ? "bg-primary" : "bg-border-strong"
-                }`}
-              >
-                <span
-                  className={`absolute top-0.5 size-5 rounded-full bg-white transition-all ${
-                    day.open ? "left-5.5" : "left-0.5"
-                  }`}
-                />
-              </button>
+              <Switch
+                checked={day.open}
+                onChange={() => alternateDays(i)}
+                label={day.name}
+              />
 
               <span className="text-[13px] text-text-secondary">
                 {day.open ? "Aberto" : "Fechado"}

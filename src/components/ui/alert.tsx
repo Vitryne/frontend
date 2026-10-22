@@ -32,7 +32,6 @@ const Alert: React.FC<Props> = ({ message, title, variant = "warning" }) => {
     >
       <Icon
         size={18}
-        aria-hidden="true"
         className={`mt-0.5 shrink-0 ${style.icon}`}
       />
 
