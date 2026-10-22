@@ -39,7 +39,6 @@ const ProductRow: React.FC<Props> = ({
         <CheckBox
           checked={selected}
           onChange={(checked) => onToggleSelect(product.sku, checked)}
-          label={`Selecionar ${product.name}`}
         />
       </td>
 
@@ -97,7 +96,6 @@ const ProductRow: React.FC<Props> = ({
           <Switch
             checked={product.active}
             onChange={(checked) => onToggleStatus(product.sku, checked)}
-            label={`Status do produto ${product.name}`}
           />
           <span
             className={`text-[.8rem] ${

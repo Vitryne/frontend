@@ -3,7 +3,7 @@ import StepBusinessHours from "@/components/features/store-register/components/s
 import StepCategory from "@/components/features/store-register/components/steps/step-category";
 import StepIdentity from "@/components/features/store-register/components/steps/step-identity";
 import StepStore from "@/components/features/store-register/components/steps/step-store";
-import SidebarRegister from "@/components/features/store-register/components/register-sidebar";
+import RegisterSidebar from "@/components/features/store-register/components/register-sidebar";
 import { useState } from "react";
 import Head from "next/head";
 
@@ -28,7 +28,7 @@ const Register = () => {
         <title>{`${STEPS[stepIndex].label} · Cadastro · Vitryne`}</title>
       </Head>
 
-      <SidebarRegister
+      <RegisterSidebar
         steps={STEPS}
         stepIndex={stepIndex}
         selectStep={(i) => setStepIndex(i)}
