@@ -4,6 +4,7 @@ import { useState } from "react";
 import ButtonSecondary from "@/components/ui/button-secondary";
 import ButtonPrimary from "@/components/ui/button-primary";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
+import Switch from "@/components/ui/switch";
 
 interface Props {
   onNext: () => void;
@@ -71,7 +72,7 @@ const DAYS_MODELS = [
 
 const PRESETS = [
   {
-    name: "Comerical (Seg-Sex 9h-18h)",
+    name: "Comercial (Seg-Sex 9h-18h)",
     days: [
       {
         name: "Segunda",
@@ -247,7 +248,6 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
               key={preset.name}
               type="button"
               onClick={() => applyPreset(preset)}
-              aria-pressed={active}
               className={`cursor-pointer px-5 py-3 border rounded-xl font-semibold text-primary-deep text-[.9rem] ${
                 active
                   ? "border-primary bg-primary-soft text-primary-strong"
@@ -264,10 +264,10 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
         <div className="flex items-center gap-8 border-b border-border py-2">
           <span className="w-24" />
           <span className="w-32" />
-          <span className="flex-1 text-[11px] uppercase tracking-wider text-center text-text-terciary">
+          <span className="flex-1 text-[11px] uppercase tracking-wider text-center text-text-tertiary">
             Manhã
           </span>
-          <span className="flex-1 text-[11px] uppercase tracking-wider text-center text-text-terciary">
+          <span className="flex-1 text-[11px] uppercase tracking-wider text-center text-text-tertiary">
             Tarde
           </span>
         </div>
@@ -283,20 +283,10 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
               {day.name}
             </span>
             <div className="flex w-32 items-center gap-2">
-              <button
-                type="button"
-                onClick={() => alternateDays(i)}
-                aria-pressed={day.open}
-                className={`relative h-6 w-11 shrink-0 cursor-pointer rounded-full transition-colors ${
-                  day.open ? "bg-primary" : "bg-border-strong"
-                }`}
-              >
-                <span
-                  className={`absolute top-0.5 size-5 rounded-full bg-white transition-all ${
-                    day.open ? "left-5.5" : "left-0.5"
-                  }`}
-                />
-              </button>
+              <Switch
+                checked={day.open}
+                onChange={() => alternateDays(i)}
+              />
 
               <span className="text-[13px] text-text-secondary">
                 {day.open ? "Aberto" : "Fechado"}
@@ -309,7 +299,7 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
                 value={day.openMorning}
                 disabled={!day.open}
                 onChange={(e) => changeHour(i, "openMorning", e.target.value)}
-                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-terciary"
+                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-tertiary"
               />
               <span className="shrink-0 text-[13px] text-text-secondary">
                 até
@@ -319,7 +309,7 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
                 value={day.closeMorning}
                 disabled={!day.open}
                 onChange={(e) => changeHour(i, "closeMorning", e.target.value)}
-                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-terciary"
+                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-tertiary"
               />
             </div>
 
@@ -329,7 +319,7 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
                 value={day.openAfternoon}
                 disabled={!day.open}
                 onChange={(e) => changeHour(i, "openAfternoon", e.target.value)}
-                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-terciary"
+                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-tertiary"
               />
               <span className="shrink-0 text-[13px] text-text-secondary">
                 até
@@ -341,7 +331,7 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
                 onChange={(e) =>
                   changeHour(i, "closeAfternoon", e.target.value)
                 }
-                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-terciary"
+                className="w-full max-w-30 rounded-[10px] border border-border bg-surface px-3 py-2 text-center text-[14px] text-text-primary outline-none focus:border-primary disabled:bg-screen disabled:text-text-tertiary"
               />
             </div>
           </div>

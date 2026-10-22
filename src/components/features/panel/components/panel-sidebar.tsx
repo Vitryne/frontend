@@ -94,14 +94,13 @@ const PanelSidebar: React.FC<Props> = ({
             }`}
           >
             <span
-              className={`size-1.5 rounded-full ${storeOpen ? "bg-success" : "bg-gray-400"}`}
+              className={`size-1.5 rounded-full ${storeOpen ? "bg-success" : "bg-text-disabled"}`}
             />
             {storeOpen ? "Loja aberta" : "Loja fechada"}
           </span>
           <Switch
             checked={storeOpen}
             onChange={onToggleStore}
-            label="Status da loja"
           />
         </div>
       </div>
@@ -114,22 +113,22 @@ const PanelSidebar: React.FC<Props> = ({
             </p>
 
             <ul className="flex flex-col gap-y-1">
-              {group.items.map((i) => {
-                const active = isActive(i.href);
-                const Icon = i.icon;
+              {group.items.map((item) => {
+                const active = isActive(item.href);
+                const Icon = item.icon;
 
                 return (
-                  <li key={i.href}>
+                  <li key={item.href}>
                     <Link
-                      href={i.href}
+                      href={item.href}
                       className={`flex items-center gap-3 rounded-xl px-3 py-2 text-[.85rem] transition-colors ${
                         active
                           ? "bg-primary-soft font-bold text-primary-hover"
                           : "text-text-primary hover:bg-surface-subtle"
                       }`}
                     >
-                      <Icon size={16} aria-hidden="true" />
-                      <span className="flex-1">{i.label}</span>
+                      <Icon size={16} />
+                      <span className="flex-1">{item.label}</span>
                     </Link>
                   </li>
                 );
@@ -151,7 +150,6 @@ const PanelSidebar: React.FC<Props> = ({
         </div>
         <Link
           href="/login"
-          aria-label="Sair"
           className="rounded-lg p-1.5 text-text-disabled transition-colors hover:bg-surface-subtle hover:text-text-primary"
         >
           <LuLogOut size={16} />

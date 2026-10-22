@@ -61,7 +61,6 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack }) => {
                 key={category}
                 type="button"
                 onClick={() => toggleCategory(category)}
-                aria-pressed={active}
                 className={`flex items-center gap-2 cursor-pointer rounded-full border px-6 py-2 text-[1rem] transition-colors ${
                   active
                     ? "bg-primary border-primary text-white"
@@ -121,7 +120,6 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack }) => {
                   key={time}
                   type="button"
                   onClick={() => setPrepTime(time)}
-                  aria-pressed={active}
                   className={`cursor-pointer border border-border rounded-2xl px-6 py-3 text-[1rem] transition-colors ${
                     active
                       ? "bg-black text-white"

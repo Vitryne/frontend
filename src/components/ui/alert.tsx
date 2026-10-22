@@ -9,8 +9,8 @@ interface Props {
 const VARIANTS = {
   warning: {
     box: "border-warning bg-warning-soft",
-    icon: "text-orange-500",
-    title: "text-orange-700",
+    icon: "text-warning",
+    title: "text-warning",
     Icon: LuCircleAlert,
   },
   info: {
@@ -32,7 +32,6 @@ const Alert: React.FC<Props> = ({ message, title, variant = "warning" }) => {
     >
       <Icon
         size={18}
-        aria-hidden="true"
         className={`mt-0.5 shrink-0 ${style.icon}`}
       />
 

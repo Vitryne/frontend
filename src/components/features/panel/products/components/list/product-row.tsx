@@ -6,6 +6,7 @@ import StockBySize from "./stock-by-size";
 import Switch from "@/components/ui/switch";
 import { LuPencil } from "react-icons/lu";
 import CheckBox from "@/components/ui/checkbox";
+import { formatPrice } from "@/lib/format";
 
 interface Props {
   product: Product;
@@ -13,13 +14,6 @@ interface Props {
   onToggleSelect: (sku: string, selected: boolean) => void;
   onToggleStatus: (sku: string, active: boolean) => void;
 }
-
-const formatPrice = (priceInCents: number) => {
-  const reais = Math.floor(priceInCents / 100).toLocaleString("pt-BR");
-  const cents = String(priceInCents % 100).padStart(2, "0");
-
-  return { reais, cents };
-};
 
 const ProductRow: React.FC<Props> = ({
   product,
@@ -39,7 +33,6 @@ const ProductRow: React.FC<Props> = ({
         <CheckBox
           checked={selected}
           onChange={(checked) => onToggleSelect(product.sku, checked)}
-          label={`Selecionar ${product.name}`}
         />
       </td>
 
@@ -97,7 +90,6 @@ const ProductRow: React.FC<Props> = ({
           <Switch
             checked={product.active}
             onChange={(checked) => onToggleStatus(product.sku, checked)}
-            label={`Status do produto ${product.name}`}
           />
           <span
             className={`text-[.8rem] ${
@@ -112,10 +104,9 @@ const ProductRow: React.FC<Props> = ({
       <td className="py-3 pl-2 pr-5">
         <Link
           href={`/products/${product.sku.toLowerCase()}/edit`}
-          aria-label={`Editar ${product.name}`}
           className={`inline-flex size-8 items-center justify-center rounded-full text-text-primary transition-colors hover:bg-surface-subtle ${selected ? "bg-surface shadow-sm" : ""}`}
         >
-          <LuPencil size={15} aria-hidden="true" />
+          <LuPencil size={15}/>
         </Link>
       </td>
     </tr>

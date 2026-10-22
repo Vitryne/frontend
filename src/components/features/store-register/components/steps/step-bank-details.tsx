@@ -27,7 +27,7 @@ const StepBankDetails: React.FC<Props> = ({ onBack }) => {
       />
 
       <div className="flex gap-3 bg-primary-soft py-4 px-5 border border-border-brand rounded-2xl ">
-        <FiCheck size={24} color="#9530D9" />
+        <FiCheck size={24} className="shrink-0 text-primary" />
         <p className="text-primary-hover text-[16px]">
           O CNPJ <span className="font-bold">34.221.876/0001-44</span> e o
           titular precisam coincidir com a conta abaixo. Pagamentos são feitos
@@ -66,7 +66,6 @@ const StepBankDetails: React.FC<Props> = ({ onBack }) => {
                   key={type}
                   type="button"
                   onClick={() => setAccType(type)}
-                  aria-pressed={active}
                   className={`cursor-pointer border border-border rounded-2xl px-6 py-3 text-[1rem] font-semibold  ${
                     active
                       ? "bg-black text-white"
@@ -84,12 +83,12 @@ const StepBankDetails: React.FC<Props> = ({ onBack }) => {
           <Input
             title="Banco *"
             type="text"
-            placeholder="00264 — Bradesco S.A."
+            placeholder="237 — Bradesco S.A."
           />
         </div>
 
         <div className="col-span-5">
-          <Input title="Agência *" type="number" placeholder="3421" />
+          <Input title="Agência *" type="text" placeholder="00264" />
         </div>
 
         <div className="col-span-6">
@@ -113,7 +112,7 @@ const StepBankDetails: React.FC<Props> = ({ onBack }) => {
         <div className="col-span-12">
           <Input
             title="Chave PIX (opcional)"
-            type="string"
+            type="text"
             placeholder="contato@ateliernorte.com.br"
           />
         </div>

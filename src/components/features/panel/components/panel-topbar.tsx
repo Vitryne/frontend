@@ -24,7 +24,6 @@ const PanelTopbar: React.FC<Props> = ({ title, subtitle }) => {
           <span className="sr-only">Buscar</span>
           <LuSearch
             size={16}
-            aria-hidden="true"
             className="pointer-events-none absolute left-3 text-text-secondary"
           />
           <input
@@ -36,10 +35,9 @@ const PanelTopbar: React.FC<Props> = ({ title, subtitle }) => {
 
         <button
           type="button"
-          aria-label="Notificações"
           className="relative flex size-9 cursor-pointer items-center justify-center rounded-[10px] bg-surface-subtle text-text-primary transition-colors duration-200 hover:bg-border/60"
         >
-          <LuBell size={16} aria-hidden="true" />
+          <LuBell size={16} />
           <span className="absolute right-2 top-2 size-1.5 rounded-full bg-primary" />
         </button>
       </div>

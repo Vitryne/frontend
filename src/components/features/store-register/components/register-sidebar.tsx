@@ -11,7 +11,7 @@ interface Props {
   selectStep: (i: number) => void;
 }
 
-const SidebarRegister: React.FC<Props> = ({ steps, stepIndex, selectStep }) => {
+const RegisterSidebar: React.FC<Props> = ({ steps, stepIndex, selectStep }) => {
   return (
     <div className="sticky top-0 flex h-screen w-100 shrink-0 flex-col gap-8 px-6 py-8 shadow-[4px_0_16px_rgba(0,0,0,0.04)]">
       <div className="w-42.5">
@@ -50,10 +50,10 @@ const SidebarRegister: React.FC<Props> = ({ steps, stepIndex, selectStep }) => {
                   }`}
                 >
                   <span
-                    className={`flex size-7 justify-center items-center text-text-disabled rounded-full ${
+                    className={`flex size-7 justify-center items-center rounded-full ${
                       currentStep
                         ? "bg-primary text-white font-bold"
-                        : "bg-gray-200 text-text-terciary font-bold"
+                        : "bg-surface-subtle text-text-tertiary font-bold"
                     }`}
                   >
                     {i + 1}
@@ -77,4 +77,4 @@ const SidebarRegister: React.FC<Props> = ({ steps, stepIndex, selectStep }) => {
   );
 };
 
-export default SidebarRegister;
+export default RegisterSidebar;

@@ -3,8 +3,9 @@ import StepBusinessHours from "@/components/features/store-register/components/s
 import StepCategory from "@/components/features/store-register/components/steps/step-category";
 import StepIdentity from "@/components/features/store-register/components/steps/step-identity";
 import StepStore from "@/components/features/store-register/components/steps/step-store";
-import SidebarRegister from "@/components/features/store-register/components/register-sidebar";
+import RegisterSidebar from "@/components/features/store-register/components/register-sidebar";
 import { useState } from "react";
+import Head from "next/head";
 
 const STEPS = [
   { id: 0, label: "Dados da loja", Component: StepStore },
@@ -23,7 +24,11 @@ const Register = () => {
 
   return (
     <div className="flex min-h-screen">
-      <SidebarRegister
+      <Head>
+        <title>{`${STEPS[stepIndex].label} · Cadastro · Vitryne`}</title>
+      </Head>
+
+      <RegisterSidebar
         steps={STEPS}
         stepIndex={stepIndex}
         selectStep={(i) => setStepIndex(i)}

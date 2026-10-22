@@ -3,8 +3,8 @@ import ButtonGoogle from "@/components/ui/button-google";
 import { FcGoogle } from "react-icons/fc";
 import Input from "@/components/ui/input";
 import { useState } from "react";
-import SelectUf from "../../../../ui/select-uf";
-import MaskedInput from "../../../../ui/masked-input";
+import SelectUf from "@/components/ui/select-uf";
+import MaskedInput from "@/components/ui/masked-input";
 import StepHeader from "@/components/features/store-register/components/header";
 import ButtonPrimary from "@/components/ui/button-primary";
 import { LuArrowRight } from "react-icons/lu";
@@ -38,7 +38,7 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
 
         <ButtonGoogle
           icon={<FcGoogle size={20} />}
-          title="Cadastrar com o google"
+          title="Cadastrar com o Google"
         />
         <p className="text-center text-text-secondary py-5">
           Ou com email e senha
