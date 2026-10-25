@@ -36,7 +36,7 @@ const Input: React.FC<Props> = ({
           inputMode={inputMode}
           placeholder={placeholder}
           disabled={disabled}
-          className={`w-full rounded-[10px] border border-border bg-surface px-4 py-3 text-[14px] text-text-primary outline-none placeholder:text-text-disabled hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:bg-surface-subtle disabled:text-text-disabled disabled:hover:border-border ${
+          className={`h-11 w-full rounded-xl border border-border-strong bg-surface px-3.5 text-[13px] text-text-primary outline-none placeholder:text-text-disabled hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:border-border disabled:bg-screen disabled:text-text-disabled ${
             icon ? "pr-10" : ""
           }`}
         />

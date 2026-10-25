@@ -1,7 +1,9 @@
 import { ProductStock } from "@/components/features/panel/products/types";
-import { getTotal, isCriticalStock } from "@/components/features/panel/products/stock";
+import {
+  getTotal,
+  isCriticalStock,
+} from "@/components/features/panel/products/stock";
 import Alert from "@/components/ui/alert";
-
 
 interface Props {
   stock: ProductStock[];
@@ -9,8 +11,7 @@ interface Props {
   onChange: (stock: ProductStock[]) => void;
 }
 
-const SizesStock: React.FC<Props> = ({stock, alertThreshold, onChange}) => {
-
+const SizesStock: React.FC<Props> = ({ stock, alertThreshold, onChange }) => {
   const hasStock = getTotal(stock) > 0;
   const criticalSizes = hasStock
     ? stock
@@ -34,16 +35,14 @@ const SizesStock: React.FC<Props> = ({stock, alertThreshold, onChange}) => {
           gridTemplateColumns: `auto repeat(${stock.length}, minmax(0, 1fr))`,
         }}
       >
-        <span className="pr-6 text-[12px] text-text-tertiary">
-          Tamanho
-        </span>
+        <span className="pr-6 text-[12px] text-text-tertiary">Tamanho</span>
 
         {stock.map((item) => (
           <span
             key={item.size}
             className="text-center text-[12px] text-text-tertiary"
           >
-            { item.size }
+            {item.size}
           </span>
         ))}
 
@@ -51,7 +50,7 @@ const SizesStock: React.FC<Props> = ({stock, alertThreshold, onChange}) => {
           Estoque
         </span>
         {stock.map((item) => {
-          const critical = criticalSizes.includes(item.size)
+          const critical = criticalSizes.includes(item.size);
 
           return (
             <input
@@ -67,7 +66,7 @@ const SizesStock: React.FC<Props> = ({stock, alertThreshold, onChange}) => {
                   : "border-border bg-surface text-text-primary hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20"
               }`}
             />
-          )
+          );
         })}
       </div>
 
@@ -81,8 +80,7 @@ const SizesStock: React.FC<Props> = ({stock, alertThreshold, onChange}) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-
-export default SizesStock
+export default SizesStock;

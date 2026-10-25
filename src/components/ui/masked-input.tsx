@@ -31,7 +31,7 @@ const MaskedInput: React.FC<Props> = ({
           className={
             className
               ? className
-              : "w-full rounded-[10px] bg-surface border border-border px-4 py-3 pr-10 text-[14px] text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border-strong"
+              : "w-full rounded-xl bg-surface border border-border-strong h-11 px-3.5 pr-10 text-[13px] text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border-strong"
           }
         />
       </div>

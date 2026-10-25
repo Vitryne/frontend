@@ -12,20 +12,17 @@ interface Props {
   onChange: (photos: ProductPhoto[]) => void;
 }
 
-const MAX_SIZE = 5 * 1024 * 1024
+const MAX_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const PhotoGallery: React.FC<Props> = ({ photos, onChange }) => {
-
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
   const [dragging, setDragging] = useState(false);
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
 
-
   const addFiles = (files: FileList | null) => {
-
     if (!files || files.length === 0) return;
 
     const valid = Array.from(files).filter(
@@ -49,7 +46,7 @@ const PhotoGallery: React.FC<Props> = ({ photos, onChange }) => {
         url: URL.createObjectURL(file),
       })),
     ]);
-  }
+  };
 
   const removePhoto = (id: string) => {
     const photo = photos.find((item) => item.id === id);
@@ -77,8 +74,6 @@ const PhotoGallery: React.FC<Props> = ({ photos, onChange }) => {
     setOverId(null);
   };
 
-  
-
   const dropHandlers = {
     onClick: () => inputRef.current?.click(),
     onDragOver: (event: React.DragEvent) => {
@@ -96,15 +91,15 @@ const PhotoGallery: React.FC<Props> = ({ photos, onChange }) => {
 
   return (
     <div>
-      <input 
+      <input
         ref={inputRef}
-        type="file" 
+        type="file"
         accept={ACCEPTED_TYPES.join(",")}
         multiple
         hidden
         onChange={(e) => {
-          addFiles(e.target.files)
-          e.target.value = ""
+          addFiles(e.target.files);
+          e.target.value = "";
         }}
       />
 
@@ -208,9 +203,9 @@ const PhotoGallery: React.FC<Props> = ({ photos, onChange }) => {
         </div>
       )}
 
-      {error && <p className="mt-2 text-[12px] text-danger">{ error }</p>}
+      {error && <p className="mt-2 text-[12px] text-danger">{error}</p>}
     </div>
-  )
-}
+  );
+};
 
-export default PhotoGallery
+export default PhotoGallery;

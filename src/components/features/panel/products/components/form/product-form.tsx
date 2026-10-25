@@ -8,12 +8,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { LuChevronLeft } from "react-icons/lu";
 import TagsInput from "./tag-input";
-import PhotoGallery, { ProductPhoto } from "@/components/features/panel/products/components/form/photo-gallery";
+import PhotoGallery, {
+  ProductPhoto,
+} from "@/components/features/panel/products/components/form/photo-gallery";
 import { ProductStock } from "@/components/features/panel/products/types";
 import { getTotal } from "@/components/features/panel/products/stock";
 import SizesStock from "./sizes-stock";
 import PriceSection from "./price-section";
-
+import VisibilitySection from "@/components/features/panel/products/components/form/visibility-section";
 
 const CATEGORIES = [
   ...new Set(PRODUCTS_MOCK.map((product) => product.category)),
@@ -31,9 +33,7 @@ const TAG_SUGGESTIONS = [
 
 const SIZES = ["PP", "P", "M", "G", "GG"];
 
-
 const ProductForm: React.FC = () => {
-
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [photos, setPhotos] = useState<ProductPhoto[]>([]);
@@ -42,6 +42,8 @@ const ProductForm: React.FC = () => {
   );
   const totalStock = getTotal(stock);
   const [priceInCents, setPriceInCents] = useState(0);
+  const [active, setActive] = useState(true);
+  const [featured, setFeatured] = useState(false);
 
   return (
     <div>
@@ -65,32 +67,36 @@ const ProductForm: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 items-start gap-5">
-        <div className="col-span-2 flex flex-col gap-5">
+      <div className="flex items-start gap-5">
+        <div className="flex min-w-0 flex-1 flex-col gap-4">
           <Card title="Informações básicas">
-            <div className="grid grid-cols-3 gap-4">
-              <div className="col-span-2">
-                <Input
-                  title="Nome do produto *"
-                  placeholder="Ex.: Vestido midi floral"
-                />
+            <div className="flex flex-col gap-4">
+              <div className="flex items-start gap-3.5">
+                <div className="min-w-0 flex-1">
+                  <Input
+                    title="Nome do produto *"
+                    placeholder="Ex.: Vestido midi floral"
+                  />
+                </div>
+
+                <div className="w-55 shrink-0">
+                  <Input
+                    title="SKU"
+                    placeholder="Gerado ao cadastrar"
+                    disabled
+                  />
+                  <p className="mt-1.5 text-[12px] text-text-tertiary">
+                    Gerado automaticamente
+                  </p>
+                </div>
               </div>
 
-              <div>
-                <Input title="SKU" placeholder="Gerado ao cadastrar" disabled />
-                <p className="mt-1.5 text-[11px] text-text-tertiary">
-                  Gerado automaticamente
-                </p>
-              </div>
+              <Textarea
+                title="Descrição *"
+                placeholder="Descreva a peça: tecido, caimento, composição e cuidados de lavagem."
+              />
 
-              <div className="col-span-3">
-                <Textarea
-                  title="Descrição *"
-                  placeholder="Descreva a peça: tecido, caimento, composição e cuidados de lavagem."
-                />
-              </div>
-
-              <div className="col-span-3 grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3.5">
                 <SelectField
                   title="Categoria *"
                   placeholder="Selecione uma categoria"
@@ -125,21 +131,25 @@ const ProductForm: React.FC = () => {
                 : `Informe a quantidade por tamanho · alerta em 3 unidades`
             }
           >
-            <SizesStock
-              stock={stock}
-              alertThreshold={3}
-              onChange={setStock}
-            />
+            <SizesStock stock={stock} alertThreshold={3} onChange={setStock} />
           </Card>
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex w-85 shrink-0 flex-col gap-4">
           <Card title="Preço">
-            <PriceSection priceInCents={priceInCents} onChange={setPriceInCents} />
+            <PriceSection
+              priceInCents={priceInCents}
+              onChange={setPriceInCents}
+            />
           </Card>
 
           <Card title="Visibilidade">
-            <p className="text-[13px] text-text-tertiary">Em breve.</p>
+            <VisibilitySection
+              active={active}
+              onActiveChange={setActive}
+              featured={featured}
+              onFeaturedChange={setFeatured}
+            />
           </Card>
         </div>
       </div>

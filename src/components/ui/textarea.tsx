@@ -23,7 +23,7 @@ const Textarea: React.FC<Props> = ({ title, placeholder, rows = 3 }) => {
         id={id}
         rows={rows}
         placeholder={placeholder}
-        className="w-full resize-none rounded-[10px] border border-border bg-surface px-4 py-3 text-[14px] text-text-primary outline-none placeholder:text-text-disabled hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20"
+        className="w-full resize-none rounded-xl border border-border-strong bg-surface px-3.5 py-2.5 text-[13px] text-text-primary outline-none placeholder:text-text-disabled hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20"
       />
     </div>
   );

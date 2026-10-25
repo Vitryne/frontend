@@ -15,7 +15,6 @@ const TagsInput: React.FC<Props> = ({
   value,
   onChange,
 }) => {
-
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,14 +46,15 @@ const TagsInput: React.FC<Props> = ({
     };
   }, [open]);
 
-
   const options = [...new Set([...suggestions, ...value])];
   const search = query.trim().toLowerCase();
   const filtered = options.filter((tag) => tag.includes(search));
 
   const toggleTag = (tag: string) => {
     onChange(
-      value.includes(tag) ? value.filter((item) => item !== tag) : [...value, tag],
+      value.includes(tag)
+        ? value.filter((item) => item !== tag)
+        : [...value, tag],
     );
   };
 
@@ -69,17 +69,19 @@ const TagsInput: React.FC<Props> = ({
   };
 
   return (
-
     <div className="relative w-full" ref={containerRef}>
       {title && (
-        <label htmlFor={id} className="mb-1.5 block text-[12px] font-semibold text-text-primary">
-          { title }
+        <label
+          htmlFor={id}
+          className="mb-1.5 block text-[12px] font-semibold text-text-primary"
+        >
+          {title}
         </label>
       )}
 
       <div
         onClick={() => inputRef.current?.focus()}
-        className={`flex min-h-12 w-full cursor-text flex-wrap items-center gap-1.5 rounded-[10px] border bg-surface px-3 py-2 transition-colors ${
+        className={`flex min-h-11 w-full cursor-text flex-wrap items-center gap-1.5 rounded-xl border bg-surface px-3 py-2 transition-colors ${
           open
             ? "border-primary ring-2 ring-primary/20"
             : "border-border hover:border-border-strong"
@@ -119,7 +121,7 @@ const TagsInput: React.FC<Props> = ({
       </div>
 
       {open && (
-        <div className="absolute left-0 right-0 z-20 mt-2 rounded-[10px] border border-border bg-surface p-1.5 shadow-lg">
+        <div className="absolute left-0 right-0 z-20 mt-2 rounded-xl border border-border-strong bg-surface p-1.5 shadow-lg">
           <p className="px-3 pb-1.5 pt-1 text-[11px] font-semibold uppercase tracking-wider text-text-tertiary">
             Tags do produto
           </p>
@@ -132,7 +134,7 @@ const TagsInput: React.FC<Props> = ({
                     checked={value.includes(tag)}
                     onChange={() => toggleTag(tag)}
                   />
-                  { tag }
+                  {tag}
                 </label>
               </li>
             ))}
@@ -144,14 +146,13 @@ const TagsInput: React.FC<Props> = ({
             )}
           </ul>
 
-
-          <p className="mt-1 border-t border-border px-3 pb-1 pt-2 text-[12px] text-text-tertiary">
+          <p className="mt-1 border-t border-border-strong px-3 pb-1 pt-2 text-[12px] text-text-tertiary">
             Digite e tecle Enter para criar uma tag nova
           </p>
         </div>
       )}
     </div>
-  )
+  );
 };
 
 export default TagsInput;
