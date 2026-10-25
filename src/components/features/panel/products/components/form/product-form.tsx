@@ -11,7 +11,7 @@ import TagsInput from "./tag-input";
 import PhotoGallery, {
   ProductPhoto,
 } from "@/components/features/panel/products/components/form/photo-gallery";
-import { ProductStock } from "@/components/features/panel/products/types";
+import { Product, ProductStock } from "@/components/features/panel/products/types";
 import { getTotal } from "@/components/features/panel/products/stock";
 import SizesStock from "./sizes-stock";
 import PriceSection from "./price-section";
@@ -31,19 +31,31 @@ const TAG_SUGGESTIONS = [
   "básico",
 ];
 
+interface Props {
+  product?: Product
+}
+
 const SIZES = ["PP", "P", "M", "G", "GG"];
 
-const ProductForm: React.FC = () => {
-  const [category, setCategory] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
-  const [photos, setPhotos] = useState<ProductPhoto[]>([]);
+const ProductForm: React.FC<Props> = ({ product}) => {
+  const isEdit = product !== undefined;
+  const alertThreshold = product?.stockAlertThreshold ?? 3;
+
+  const [category, setCategory] = useState(product?.category ?? "");
+  const [tags, setTags] = useState<string[]>(product?.tags ?? []);
+  const [photos, setPhotos] = useState<ProductPhoto[]>(() =>
+    (product?.images ?? (product ? [product.image] : [])).map((url) => ({
+      id: crypto.randomUUID(),
+      url,
+    })),
+  );
   const [stock, setStock] = useState<ProductStock[]>(
-    SIZES.map((size) => ({ size, quantity: 0 })),
+    product?.stock ?? SIZES.map((size) => ({ size, quantity: 0 })),
   );
   const totalStock = getTotal(stock);
-  const [priceInCents, setPriceInCents] = useState(0);
-  const [active, setActive] = useState(true);
-  const [featured, setFeatured] = useState(false);
+  const [priceInCents, setPriceInCents] = useState(product?.priceInCents ?? 0);
+  const [active, setActive] = useState(product?.active ?? true);
+  const [featured, setFeatured] = useState(product?.featured ?? false);
 
   return (
     <div>
@@ -61,9 +73,9 @@ const ProductForm: React.FC = () => {
             href="/products"
             className="inline-flex items-center justify-center rounded-[10px] border border-primary/30 bg-white px-5 py-2.5 text-[14px] font-semibold text-primary transition-transform duration-200 ease-in-out hover:scale-[1.02] hover:bg-primary/5 active:scale-95"
           >
-            Cancelar
+            { isEdit ? "Descartar" : "Cancelar"}
           </Link>
-          <ButtonPrimary title="Cadastrar produto" />
+          <ButtonPrimary title={isEdit ? "Salvar alterações" : "Cadastrar produto"} />
         </div>
       </div>
 
@@ -76,6 +88,7 @@ const ProductForm: React.FC = () => {
                   <Input
                     title="Nome do produto *"
                     placeholder="Ex.: Vestido midi floral"
+                    defaultValue={product?.name}
                   />
                 </div>
 
@@ -84,6 +97,7 @@ const ProductForm: React.FC = () => {
                     title="SKU"
                     placeholder="Gerado ao cadastrar"
                     disabled
+                    defaultValue={product?.name}
                   />
                   <p className="mt-1.5 text-[12px] text-text-tertiary">
                     Gerado automaticamente
@@ -94,6 +108,7 @@ const ProductForm: React.FC = () => {
               <Textarea
                 title="Descrição *"
                 placeholder="Descreva a peça: tecido, caimento, composição e cuidados de lavagem."
+                defaultValue={product?.description}
               />
 
               <div className="grid grid-cols-2 gap-3.5">

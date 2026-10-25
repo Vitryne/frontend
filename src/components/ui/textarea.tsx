@@ -4,9 +4,10 @@ interface Props {
   title?: string;
   placeholder?: string;
   rows?: number;
+  defaultValue?: string;
 }
 
-const Textarea: React.FC<Props> = ({ title, placeholder, rows = 3 }) => {
+const Textarea: React.FC<Props> = ({ title, placeholder, rows = 3, defaultValue}) => {
   const id = useId();
 
   return (
@@ -23,6 +24,7 @@ const Textarea: React.FC<Props> = ({ title, placeholder, rows = 3 }) => {
         id={id}
         rows={rows}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         className="w-full resize-none rounded-xl border border-border-strong bg-surface px-3.5 py-2.5 text-[13px] text-text-primary outline-none placeholder:text-text-disabled hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20"
       />
     </div>

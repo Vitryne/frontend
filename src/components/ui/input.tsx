@@ -7,15 +7,17 @@ interface Props {
   type?: "text" | "email" | "password" | "tel" | "url" | "search";
   inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
   disabled?: boolean;
+  defaultValue?: string;
 }
 
 const Input: React.FC<Props> = ({
   icon,
   title,
   placeholder,
-  type = "text`",
+  type = "text",
   inputMode,
   disabled,
+  defaultValue
 }) => {
   const id = useId();
 
@@ -36,6 +38,7 @@ const Input: React.FC<Props> = ({
           inputMode={inputMode}
           placeholder={placeholder}
           disabled={disabled}
+          defaultValue={defaultValue}
           className={`h-11 w-full rounded-xl border border-border-strong bg-surface px-3.5 text-[13px] text-text-primary outline-none placeholder:text-text-disabled hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:border-border disabled:bg-screen disabled:text-text-disabled ${
             icon ? "pr-10" : ""
           }`}
