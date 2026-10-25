@@ -283,10 +283,7 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
               {day.name}
             </span>
             <div className="flex w-32 items-center gap-2">
-              <Switch
-                checked={day.open}
-                onChange={() => alternateDays(i)}
-              />
+              <Switch checked={day.open} onChange={() => alternateDays(i)} />
 
               <span className="text-[13px] text-text-secondary">
                 {day.open ? "Aberto" : "Fechado"}

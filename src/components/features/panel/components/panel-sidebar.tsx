@@ -98,10 +98,7 @@ const PanelSidebar: React.FC<Props> = ({
             />
             {storeOpen ? "Loja aberta" : "Loja fechada"}
           </span>
-          <Switch
-            checked={storeOpen}
-            onChange={onToggleStore}
-          />
+          <Switch checked={storeOpen} onChange={onToggleStore} />
         </div>
       </div>
 

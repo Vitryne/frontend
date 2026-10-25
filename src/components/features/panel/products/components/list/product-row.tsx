@@ -106,7 +106,7 @@ const ProductRow: React.FC<Props> = ({
           href={`/products/${product.sku.toLowerCase()}/edit`}
           className={`inline-flex size-8 items-center justify-center rounded-full text-text-primary transition-colors hover:bg-surface-subtle ${selected ? "bg-surface shadow-sm" : ""}`}
         >
-          <LuPencil size={15}/>
+          <LuPencil size={15} />
         </Link>
       </td>
     </tr>

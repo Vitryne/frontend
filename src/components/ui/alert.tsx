@@ -30,10 +30,7 @@ const Alert: React.FC<Props> = ({ message, title, variant = "warning" }) => {
       role="status"
       className={`flex items-start gap-3 rounded-xl border px-4 py-3 ${style.box}`}
     >
-      <Icon
-        size={18}
-        className={`mt-0.5 shrink-0 ${style.icon}`}
-      />
+      <Icon size={18} className={`mt-0.5 shrink-0 ${style.icon}`} />
 
       <div>
         {title && (
