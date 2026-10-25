@@ -17,6 +17,12 @@ export interface Product {
   active: boolean;
   featured?: boolean
   ordersCount?: number;
+  promotion?: ProductPromotion;
+}
+
+export interface ProductPromotion {
+  priceInCents: number;
+  endsAt: string;
 }
 
 export type ProductStatusFilter = "all" | "active" | "inactive";

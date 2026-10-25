@@ -21,7 +21,10 @@ const ProductRow: React.FC<Props> = ({
   onToggleSelect,
   onToggleStatus,
 }) => {
-  const { reais, cents } = formatPrice(product.priceInCents);
+  
+  const { reais, cents } = formatPrice(
+    product.promotion?.priceInCents ?? product.priceInCents,
+  );
   const total = product.stock.reduce((sum, item) => sum + item.quantity, 0);
   const dimmed = product.active ? "" : "opacity-50";
 

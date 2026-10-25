@@ -5,7 +5,11 @@ export const PRODUCTS_MOCK: Product[] = [
     sku: "VTR-0142",
     name: "Vestido midi floral",
     category: "Vestidos",
-    priceInCents: 28900,
+    priceInCents: 35900,
+    promotion: {
+      priceInCents: 28900,
+      endsAt: "2026-10-31",
+    },
     image: "/p_vestido_seda.jpg",
     images: [
       "/p_vestido_seda.jpg",

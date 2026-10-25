@@ -39,7 +39,6 @@ const SIZES = ["PP", "P", "M", "G", "GG"];
 
 const ProductForm: React.FC<Props> = ({ product}) => {
   const isEdit = product !== undefined;
-  const alertThreshold = product?.stockAlertThreshold ?? 3;
 
   const [category, setCategory] = useState(product?.category ?? "");
   const [tags, setTags] = useState<string[]>(product?.tags ?? []);
@@ -97,7 +96,7 @@ const ProductForm: React.FC<Props> = ({ product}) => {
                     title="SKU"
                     placeholder="Gerado ao cadastrar"
                     disabled
-                    defaultValue={product?.name}
+                    defaultValue={product?.sku}
                   />
                   <p className="mt-1.5 text-[12px] text-text-tertiary">
                     Gerado automaticamente
@@ -155,6 +154,8 @@ const ProductForm: React.FC<Props> = ({ product}) => {
             <PriceSection
               priceInCents={priceInCents}
               onChange={setPriceInCents}
+              isEdit={isEdit}
+              promotion={product?.promotion}
             />
           </Card>
 

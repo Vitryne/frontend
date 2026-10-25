@@ -18,3 +18,6 @@ export const formatMoney = (cents: number) =>
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+
+export const formatDate = (isoDate: string) =>
+  new Date(`${isoDate}T00:00:00`).toLocaleDateString("pt-BR");
