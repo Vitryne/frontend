@@ -17,7 +17,7 @@ const Input: React.FC<Props> = ({
   type = "text",
   inputMode,
   disabled,
-  defaultValue
+  defaultValue,
 }) => {
   const id = useId();
 

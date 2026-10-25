@@ -7,7 +7,6 @@ import Switch from "@/components/ui/switch";
 import { LuPencil } from "react-icons/lu";
 import CheckBox from "@/components/ui/checkbox";
 import { formatPrice } from "@/lib/format";
-import { useState } from "react";
 
 interface Props {
   product: Product;
@@ -22,7 +21,6 @@ const ProductRow: React.FC<Props> = ({
   onToggleSelect,
   onToggleStatus,
 }) => {
-
   const { reais, cents } = formatPrice(
     product.promotion?.priceInCents ?? product.priceInCents,
   );

@@ -7,7 +7,12 @@ interface Props {
   defaultValue?: string;
 }
 
-const Textarea: React.FC<Props> = ({ title, placeholder, rows = 3, defaultValue}) => {
+const Textarea: React.FC<Props> = ({
+  title,
+  placeholder,
+  rows = 3,
+  defaultValue,
+}) => {
   const id = useId();
 
   return (

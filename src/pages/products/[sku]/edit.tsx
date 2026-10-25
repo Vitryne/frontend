@@ -5,20 +5,19 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const EditProduct: React.FC = ({}) => {
-  
-  const router = useRouter()
-  const sku = typeof router.query.sku === "string" ? router.query.sku : ""
+  const router = useRouter();
+  const sku = typeof router.query.sku === "string" ? router.query.sku : "";
   const product = PRODUCTS_MOCK.find(
-    (item) => item.sku.toLowerCase() === sku.toLowerCase()
-  )
+    (item) => item.sku.toLowerCase() === sku.toLowerCase(),
+  );
 
   return (
-    <PanelLayout 
+    <PanelLayout
       title="Editar produto"
       subtitle={product ? `${product.name} · SKU ${product.sku}` : undefined}
     >
       {router.isReady &&
-        ( product ? (
+        (product ? (
           <ProductForm key={product.sku} product={product} />
         ) : (
           <div className="flex flex-col items-center py-24 text-center">
@@ -35,7 +34,7 @@ const EditProduct: React.FC = ({}) => {
               Voltar para produtos
             </Link>
           </div>
-      ))}
+        ))}
     </PanelLayout>
   );
 };

@@ -6,8 +6,6 @@ import Modal from "@/components/ui/modal";
 import { useEffect, useId, useRef, useState } from "react";
 import { LuPackage } from "react-icons/lu";
 
-
-
 interface Props {
   open: boolean;
   subtitle: string;
@@ -17,19 +15,18 @@ interface Props {
   onSave: (threshold: number, applyToAll: boolean) => void;
 }
 
-const units = (count: number) => `${count} ${count === 1 ? "unidade" : "unidades"}`;
+const units = (count: number) =>
+  `${count} ${count === 1 ? "unidade" : "unidades"}`;
 
-
-const StockThresholdModal: React.FC<Props> = ({ 
-  open, 
-  subtitle, 
-  currentThreshold, 
-  otherProductsCount, 
-  onCancel, 
-  onSave 
+const StockThresholdModal: React.FC<Props> = ({
+  open,
+  subtitle,
+  currentThreshold,
+  otherProductsCount,
+  onCancel,
+  onSave,
 }) => {
-
-  const id = useId()
+  const id = useId();
   const [threshold, setThreshold] = useState(currentThreshold);
   const inputRef = useRef<HTMLInputElement>(null);
   const [applyToAll, setApplyToAll] = useState(false);
@@ -64,11 +61,12 @@ const StockThresholdModal: React.FC<Props> = ({
     >
       <div className="flex flex-col gap-4 pt-4">
         <p className="text-[13px] text-text-secondary">
-          Avisamos você quando um tamanho chegar a esta quantidade. O limiar vale só para este produto, a menos que você aplique a toda a loja.
+          Avisamos você quando um tamanho chegar a esta quantidade. O limiar
+          vale só para este produto, a menos que você aplique a toda a loja.
         </p>
 
         <div>
-          <label 
+          <label
             htmlFor={id}
             className="mb-1.5 block text-[12px] font-semibold text-text-primary"
           >
@@ -88,9 +86,13 @@ const StockThresholdModal: React.FC<Props> = ({
               placeholder="0"
               value={threshold === 0 ? "" : String(threshold)}
               onChange={(event) =>
-                setThreshold(Number(event.target.value.replace(/\D/g, "").slice(0, 3)))
+                setThreshold(
+                  Number(event.target.value.replace(/\D/g, "").slice(0, 3)),
+                )
               }
-              style={{ width: `${Math.max(1, String(threshold || "").length)}ch` }}
+              style={{
+                width: `${Math.max(1, String(threshold || "").length)}ch`,
+              }}
               className="bg-transparent text-text-primary outline-none placeholder:text-text-disabled"
             />
             <span className="text-text-primary">
@@ -111,14 +113,14 @@ const StockThresholdModal: React.FC<Props> = ({
 
         <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-screen p-4">
           <span className="mt-0.5">
-              <CheckBox checked={applyToAll} onChange={setApplyToAll} />
+            <CheckBox checked={applyToAll} onChange={setApplyToAll} />
           </span>
           <span>
             <span className="block text-[13px] font-semibold text-text-primary">
               Aplicar a todos os produtos da loja
             </span>
             <span className="block text-[12px] text-text-tertiary">
-              Substitui o limiar individual definido em cada produto 
+              Substitui o limiar individual definido em cada produto
             </span>
           </span>
         </label>
@@ -130,10 +132,7 @@ const StockThresholdModal: React.FC<Props> = ({
         )}
       </div>
     </Modal>
-  )
-
-}
-
-
+  );
+};
 
 export default StockThresholdModal;

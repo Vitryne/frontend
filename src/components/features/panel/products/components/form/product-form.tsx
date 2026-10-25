@@ -11,7 +11,10 @@ import TagsInput from "./tag-input";
 import PhotoGallery, {
   ProductPhoto,
 } from "@/components/features/panel/products/components/form/photo-gallery";
-import { Product, ProductStock } from "@/components/features/panel/products/types";
+import {
+  Product,
+  ProductStock,
+} from "@/components/features/panel/products/types";
 import { getTotal } from "@/components/features/panel/products/stock";
 import SizesStock from "@/components/features/panel/products/components/form/sizes-stock";
 import PriceSection from "./price-section";
@@ -33,12 +36,12 @@ const TAG_SUGGESTIONS = [
 ];
 
 interface Props {
-  product?: Product
+  product?: Product;
 }
 
 const SIZES = ["PP", "P", "M", "G", "GG"];
 
-const ProductForm: React.FC<Props> = ({ product}) => {
+const ProductForm: React.FC<Props> = ({ product }) => {
   const isEdit = product !== undefined;
 
   const [category, setCategory] = useState(product?.category ?? "");
@@ -78,9 +81,11 @@ const ProductForm: React.FC<Props> = ({ product}) => {
             href="/products"
             className="inline-flex items-center justify-center rounded-[10px] border border-primary/30 bg-white px-5 py-2.5 text-[14px] font-semibold text-primary transition-transform duration-200 ease-in-out hover:scale-[1.02] hover:bg-primary/5 active:scale-95"
           >
-            { isEdit ? "Descartar" : "Cancelar"}
+            {isEdit ? "Descartar" : "Cancelar"}
           </Link>
-          <ButtonPrimary title={isEdit ? "Salvar alterações" : "Cadastrar produto"} />
+          <ButtonPrimary
+            title={isEdit ? "Salvar alterações" : "Cadastrar produto"}
+          />
         </div>
       </div>
 
@@ -183,7 +188,9 @@ const ProductForm: React.FC<Props> = ({ product}) => {
 
       <StockThresholdModal
         open={thresholdModalOpen}
-        subtitle={product ? `${product.name} · SKU ${product.sku}` : "Novo produto"}
+        subtitle={
+          product ? `${product.name} · SKU ${product.sku}` : "Novo produto"
+        }
         currentThreshold={alertThreshold}
         otherProductsCount={PRODUCTS_MOCK.length - 1}
         onCancel={() => setThresholdModalOpen(false)}

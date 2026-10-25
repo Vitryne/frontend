@@ -5,7 +5,13 @@ import {
 } from "@/components/features/panel/products/stock";
 import Alert from "@/components/ui/alert";
 import Menu, { MenuItem } from "@/components/ui/menu";
-import { LuPencil, LuPlus, LuTrash2, LuTrendingUp, LuUpload } from "react-icons/lu";
+import {
+  LuPencil,
+  LuPlus,
+  LuTrash2,
+  LuTrendingUp,
+  LuUpload,
+} from "react-icons/lu";
 
 interface Props {
   stock: ProductStock[];
@@ -14,8 +20,12 @@ interface Props {
   onConfigureThreshold?: () => void;
 }
 
-
-const SizesStock: React.FC<Props> = ({ stock, alertThreshold, onChange, onConfigureThreshold }) => {
+const SizesStock: React.FC<Props> = ({
+  stock,
+  alertThreshold,
+  onChange,
+  onConfigureThreshold,
+}) => {
   const hasStock = getTotal(stock) > 0;
   const criticalSizes = hasStock
     ? stock
@@ -50,8 +60,7 @@ const SizesStock: React.FC<Props> = ({ stock, alertThreshold, onChange, onConfig
       icon: LuTrash2,
       danger: true,
       separated: true,
-      onClick: () =>
-        onChange(stock.map((item) => ({ ...item, quantity: 0 }))),
+      onClick: () => onChange(stock.map((item) => ({ ...item, quantity: 0 }))),
     },
   ];
 
