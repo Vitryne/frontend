@@ -44,7 +44,7 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
           Ou com email e senha
         </p>
 
-        <Input title="Email *" placeholder="Digite seu email..." type="email" />
+        <Input title="E-mail *" placeholder="Digite seu email..." type="email" />
         <div className="grid grid-cols-2 gap-5 pt-5">
           <div className="flex flex-col">
             <Input

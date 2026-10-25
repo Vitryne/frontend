@@ -1,5 +1,7 @@
 import ButtonPrimary from "@/components/ui/button-primary";
 import Card from "@/components/ui/card";
+import Input from "@/components/ui/input";
+import Textarea from "@/components/ui/textarea";
 import Link from "next/link";
 import { LuChevronLeft } from "react-icons/lu";
 
@@ -29,7 +31,25 @@ const ProductForm: React.FC = () => {
       <div className="grid grid-cols-3 items-start gap-5">
         <div className="col-span-2 flex flex-col gap-5">
           <Card title="Informações básicas">
-            <p className="text-[13px] text-text-primary">Em breve.</p>
+            <div className="grid grid-cols-3 gap-4">
+                <div className="col-span-2">
+                    <Input title="Nome do produto *" placeholder="Ex.: Vestido midi floral" />
+                </div>
+
+                <div>
+                    <Input title="SKU" placeholder="Gerado ao cadastrar" disabled />
+                    <p className="mt-1.5 text-[11px] text-text-tertiary">
+                        Gerado automaticamente
+                    </p>
+                </div>
+
+                <div className="col-span-3">
+                    <Textarea
+                        title="Descrição *"
+                        placeholder="Descreva a peça: tecido, caimento, composição e cuidados de lavagem."
+                    />
+                </div>
+            </div>
           </Card>
           <Card
             title="Galeria de fotos"

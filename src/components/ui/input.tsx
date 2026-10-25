@@ -1,27 +1,49 @@
-import { ReactElement } from "react";
+import { HTMLAttributes, ReactElement, useId } from "react";
 
 interface Props {
   title?: string;
   icon?: ReactElement;
   placeholder?: string;
-  type?: string;
+  type?: "text" | "email" | "password" | "tel" | "url" | "search";
+  inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"]
+  disabled?: boolean
 }
 
-const Input: React.FC<Props> = ({ icon, title, placeholder, type }) => {
+const Input: React.FC<Props> = ({ 
+  icon, 
+  title, 
+  placeholder, 
+  type = "text`",
+  inputMode,
+  disabled 
+}) => {
+
+  const id = useId()
+
   return (
     <div className="w-full">
-      <label className="block font-bold uppercase tracking-wider text-[11px] leading-snug text-text-primary mb-1.5">
-        {title}
-      </label>
+      {title && (
+        <label htmlFor={id} className="mb-1.5 block text-[12px] font-semibold text-text-primary">
+          { title }
+        </label>
+      )}
       <div className="relative">
         <input
+          id={id}
           type={type}
+          inputMode={inputMode}
           placeholder={placeholder}
-          className="w-full rounded-[10px] bg-surface border border-border px-4 py-3 pr-10 text-[14px] text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border-strong"
+          disabled={disabled}
+          className={`w-full rounded-[10px] border border-border bg-surface px-4 py-3 text-[14px] text-text-primary outline-none placeholder:text-text-disabled hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:bg-surface-subtle disabled:text-text-disabled disabled:hover:border-border ${
+            icon ? "pr-10" : ""
+          }`}
         />
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary font-bold">
-          {icon}
-        </span>
+        
+        {icon && (
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary">
+            { icon }
+          </span>
+        )}
       </div>
     </div>
   );

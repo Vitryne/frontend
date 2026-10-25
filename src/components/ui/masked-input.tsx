@@ -19,8 +19,8 @@ const MaskedInput: React.FC<Props> = ({
 }) => {
   return (
     <div className="w-full">
-      <label className="block font-semibold uppercase tracking-wider text-[11px] leading-snug text-text-primary mb-1.5">
-        {title}
+      <label className="mb-1.5 block text-[12px] font-semibold text-text-primary">
+        { title }
       </label>
       <div className="relative">
         <IMaskInput
