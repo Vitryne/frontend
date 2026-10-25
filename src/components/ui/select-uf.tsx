@@ -60,7 +60,7 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
   return (
     <div className="w-full" ref={containerRef}>
       <label className="mb-1.5 block text-[12px] font-semibold text-text-primary">
-        { title }
+        {title}
       </label>
 
       <div className="relative">

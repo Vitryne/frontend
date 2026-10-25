@@ -5,26 +5,28 @@ interface Props {
   icon?: ReactElement;
   placeholder?: string;
   type?: "text" | "email" | "password" | "tel" | "url" | "search";
-  inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"]
-  disabled?: boolean
+  inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
+  disabled?: boolean;
 }
 
-const Input: React.FC<Props> = ({ 
-  icon, 
-  title, 
-  placeholder, 
+const Input: React.FC<Props> = ({
+  icon,
+  title,
+  placeholder,
   type = "text`",
   inputMode,
-  disabled 
+  disabled,
 }) => {
-
-  const id = useId()
+  const id = useId();
 
   return (
     <div className="w-full">
       {title && (
-        <label htmlFor={id} className="mb-1.5 block text-[12px] font-semibold text-text-primary">
-          { title }
+        <label
+          htmlFor={id}
+          className="mb-1.5 block text-[12px] font-semibold text-text-primary"
+        >
+          {title}
         </label>
       )}
       <div className="relative">
@@ -38,10 +40,10 @@ const Input: React.FC<Props> = ({
             icon ? "pr-10" : ""
           }`}
         />
-        
+
         {icon && (
           <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary">
-            { icon }
+            {icon}
           </span>
         )}
       </div>
