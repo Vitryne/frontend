@@ -39,3 +39,10 @@ export const formatTimeAgo = (iso: string) => {
 
   return rest === 0 ? `há ${hours} h` : `há ${hours} h ${rest}`;
 };
+
+export const formatCountdown = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const rest = seconds % 60;
+
+  return `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
+};

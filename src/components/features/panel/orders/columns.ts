@@ -14,3 +14,8 @@ export const ORDER_COLUMNS: {
   { status: "delivering", title: "Em entrega", dotClass: "bg-info" },
   { status: "completed", title: "Concluídos", dotClass: "bg-success" },
 ];
+
+export const getConfirmDeadline = (createdAt: string) =>
+  new Date(
+    new Date(createdAt).getTime() + CONFIRM_WINDOW_MINUTES * 60000,
+  ).toISOString();

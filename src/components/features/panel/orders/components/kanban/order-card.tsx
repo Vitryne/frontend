@@ -1,8 +1,9 @@
 import { formatPrice, formatTime, formatTimeAgo } from "@/lib/format";
-import { Order } from "../../types";
+import { Order } from "@/components/features/panel/orders/types";
 import { LuArrowRight, LuCheck, LuClock3 } from "react-icons/lu";
 import ButtonSecondary from "@/components/ui/button-secondary";
 import ButtonPrimary from "@/components/ui/button-primary";
+import ConfirmDeadline from "@/components/features/panel/orders/components/kanban/confirm-deadline";
 
 
 interface Props {
@@ -76,6 +77,8 @@ const OrderCard: React.FC<Props> = ({ order }) => {
       <p className="mt-0.5 truncate text-[12px] text-text-tertiary">
         { getItemsLabel(order) }
       </p>
+
+      {isNew && <ConfirmDeadline createdAt={order.createdAt} />}
 
       {infoLabel && (
         <p className="mt-2.5 flex items-center gap-1.5 text-[11px] text-text-secondary">
