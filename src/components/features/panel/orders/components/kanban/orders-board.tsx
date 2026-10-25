@@ -1,6 +1,7 @@
 import { Order } from "@/components/features/panel/orders/types";
-import { ORDER_COLUMNS } from "../../columns";
-import OrdersColumn from "./orders-column";
+import { ORDER_COLUMNS } from "@/components/features/panel/orders/columns";
+import OrdersColumn from "@/components/features/panel/orders/components/kanban/orders-column";
+import OrderCard from "@/components/features/panel/orders/components/kanban/order-card";
 
 
 
@@ -29,7 +30,7 @@ const OrdersBoard: React.FC<Props> = ({orders}) => {
                 key={order.id}
                 className="rounded-xl bg-surface p-3 text-[13px] font-semibold text-text-primary"
               > 
-                #{order.id}
+                <OrderCard key={order.id} order={order} />
               </div>
             ))}
           </OrdersColumn>
