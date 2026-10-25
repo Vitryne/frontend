@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons";
 import { LuEllipsisVertical } from "react-icons/lu";
-
 
 export interface MenuItem {
   label: string;
@@ -19,11 +18,34 @@ interface Props {
   placement?: "top" | "bottom";
 }
 
-const Menu: React.FC<Props> = ({title, items, placement = "bottom"}) => {
-  
+const Menu: React.FC<Props> = ({ title, items, placement = "bottom" }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (!open) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [open]);
 
   return (
     <div className="relative" ref={containerRef}>
@@ -39,19 +61,19 @@ const Menu: React.FC<Props> = ({title, items, placement = "bottom"}) => {
 
       {open && (
         <div
-            className={`absolute right-0 z-30 w-64 rounded-xl border border-border bg-surface p-1.5 shadow-lg ${
+          className={`absolute right-0 z-30 w-72 rounded-xl border border-border bg-surface p-1.5 shadow-lg ${
             placement === "top" ? "bottom-full mb-2" : "top-full mt-2"
           }`}
         >
           {title && (
             <p className="px-3 pb-1.5 pt-1 text-[11px] font-semibold uppercase tracking-wider text-text-tertiary">
-              { title }
+              {title}
             </p>
           )}
 
           <ul>
             {items.map((item) => {
-              const Icon = item.icon
+              const Icon = item.icon;
 
               return (
                 <li
@@ -64,8 +86,8 @@ const Menu: React.FC<Props> = ({title, items, placement = "bottom"}) => {
                     type="button"
                     disabled={item.disabled}
                     onClick={() => {
-                      item.onClick?.()
-                      setOpen(false)
+                      item.onClick?.();
+                      setOpen(false);
                     }}
                     className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[13px] transition-colors ${
                       item.disabled
@@ -76,23 +98,23 @@ const Menu: React.FC<Props> = ({title, items, placement = "bottom"}) => {
                     }`}
                   >
                     <Icon size={15} />
-                    <span className="flex-1">
-                      { item.label }
+                    <span className="flex-1 whitespace-nowrap">
+                      {item.label}
                     </span>
                     {item.hint && (
                       <span className="text-[11px] text-text-disabled">
-                        { item.hint }
+                        {item.hint}
                       </span>
                     )}
                   </button>
                 </li>
-              )
+              );
             })}
           </ul>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Menu;

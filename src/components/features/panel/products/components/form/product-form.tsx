@@ -13,9 +13,10 @@ import PhotoGallery, {
 } from "@/components/features/panel/products/components/form/photo-gallery";
 import { Product, ProductStock } from "@/components/features/panel/products/types";
 import { getTotal } from "@/components/features/panel/products/stock";
-import SizesStock from "./sizes-stock";
+import SizesStock from "@/components/features/panel/products/components/form/sizes-stock";
 import PriceSection from "./price-section";
 import VisibilitySection from "@/components/features/panel/products/components/form/visibility-section";
+import StockThresholdModal from "./stock-threshold-modal";
 
 const CATEGORIES = [
   ...new Set(PRODUCTS_MOCK.map((product) => product.category)),
@@ -55,6 +56,11 @@ const ProductForm: React.FC<Props> = ({ product}) => {
   const [priceInCents, setPriceInCents] = useState(product?.priceInCents ?? 0);
   const [active, setActive] = useState(product?.active ?? true);
   const [featured, setFeatured] = useState(product?.featured ?? false);
+
+  const [alertThreshold, setAlertThreshold] = useState(
+    product?.stockAlertThreshold ?? 3,
+  );
+  const [thresholdModalOpen, setThresholdModalOpen] = useState(false);
 
   return (
     <div>
@@ -141,11 +147,16 @@ const ProductForm: React.FC<Props> = ({ product}) => {
             title="Tamanhos e estoque"
             aside={
               totalStock > 0
-                ? `${totalStock} ${totalStock === 1 ? "unidade" : "unidades"} · alerta em 3 unidades`
-                : `Informe a quantidade por tamanho · alerta em 3 unidades`
+                ? `${totalStock} ${totalStock === 1 ? "unidade" : "unidades"} · alerta em ${alertThreshold} unidades`
+                : `Informe a quantidade por tamanho · alerta em ${alertThreshold} unidades`
             }
           >
-            <SizesStock stock={stock} alertThreshold={3} onChange={setStock} />
+            <SizesStock
+              stock={stock}
+              alertThreshold={alertThreshold}
+              onChange={setStock}
+              onConfigureThreshold={() => setThresholdModalOpen(true)}
+            />
           </Card>
         </div>
 
@@ -169,6 +180,18 @@ const ProductForm: React.FC<Props> = ({ product}) => {
           </Card>
         </div>
       </div>
+
+      <StockThresholdModal
+        open={thresholdModalOpen}
+        subtitle={product ? `${product.name} · SKU ${product.sku}` : "Novo produto"}
+        currentThreshold={alertThreshold}
+        otherProductsCount={PRODUCTS_MOCK.length - 1}
+        onCancel={() => setThresholdModalOpen(false)}
+        onSave={(threshold) => {
+          setAlertThreshold(threshold);
+          setThresholdModalOpen(false);
+        }}
+      />
     </div>
   );
 };
