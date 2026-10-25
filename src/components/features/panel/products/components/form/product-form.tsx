@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { LuChevronLeft } from "react-icons/lu";
 import TagsInput from "./tag-input";
+import PhotoGallery, { ProductPhoto } from "@/components/features/panel/products/components/form/photo-gallery";
 
 
 const CATEGORIES = [
@@ -28,6 +29,7 @@ const ProductForm: React.FC = () => {
 
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [photos, setPhotos] = useState<ProductPhoto[]>([]);
 
   return (
     <div>
@@ -97,9 +99,9 @@ const ProductForm: React.FC = () => {
           </Card>
           <Card
             title="Galeria de fotos"
-            aside="0 de 8 fotos · JPG, PNG ou WebP até 5 MB"
+            aside={`${photos.length} de 8 fotos · JPG, PNG ou WebP até 5 MB`}
           >
-            <p className="text-[13px] text-text-tertiary">Em breve.</p>
+            <PhotoGallery photos={photos} onChange={setPhotos} />
           </Card>
 
           <Card
