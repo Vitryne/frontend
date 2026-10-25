@@ -9,6 +9,9 @@ import { useState } from "react";
 import { LuChevronLeft } from "react-icons/lu";
 import TagsInput from "./tag-input";
 import PhotoGallery, { ProductPhoto } from "@/components/features/panel/products/components/form/photo-gallery";
+import { ProductStock } from "@/components/features/panel/products/types";
+import { getTotal } from "@/components/features/panel/products/stock";
+import SizesStock from "./sizes-stock";
 
 
 const CATEGORIES = [
@@ -25,11 +28,18 @@ const TAG_SUGGESTIONS = [
   "básico",
 ];
 
+const SIZES = ["PP", "P", "M", "G", "GG"];
+
+
 const ProductForm: React.FC = () => {
 
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [photos, setPhotos] = useState<ProductPhoto[]>([]);
+  const [stock, setStock] = useState<ProductStock[]>(
+    SIZES.map((size) => ({ size, quantity: 0 })),
+  );
+  const totalStock = getTotal(stock);
 
   return (
     <div>
@@ -106,9 +116,17 @@ const ProductForm: React.FC = () => {
 
           <Card
             title="Tamanhos e estoque"
-            aside="Informe a quantidade por tamanho · alerta em 3 unidades"
+            aside={
+              totalStock > 0
+                ? `${totalStock} ${totalStock === 1 ? "unidade" : "unidades"} · alerta em 3 unidades`
+                : `Informe a quantidade por tamanho · alerta em 3 unidades`
+            }
           >
-            <p className="text-[13px] text-text-tertiary">Em breve.</p>
+            <SizesStock
+              stock={stock}
+              alertThreshold={3}
+              onChange={setStock}
+            />
           </Card>
         </div>
 
