@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useRef, useState } from "react";
-import { LuTrash2, LuUpload } from "react-icons/lu";
+import { LuGripVertical, LuTrash2, LuUpload } from "react-icons/lu";
 
 export interface ProductPhoto {
   id: string;
@@ -20,6 +20,8 @@ const PhotoGallery: React.FC<Props> = ({ photos, onChange }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
   const [dragging, setDragging] = useState(false);
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [overId, setOverId] = useState<string | null>(null);
 
 
   const addFiles = (files: FileList | null) => {
@@ -57,9 +59,30 @@ const PhotoGallery: React.FC<Props> = ({ photos, onChange }) => {
     setError("");
   };
 
+  const movePhoto = (fromId: string, toId: string) => {
+    if (fromId === toId) return;
+
+    const from = photos.findIndex((item) => item.id === fromId);
+    const to = photos.findIndex((item) => item.id === toId);
+
+    const reordered = [...photos];
+    const [moved] = reordered.splice(from, 1);
+    reordered.splice(to, 0, moved);
+
+    onChange(reordered);
+  };
+
+  const resetDrag = () => {
+    setDraggedId(null);
+    setOverId(null);
+  };
+
+  
+
   const dropHandlers = {
     onClick: () => inputRef.current?.click(),
     onDragOver: (event: React.DragEvent) => {
+      if (draggedId) return;
       event.preventDefault();
       setDragging(true);
     },
@@ -113,8 +136,28 @@ const PhotoGallery: React.FC<Props> = ({ photos, onChange }) => {
           {photos.map((photo, i) => (
             <div
               key={photo.id}
-              className={`relative aspect-4/5 overflow-hidden rounded-xl border-2 ${
+              draggable
+              onDragStart={(event) => {
+                setDraggedId(photo.id);
+                event.dataTransfer.effectAllowed = "move";
+              }}
+              onDragOver={(event) => {
+                if (!draggedId) return;
+                event.preventDefault();
+                setOverId(photo.id);
+              }}
+              onDrop={(event) => {
+                event.preventDefault();
+                if (draggedId) movePhoto(draggedId, photo.id);
+                resetDrag();
+              }}
+              onDragEnd={resetDrag}
+              className={`relative aspect-4/5 cursor-grab overflow-hidden rounded-xl border-2 transition-opacity active:cursor-grabbing ${
                 i === 0 ? "border-primary" : "border-transparent"
+              } ${draggedId === photo.id ? "opacity-40" : ""} ${
+                overId === photo.id && draggedId !== photo.id
+                  ? "ring-2 ring-primary ring-offset-2"
+                  : ""
               }`}
             >
               <Image
@@ -122,8 +165,13 @@ const PhotoGallery: React.FC<Props> = ({ photos, onChange }) => {
                 alt=""
                 fill
                 unoptimized
+                draggable={false}
                 className="object-cover"
               />
+
+              <span className="absolute left-1.5 top-1.5 flex size-7 items-center justify-center rounded-md bg-surface/90 text-text-secondary">
+                <LuGripVertical size={14} />
+              </span>
 
               <button
                 type="button"
