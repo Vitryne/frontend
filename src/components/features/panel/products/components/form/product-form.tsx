@@ -12,6 +12,7 @@ import PhotoGallery, { ProductPhoto } from "@/components/features/panel/products
 import { ProductStock } from "@/components/features/panel/products/types";
 import { getTotal } from "@/components/features/panel/products/stock";
 import SizesStock from "./sizes-stock";
+import PriceSection from "./price-section";
 
 
 const CATEGORIES = [
@@ -40,6 +41,7 @@ const ProductForm: React.FC = () => {
     SIZES.map((size) => ({ size, quantity: 0 })),
   );
   const totalStock = getTotal(stock);
+  const [priceInCents, setPriceInCents] = useState(0);
 
   return (
     <div>
@@ -107,6 +109,7 @@ const ProductForm: React.FC = () => {
               </div>
             </div>
           </Card>
+
           <Card
             title="Galeria de fotos"
             aside={`${photos.length} de 8 fotos · JPG, PNG ou WebP até 5 MB`}
@@ -132,7 +135,7 @@ const ProductForm: React.FC = () => {
 
         <div className="flex flex-col gap-5">
           <Card title="Preço">
-            <p className="text-[13px] text-text-tertiary">Em breve.</p>
+            <PriceSection priceInCents={priceInCents} onChange={setPriceInCents} />
           </Card>
 
           <Card title="Visibilidade">

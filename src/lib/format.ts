@@ -12,3 +12,9 @@ export const getInitials = (name: string) =>
     .slice(0, 2)
     .map((part) => part[0].toUpperCase())
     .join("");
+
+export const formatMoney = (cents: number) =>
+  (cents / 100).toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
