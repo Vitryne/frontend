@@ -3,11 +3,12 @@ import { getNextStatus } from "@/components/features/panel/orders/columns";
 import OrdersBoard from "@/components/features/panel/orders/components/kanban/orders-board";
 import OrdersToolbar from "@/components/features/panel/orders/components/kanban/orders-toolbar";
 import RefuseOrderModal from "@/components/features/panel/orders/components/kanban/refuse-order-modal";
-import type { Order, OrderStatus } from "@/components/features/panel/orders/types";
+import { Order, OrderStatus } from "@/components/features/panel/orders/types";
 import { getOrders, refuseOrder, updateOrderStatus } from "@/service/orders-service";
 import { useEffect, useState } from "react";
 
 const Orders: React.FC = () => {
+
   const [orders, setOrders] = useState<Order[]>([]);
   const [orderToRefuse, setOrderToRefuse] = useState<Order | null>(null);
 
@@ -64,6 +65,7 @@ const Orders: React.FC = () => {
         orders={orders}
         onAdvance={handleAdvance}
         onRefuse={setOrderToRefuse}
+        onMove={handleMove}
       />
 
       <RefuseOrderModal

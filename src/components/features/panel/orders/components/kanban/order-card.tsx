@@ -8,6 +8,7 @@ import ConfirmDeadline from "@/components/features/panel/orders/components/kanba
 
 interface Props {
   order: Order;
+  isDragging?: boolean
   onAdvance: () => void;
   onRefuse: () => void;
 }
@@ -46,7 +47,7 @@ const getCourier = (name: string) => {
   };
 };
 
-const OrderCard: React.FC<Props> = ({ order, onAdvance, onRefuse }) => {
+const OrderCard: React.FC<Props> = ({ order, isDragging, onAdvance, onRefuse }) => {
 
   const isNew = order.status === "new";
   const isCompleted = order.status === "completed";
@@ -56,7 +57,9 @@ const OrderCard: React.FC<Props> = ({ order, onAdvance, onRefuse }) => {
 
   return (
     <div 
-      className={`rounded-xl border p-3 shadow-sm ${
+      className={`rounded-xl border p-3 ${
+        isDragging ? "shadow-lg" : "shadow-sm"
+      } ${
         isNew
           ? "border-primary/40 bg-surface shadow-primary/10"
           : isCompleted

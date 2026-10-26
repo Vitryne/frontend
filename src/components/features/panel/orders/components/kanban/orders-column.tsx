@@ -1,11 +1,15 @@
+import { OrderStatus } from "@/components/features/panel/orders/types";
+import { Droppable } from "@hello-pangea/dnd";
+
 interface Props {
+  status: OrderStatus
   title: string;
   dotClass: string;
   count: number;
   children?: React.ReactNode;
 }
 
-const OrdersColumn: React.FC<Props> = ({ title, dotClass, count, children}) => {
+const OrdersColumn: React.FC<Props> = ({ status, title, dotClass, count, children}) => {
   return (
     <div className="flex w-69 shrink-0 flex-col gap-3 rounded-[14px] bg-surface-subtle p-3">
       <header className="flex items-center gap-2 px-1">
@@ -18,9 +22,20 @@ const OrdersColumn: React.FC<Props> = ({ title, dotClass, count, children}) => {
           </span>
       </header>
 
-      <div className="flex flex-col gap-2.5">
-        { children }
-      </div>
+      <Droppable droppableId={status}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className={`-mb-2.5 min-h-20 rounded-xl transition-colors ${
+              snapshot.isDraggingOver ? "bg-primary-soft" : ""
+            }`}
+          >
+            { children }
+            { provided.placeholder }
+          </div>
+        )}
+      </Droppable>
     </div>
   )
 }
