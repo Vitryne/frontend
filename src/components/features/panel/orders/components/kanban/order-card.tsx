@@ -3,7 +3,7 @@ import { Order } from "@/components/features/panel/orders/types";
 import { LuArrowRight, LuCheck, LuClock3 } from "react-icons/lu";
 import ButtonSecondary from "@/components/ui/button-secondary";
 import ButtonPrimary from "@/components/ui/button-primary";
-import ConfirmDeadline from "@/components/features/panel/orders/components/kanban/confirm-deadline";
+import ConfirmDeadline from "@/components/features/panel/orders/components/confirm-deadline";
 
 interface Props {
   order: Order;
@@ -74,12 +74,12 @@ const OrderCard: React.FC<Props> = ({
         <span className="text-[13px] font-semibold text-text-primary">
           #{order.id}
         </span>
-        <span className="text-[13px] font-medium text-text-primary">
+        <span className="text-[11px] text-text-tertiary">
           {formatTimeAgo(order.createdAt)}
         </span>
       </div>
 
-      <p className="mt-1 text-[12px] font-medium text-text-primary">
+      <p className="mt-1 text-[13px] font-medium text-text-primary">
         {order.customerName}
       </p>
       <p className="mt-0.5 truncate text-[12px] text-text-tertiary">

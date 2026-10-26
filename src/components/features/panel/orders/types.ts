@@ -19,3 +19,5 @@ export interface Order {
   courierStatus?: string;
   courierName?: string;
 }
+
+export type OrdersView = "kanban" | "list";
