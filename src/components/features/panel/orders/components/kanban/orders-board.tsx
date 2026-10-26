@@ -1,9 +1,10 @@
-import { Order, OrderStatus } from "@/components/features/panel/orders/types";
+import { DragDropContext, Draggable, type DropResult } from "@hello-pangea/dnd";
+import { useRef, useState } from "react";
 import { ORDER_COLUMNS } from "@/components/features/panel/orders/columns";
-import OrdersColumn from "@/components/features/panel/orders/components/kanban/orders-column";
+import type { Order, OrderStatus } from "@/components/features/panel/orders/types";
 import OrderCard from "@/components/features/panel/orders/components/kanban/order-card";
-import { DragDropContext, Draggable, DropResult } from "@hello-pangea/dnd";
-import OrderCardSkeleton from "./order-card-skeleton";
+import OrderCardSkeleton from "@/components/features/panel/orders/components/kanban/order-card-skeleton";
+import OrdersColumn from "@/components/features/panel/orders/components/kanban/orders-column";
 
 interface Props {
   orders: Order[];
@@ -20,6 +21,39 @@ const OrdersBoard: React.FC<Props> = ({
   onRefuse,
   onMove,
 }) => {
+  const boardRef = useRef<HTMLDivElement>(null);
+  const [isPanning, setIsPanning] = useState(false);
+
+  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    const board = boardRef.current;
+
+    if (!board || event.button !== 0) return;
+    if (
+      (event.target as HTMLElement).closest("[data-rfd-draggable-id], button")
+    )
+      return;
+
+    event.preventDefault();
+
+    const startX = event.clientX;
+    const startScroll = board.scrollLeft;
+
+    setIsPanning(true);
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      board.scrollLeft = startScroll - (moveEvent.clientX - startX);
+    };
+
+    const handleMouseUp = () => {
+      setIsPanning(false);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+  };
+
   const handleDragEnd = ({ source, destination, draggableId }: DropResult) => {
     if (!destination || destination.droppableId === source.droppableId) return;
 
@@ -30,7 +64,13 @@ const OrdersBoard: React.FC<Props> = ({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex items-start gap-4 overflow-x-auto pb-4">
+      <div
+        ref={boardRef}
+        onMouseDown={handleMouseDown}
+        className={`flex items-start gap-4 overflow-x-auto pb-4 ${
+          isPanning ? "cursor-grabbing select-none" : "cursor-grab"
+        }`}
+      >
         {ORDER_COLUMNS.map((column) => {
           const columnOrders = orders.filter(
             (order) => order.status === column.status,
