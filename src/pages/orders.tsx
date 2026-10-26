@@ -2,6 +2,7 @@ import PanelLayout from "@/components/features/panel/components/panel-layout";
 import { getNextStatus } from "@/components/features/panel/orders/columns";
 import OrdersBoard from "@/components/features/panel/orders/components/kanban/orders-board";
 import OrdersToolbar from "@/components/features/panel/orders/components/kanban/orders-toolbar";
+import PendingOrdersBanner from "@/components/features/panel/orders/components/kanban/pending-order-banner";
 import RefuseOrderModal from "@/components/features/panel/orders/components/kanban/refuse-order-modal";
 import { Order, OrderStatus } from "@/components/features/panel/orders/types";
 import { getOrders, refuseOrder, updateOrderStatus } from "@/service/orders-service";
@@ -40,6 +41,12 @@ const Orders: React.FC = () => {
     if (nextStatus) handleMove(order, nextStatus);
   };
 
+  const newOrders = orders.filter((order) => order.status === "new");
+
+  const handleAcceptAll = () => {
+    newOrders.forEach((order) => handleMove(order, "confirmed"));
+  };
+
   const handleConfirmRefuse = async () => {
     if (!orderToRefuse) return;
 
@@ -60,7 +67,9 @@ const Orders: React.FC = () => {
       title="Pedidos"
       subtitle="Quadro kanban · atualizado em tempo real"
     >
-      <OrdersToolbar />
+      <OrdersToolbar>
+        <PendingOrdersBanner orders={newOrders} onAcceptAll={handleAcceptAll} />
+      </OrdersToolbar>
       <OrdersBoard
         orders={orders}
         onAdvance={handleAdvance}

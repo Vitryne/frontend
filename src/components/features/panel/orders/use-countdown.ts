@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-const getRemainingSeconds = (deadline: string) =>
-  Math.max(0, Math.floor((new Date(deadline).getTime() - Date.now()) / 1000));
+export const getRemainingSeconds = (deadline: string, now = Date.now()) =>
+  Math.max(0, Math.floor((new Date(deadline).getTime() - now) / 1000));
 
 export const useCountdown = (deadline: string) => {
   const [remaining, setRemaining] = useState(() =>
@@ -19,4 +19,16 @@ export const useCountdown = (deadline: string) => {
   }, [deadline]);
 
   return remaining;
+};
+
+export const useNow = () => {
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return now;
 };
