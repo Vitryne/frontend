@@ -7,7 +7,9 @@ import ConfirmDeadline from "@/components/features/panel/orders/components/kanba
 
 
 interface Props {
-  order: Order
+  order: Order;
+  onAdvance: () => void;
+  onRefuse: () => void;
 }
 
 const getItemsLabel = (order: Order) => {
@@ -44,7 +46,7 @@ const getCourier = (name: string) => {
   };
 };
 
-const OrderCard: React.FC<Props> = ({ order }) => {
+const OrderCard: React.FC<Props> = ({ order, onAdvance, onRefuse }) => {
 
   const isNew = order.status === "new";
   const isCompleted = order.status === "completed";
@@ -116,10 +118,12 @@ const OrderCard: React.FC<Props> = ({ order }) => {
           <div className="flex gap-1.5">
             <ButtonSecondary
               title="Recusar"
+              onClick={onRefuse}
               className="inline-flex h-8 cursor-pointer items-center justify-center rounded-lg border border-border-strong bg-surface px-3 text-[12px] font-semibold text-danger transition-colors hover:bg-danger-soft"
             />
             <ButtonPrimary
               title="Aceitar"
+              onClick={onAdvance}
               className="inline-flex h-8 cursor-pointer items-center justify-center rounded-lg bg-primary px-3.5 text-[12px] font-semibold text-white transition-colors hover:bg-primary-hover"
             />
           </div>
@@ -132,6 +136,7 @@ const OrderCard: React.FC<Props> = ({ order }) => {
             title="Avançar"
             btnIcon={<LuArrowRight size={14} />}
             iconPosition="right"
+            onClick={onAdvance}
             className="inline-flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-primary/30 bg-surface px-3 text-[12px] font-semibold text-primary transition-colors hover:bg-primary/5"
           />
         )}

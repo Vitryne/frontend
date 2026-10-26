@@ -19,3 +19,9 @@ export const getConfirmDeadline = (createdAt: string) =>
   new Date(
     new Date(createdAt).getTime() + CONFIRM_WINDOW_MINUTES * 60000,
   ).toISOString();
+
+export const getNextStatus = (status: OrderStatus) => {
+  const index = ORDER_COLUMNS.findIndex((column) => column.status === status);
+
+  return ORDER_COLUMNS[index + 1]?.status;
+};
