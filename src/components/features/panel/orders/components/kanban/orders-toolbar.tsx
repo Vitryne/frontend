@@ -13,7 +13,7 @@ const OrdersToolbar: React.FC<Props> = ({ children }) => {
       <ButtonSecondary title="Filtros" btnIcon={<LuListFilter size={16} />} />
       <ButtonSecondary title="Relatórios" btnIcon={<LuDownload size={16} />} />
 
-      <div className="flex items-center rounded-xl bg-surface p-1">
+      <div className="flex items-center rounded-xl bg-surface-subtle p-1">
         <button
           type="button"
           className="flex h-8 cursor-pointer items-center gap-1.5 rounded-lg bg-surface px-3 text-[13px] font-semibold text-primary-hover shadow-sm"
@@ -23,7 +23,7 @@ const OrdersToolbar: React.FC<Props> = ({ children }) => {
         </button>
         <button
           type="button"
-          className="flex h-8 cursor-pointer items-center gap-1.5 rounded-lg bg-surface px-3 text-[13px] font-semibold text-primary-hover shadow-sm"
+          className="flex h-8 cursor-pointer items-center gap-1.5 rounded-lg px-3 text-[13px] text-text-secondary transition-colors hover:text-text-primary"
         >
           <LuList size={14} />
           Lista

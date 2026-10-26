@@ -117,7 +117,10 @@ const OrderCard: React.FC<Props> = ({
 
       <div className="mt-3 flex items-center justify-between gap-2">
         <span className="text-[13px] font-bold text-text-primary">
-          R$ {price.reais}
+          <span className="text-[13px] font-bold text-text-primary">
+            R$ {price.reais}
+            <span className="text-[10px]">,{price.cents}</span>
+          </span>
         </span>
 
         {isNew && (
