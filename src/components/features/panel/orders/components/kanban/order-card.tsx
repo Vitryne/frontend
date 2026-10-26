@@ -5,10 +5,9 @@ import ButtonSecondary from "@/components/ui/button-secondary";
 import ButtonPrimary from "@/components/ui/button-primary";
 import ConfirmDeadline from "@/components/features/panel/orders/components/kanban/confirm-deadline";
 
-
 interface Props {
   order: Order;
-  isDragging?: boolean
+  isDragging?: boolean;
   onAdvance: () => void;
   onRefuse: () => void;
 }
@@ -47,8 +46,12 @@ const getCourier = (name: string) => {
   };
 };
 
-const OrderCard: React.FC<Props> = ({ order, isDragging, onAdvance, onRefuse }) => {
-
+const OrderCard: React.FC<Props> = ({
+  order,
+  isDragging,
+  onAdvance,
+  onRefuse,
+}) => {
   const isNew = order.status === "new";
   const isCompleted = order.status === "completed";
   const infoLabel = getInfoLabel(order);
@@ -56,7 +59,7 @@ const OrderCard: React.FC<Props> = ({ order, isDragging, onAdvance, onRefuse }) 
   const price = formatPrice(order.totalInCents);
 
   return (
-    <div 
+    <div
       className={`rounded-xl border p-3 ${
         isDragging ? "shadow-lg" : "shadow-sm"
       } ${
@@ -72,15 +75,15 @@ const OrderCard: React.FC<Props> = ({ order, isDragging, onAdvance, onRefuse }) 
           #{order.id}
         </span>
         <span className="text-[13px] font-medium text-text-primary">
-          { formatTimeAgo(order.createdAt) }
+          {formatTimeAgo(order.createdAt)}
         </span>
       </div>
 
       <p className="mt-1 text-[12px] font-medium text-text-primary">
-        { order.customerName }
+        {order.customerName}
       </p>
       <p className="mt-0.5 truncate text-[12px] text-text-tertiary">
-        { getItemsLabel(order) }
+        {getItemsLabel(order)}
       </p>
 
       {isNew && <ConfirmDeadline createdAt={order.createdAt} />}
@@ -88,7 +91,7 @@ const OrderCard: React.FC<Props> = ({ order, isDragging, onAdvance, onRefuse }) 
       {infoLabel && (
         <p className="mt-2.5 flex items-center gap-1.5 text-[11px] text-text-secondary">
           <LuClock3 size={12} className="shrink-0" />
-          { infoLabel }
+          {infoLabel}
         </p>
       )}
 
@@ -98,7 +101,7 @@ const OrderCard: React.FC<Props> = ({ order, isDragging, onAdvance, onRefuse }) 
             Código de coleta
           </span>
           <span className="font-display text-[20px] leading-tight font-bold tracking-[0.3em] text-primary-strong">
-            { order.pickupCode }
+            {order.pickupCode}
           </span>
         </div>
       )}
@@ -114,7 +117,7 @@ const OrderCard: React.FC<Props> = ({ order, isDragging, onAdvance, onRefuse }) 
 
       <div className="mt-3 flex items-center justify-between gap-2">
         <span className="text-[13px] font-bold text-text-primary">
-          R$ { price.reais }
+          R$ {price.reais}
         </span>
 
         {isNew && (
@@ -144,10 +147,8 @@ const OrderCard: React.FC<Props> = ({ order, isDragging, onAdvance, onRefuse }) 
           />
         )}
       </div>
-
-
     </div>
-  )
-}
+  );
+};
 
 export default OrderCard;

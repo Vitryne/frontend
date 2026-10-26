@@ -1,4 +1,7 @@
-import type { Order, OrderStatus } from "@/components/features/panel/orders/types";
+import type {
+  Order,
+  OrderStatus,
+} from "@/components/features/panel/orders/types";
 import { ORDERS_MOCK } from "@/mocks/orders-mock";
 
 const RESPONSE_DELAY = 600;

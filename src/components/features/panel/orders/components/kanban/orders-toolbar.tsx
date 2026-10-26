@@ -1,19 +1,14 @@
 import ButtonSecondary from "@/components/ui/button-secondary";
 import { LuDownload, LuLayoutGrid, LuList, LuListFilter } from "react-icons/lu";
 
-
-
 interface Props {
   children?: React.ReactNode;
 }
 
-
-const OrdersToolbar: React.FC<Props> = ({children}) => {
+const OrdersToolbar: React.FC<Props> = ({ children }) => {
   return (
     <div className="mb-5 flex items-center gap-3">
-      <div className="min-w-0 flex-1" >
-        { children }
-      </div>
+      <div className="min-w-0 flex-1">{children}</div>
 
       <ButtonSecondary title="Filtros" btnIcon={<LuListFilter size={16} />} />
       <ButtonSecondary title="Relatórios" btnIcon={<LuDownload size={16} />} />
@@ -35,7 +30,7 @@ const OrdersToolbar: React.FC<Props> = ({children}) => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default OrdersToolbar;

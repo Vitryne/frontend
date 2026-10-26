@@ -1,25 +1,44 @@
 import PanelLayout from "@/components/features/panel/components/panel-layout";
 import { getNextStatus } from "@/components/features/panel/orders/columns";
 import OrdersBoard from "@/components/features/panel/orders/components/kanban/orders-board";
+import OrdersError from "@/components/features/panel/orders/components/kanban/orders-error";
 import OrdersToolbar from "@/components/features/panel/orders/components/kanban/orders-toolbar";
-import PendingOrdersBanner from "@/components/features/panel/orders/components/kanban/pending-order-banner";
+import PendingOrdersBanner from "@/components/features/panel/orders/components/kanban/pending-orders-banner";
 import RefuseOrderModal from "@/components/features/panel/orders/components/kanban/refuse-order-modal";
-import { Order, OrderStatus } from "@/components/features/panel/orders/types";
-import { getOrders, refuseOrder, updateOrderStatus } from "@/service/orders-service";
+import type {
+  Order,
+  OrderStatus,
+} from "@/components/features/panel/orders/types";
+import {
+  getOrders,
+  refuseOrder,
+  updateOrderStatus,
+} from "@/service/orders-service";
 import { useEffect, useState } from "react";
 
 const Orders: React.FC = () => {
-
   const [orders, setOrders] = useState<Order[]>([]);
+  const [loadState, setLoadState] = useState<"loading" | "error" | "ready">(
+    "loading",
+  );
   const [orderToRefuse, setOrderToRefuse] = useState<Order | null>(null);
 
   useEffect(() => {
-    getOrders().then(setOrders);
-  }, []);
+    if (loadState !== "loading") return;
+
+    getOrders()
+      .then((data) => {
+        setOrders(data);
+        setLoadState("ready");
+      })
+      .catch(() => setLoadState("error"));
+  }, [loadState]);
 
   const handleMove = async (order: Order, status: OrderStatus) => {
     setOrders((current) =>
-      current.map((item) => (item.id === order.id ? { ...item, status } : item)),
+      current.map((item) =>
+        item.id === order.id ? { ...item, status } : item,
+      ),
     );
 
     try {
@@ -70,12 +89,18 @@ const Orders: React.FC = () => {
       <OrdersToolbar>
         <PendingOrdersBanner orders={newOrders} onAcceptAll={handleAcceptAll} />
       </OrdersToolbar>
-      <OrdersBoard
-        orders={orders}
-        onAdvance={handleAdvance}
-        onRefuse={setOrderToRefuse}
-        onMove={handleMove}
-      />
+
+      {loadState === "error" ? (
+        <OrdersError onRetry={() => setLoadState("loading")} />
+      ) : (
+        <OrdersBoard
+          orders={orders}
+          loading={loadState === "loading"}
+          onAdvance={handleAdvance}
+          onRefuse={setOrderToRefuse}
+          onMove={handleMove}
+        />
+      )}
 
       <RefuseOrderModal
         order={orderToRefuse}

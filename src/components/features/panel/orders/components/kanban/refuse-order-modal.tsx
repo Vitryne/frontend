@@ -11,14 +11,18 @@ interface Props {
   onConfirm: () => void;
 }
 
-const RefuseOrderModal: React.FC<Props> = ({order, onCancel, onConfirm}) => {
+const RefuseOrderModal: React.FC<Props> = ({ order, onCancel, onConfirm }) => {
   return (
     <Modal
       open={order !== null}
       onClose={onCancel}
       tone="warning"
       title={`Recusar pedido #${order?.id}`}
-      subtitle={order ? `${order.customerName} · R$ ${formatMoney(order.totalInCents)}` : ""}
+      subtitle={
+        order
+          ? `${order.customerName} · R$ ${formatMoney(order.totalInCents)}`
+          : ""
+      }
       icon={<LuTriangleAlert size={18} />}
       footer={
         <>
@@ -35,7 +39,7 @@ const RefuseOrderModal: React.FC<Props> = ({order, onCancel, onConfirm}) => {
         O pedido sai do quadro e não pode ser recuperado
       </p>
     </Modal>
-  )
-}
+  );
+};
 
-export default RefuseOrderModal
+export default RefuseOrderModal;

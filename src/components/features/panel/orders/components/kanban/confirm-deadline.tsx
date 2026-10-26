@@ -3,14 +3,11 @@ import { useCountdown } from "@/components/features/panel/orders/use-countdown";
 import { formatCountdown } from "@/lib/format";
 import { LuClock3 } from "react-icons/lu";
 
-
-
 interface Props {
   createdAt: string;
 }
 
-const ConfirmDeadline: React.FC<Props> = ({ createdAt}) => {
-
+const ConfirmDeadline: React.FC<Props> = ({ createdAt }) => {
   const remaining = useCountdown(getConfirmDeadline(createdAt));
 
   return (
@@ -28,10 +25,10 @@ const ConfirmDeadline: React.FC<Props> = ({ createdAt}) => {
         Confirme em
       </span>
       <span className="font-mono font-semibold tabular-nums">
-        { formatCountdown(remaining) }
+        {formatCountdown(remaining)}
       </span>
     </div>
-  )
-}
+  );
+};
 
 export default ConfirmDeadline;

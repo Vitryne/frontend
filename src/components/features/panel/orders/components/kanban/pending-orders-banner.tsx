@@ -17,7 +17,6 @@ interface Props {
 }
 
 const PendingOrdersBanner: React.FC<Props> = ({ orders, onAcceptAll }) => {
-  
   const now = useNow();
 
   if (orders.length === 0) return null;
@@ -26,7 +25,9 @@ const PendingOrdersBanner: React.FC<Props> = ({ orders, onAcceptAll }) => {
     getRemainingSeconds(getConfirmDeadline(order.createdAt), now),
   );
   const expiredCount = remainings.filter((seconds) => seconds === 0).length;
-  const urgent = remainings.filter((seconds) => seconds > 0 && seconds < 10 * 60);
+  const urgent = remainings.filter(
+    (seconds) => seconds > 0 && seconds < 10 * 60,
+  );
 
   const pill =
     expiredCount > 0
