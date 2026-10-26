@@ -1,7 +1,10 @@
 import { DragDropContext, Draggable, type DropResult } from "@hello-pangea/dnd";
 import { useRef, useState } from "react";
 import { ORDER_COLUMNS } from "@/components/features/panel/orders/columns";
-import type { Order, OrderStatus } from "@/components/features/panel/orders/types";
+import type {
+  Order,
+  OrderStatus,
+} from "@/components/features/panel/orders/types";
 import OrderCard from "@/components/features/panel/orders/components/kanban/order-card";
 import OrderCardSkeleton from "@/components/features/panel/orders/components/kanban/order-card-skeleton";
 import OrdersColumn from "@/components/features/panel/orders/components/kanban/orders-column";
