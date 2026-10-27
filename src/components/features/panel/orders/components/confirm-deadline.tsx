@@ -5,14 +5,15 @@ import { LuClock3 } from "react-icons/lu";
 
 interface Props {
   createdAt: string;
+  className?: string
 }
 
-const ConfirmDeadline: React.FC<Props> = ({ createdAt }) => {
+const ConfirmDeadline: React.FC<Props> = ({ createdAt, className }) => {
   const remaining = useCountdown(getConfirmDeadline(createdAt));
 
   return (
     <div
-      className={`mt-2.5 flex items-center justify-between rounded-lg px-2.5 py-1.5 text-[11px] ${
+      className={`flex items-center justify-between rounded-lg px-2.5 py-1.5 text-[11px] ${className ?? ""} ${
         remaining > 15 * 60
           ? "bg-primary-soft text-primary"
           : remaining >= 10 * 60

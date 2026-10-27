@@ -1,11 +1,14 @@
 import { Order } from "@/components/features/panel/orders/types";
+import OrderRow from "@/components/features/panel/orders/components/list/order-row";
 
 
 interface Props {
   orders: Order[]
+  onAdvance: (order: Order) => void
+  onRefuse: (order: Order) => void
 }
 
-const OrdersTable: React.FC<Props> = ({orders}) => {
+const OrdersTable: React.FC<Props> = ({orders, onAdvance, onRefuse}) => {
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-white">
       <table className="w-full">
@@ -33,14 +36,12 @@ const OrdersTable: React.FC<Props> = ({orders}) => {
         </thead>
         <tbody>
           {orders.map((order) => (
-            <tr key={order.id} className="border-t border-border">
-              <td className="py-3 pr-2 pl-5 text-[13px] font-semibold text-text-primary">
-                #{order.id}
-              </td>
-              <td colSpan={5} className="px-2 py-3 text-[13px] text-text-secondary">
-                {order.customerName}
-              </td>
-            </tr>
+            <OrderRow
+              key={order.id}
+              order={order}
+              onAdvance={() => onAdvance(order)}
+              onRefuse={() => onRefuse(order)}
+            />
           ))}
         </tbody>
       </table>

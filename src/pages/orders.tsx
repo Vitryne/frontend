@@ -102,7 +102,7 @@ const Orders: React.FC = () => {
   return (
     <PanelLayout
       title="Pedidos"
-      subtitle={`${view === "list" ? "lista" : "Quadro kanban"} · atualizado em tempo real`}
+      subtitle={`${view === "list" ? "Lista" : "Quadro kanban"} · atualizado em tempo real`}
     >
       {router.isReady && (
         <>
@@ -113,7 +113,11 @@ const Orders: React.FC = () => {
           {loadState === "error" ? (
             <OrdersError onRetry={() => setLoadState("loading")} />
             ) : view === "list" ? (
-              <OrdersTable orders={orders} />
+              <OrdersTable
+                orders={orders}
+                onAdvance={handleAdvance}
+                onRefuse={setOrderToRefuse}
+              />
             ) : (
               <OrdersBoard
                 orders={orders}
