@@ -3,13 +3,20 @@ import { FiCheck } from "react-icons/fi";
 import MaskedInput from "@/components/ui/masked-input";
 import { useState } from "react";
 import Input from "@/components/ui/input";
+import SelectField from "@/components/ui/select-field";
+import { BANKS_MOCK } from "@/mocks/banks-mock";
 
 const ACC_TYPE = ["Conta corrente", "Conta poupança", "Conta pagamento"];
 
 const StepBankDetails = () => {
   const [accType, setAccType] = useState("Conta corrente");
-  const [cnpj, setCnpj] = useState("");
-  const [checkDigit, setCheckDigit] = useState("");
+  const [holderDocument, setHolderDocument] = useState("");
+  const [bank, setBank] = useState("");
+
+  const documentMask =
+    holderDocument.replace(/\D/g, "").length > 11
+      ? "00.000.000/0000-00"
+      : "000.000.000-000";
 
   return (
     <div>
@@ -18,38 +25,39 @@ const StepBankDetails = () => {
         subtitle="É para onde transferimos seus repasses em D+2 após cada venda confirmada."
       />
 
-      <div className="flex gap-3 bg-primary-soft py-4 px-5 border border-border-brand rounded-2xl ">
-        <FiCheck size={24} className="shrink-0 text-primary" />
-        <p className="text-primary-hover text-[16px]">
+      <div className="flex gap-3 rounded-2xl border border-border-brand bg-primary-soft px-5 py-4">
+        <FiCheck size={24} className="mt-0.5 shrink-0 text-primary"/>
+        <p className="text-[14px] text-primary-hover">
           O CNPJ <span className="font-bold">34.221.876/0001-44</span> e o
           titular precisam coincidir com a conta abaixo. Pagamentos são feitos
-          em D+2 após cada pedido entregue.
+          em dois dias úteis após cada pedido entregue.
         </p>
       </div>
 
-      <div className="mt-10 grid grid-cols-12 gap-4">
+      <div className="mt-8 grid grid-cols-12 gap-4">
         <div className="col-span-12">
           <Input
             title="Titular da conta *"
-            type="text"
             placeholder="Atelier Norte Comércio de Moda LTDA"
           />
         </div>
 
         <div className="col-span-12">
           <MaskedInput
-            mask="00.000.000/0000-00"
-            value={cnpj}
-            onAccept={setCnpj}
+            mask={documentMask}
+            value={holderDocument}
+            onAccept={setHolderDocument}
             placeholder="34.221.876/0001-44"
-            title="CNPJ *"
+            title="CPF/CNPJ do titular *"
           />
         </div>
 
         <div className="col-span-12">
-          <h2 className="font-bold text-[1rem]">Tipo de conta</h2>
+          <p className="mb-1.5 text-[12px] font-semibold text-text-primary">
+            Tipo de conta *
+          </p>
 
-          <div className="flex gap-4 py-3">
+          <div className="flex flex-wrap gap-3">
             {ACC_TYPE.map((type) => {
               const active = accType === type;
 
@@ -58,10 +66,10 @@ const StepBankDetails = () => {
                   key={type}
                   type="button"
                   onClick={() => setAccType(type)}
-                  className={`cursor-pointer border border-border rounded-2xl px-6 py-3 text-[1rem] font-semibold  ${
+                  className={`cursor-pointer rounded-xl border px-5 py-2.5 text-[13px] font-semibold transition-colors ${
                     active
-                      ? "bg-black text-white"
-                      : "bg-surface border-border text-text-primary hover:border-border-strong"
+                      ? "border-primary bg-primary-soft text-primary-hover"
+                      : "border-border-strong bg-surface text-text-primary hover:border-primary"
                   }`}
                 >
                   {type}
@@ -71,51 +79,29 @@ const StepBankDetails = () => {
           </div>
         </div>
 
-        <div className="col-span-12">
-          <Input
-            title="Banco *"
-            type="text"
-            placeholder="237 — Bradesco S.A."
-          />
-        </div>
-
         <div className="col-span-5">
-          <Input title="Agência *" type="text" placeholder="00264" />
-        </div>
-
-        <div className="col-span-6">
-          <Input
-            title="Conta *"
-            type="text"
-            placeholder="237 — Bradesco S.A."
+          <SelectField
+            title="Banco *"
+            placeholder="Selecione o banco"
+            options={BANKS_MOCK}
+            value={bank}
+            onChange={setBank}
           />
         </div>
 
-        <div className="col-span-1">
-          <MaskedInput
-            mask="0"
-            value={checkDigit}
-            onAccept={setCheckDigit}
-            placeholder="0"
-            title="Dígito *"
-          />
+        <div className="col-span-3">
+          <Input title="Agência *" placeholder="3421" inputMode="numeric" />
+        </div>
+        <div className="col-span-4">
+          <Input title="Conta *" placeholder="00264-2" inputMode="numeric" />
         </div>
 
         <div className="col-span-12">
           <Input
-            title="Chave PIX (opcional)"
-            type="text"
-            placeholder="contato@ateliernorte.com.br"
+            title="Chave PIX"
+            placeholder="pagamento@vitryne.com (opcional)"
           />
         </div>
-      </div>
-
-      <div className="flex gap-3 bg-surface-subtle mt-10 py-4 px-5 border border-border rounded-2xl ">
-        <FiCheck size={16} />
-        <p className="text-text-disabled text-[13px]">
-          Seus dados bancários são criptografados em repouso (AES-256) e nunca
-          exibidos em texto claro.
-        </p>
       </div>
     </div>
   );
