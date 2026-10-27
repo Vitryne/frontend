@@ -19,10 +19,9 @@ import {
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-
 const Orders: React.FC = () => {
-  const router = useRouter()
-  const view: OrdersView = router.query.view === "list" ? "list" : "kanban" 
+  const router = useRouter();
+  const view: OrdersView = router.query.view === "list" ? "list" : "kanban";
 
   const [orders, setOrders] = useState<Order[]>([]);
   const [loadState, setLoadState] = useState<"loading" | "error" | "ready">(
@@ -107,25 +106,29 @@ const Orders: React.FC = () => {
       {router.isReady && (
         <>
           <OrdersToolbar view={view} onViewChange={handleViewChange}>
-            <PendingOrdersBanner orders={newOrders} onAcceptAll={handleAcceptAll} />
+            <PendingOrdersBanner
+              orders={newOrders}
+              onAcceptAll={handleAcceptAll}
+            />
           </OrdersToolbar>
 
           {loadState === "error" ? (
             <OrdersError onRetry={() => setLoadState("loading")} />
-            ) : view === "list" ? (
-              <OrdersTable
-                orders={orders}
-                onAdvance={handleAdvance}
-                onRefuse={setOrderToRefuse}
-              />
-            ) : (
-              <OrdersBoard
-                orders={orders}
-                loading={loadState === "loading"}
-                onAdvance={handleAdvance}
-                onRefuse={setOrderToRefuse}
-                onMove={handleMove}
-              />
+          ) : view === "list" ? (
+            <OrdersTable
+              orders={orders}
+              loading={loadState === "loading"}
+              onAdvance={handleAdvance}
+              onRefuse={setOrderToRefuse}
+            />
+          ) : (
+            <OrdersBoard
+              orders={orders}
+              loading={loadState === "loading"}
+              onAdvance={handleAdvance}
+              onRefuse={setOrderToRefuse}
+              onMove={handleMove}
+            />
           )}
         </>
       )}

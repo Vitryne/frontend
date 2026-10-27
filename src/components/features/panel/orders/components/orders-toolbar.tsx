@@ -3,8 +3,8 @@ import { LuDownload, LuLayoutGrid, LuList, LuListFilter } from "react-icons/lu";
 import { OrdersView } from "@/components/features/panel/orders/types";
 
 interface Props {
-  view: OrdersView
-  onViewChange: (view: OrdersView) => void
+  view: OrdersView;
+  onViewChange: (view: OrdersView) => void;
   children?: React.ReactNode;
 }
 

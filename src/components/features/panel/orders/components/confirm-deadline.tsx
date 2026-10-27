@@ -5,7 +5,7 @@ import { LuClock3 } from "react-icons/lu";
 
 interface Props {
   createdAt: string;
-  className?: string
+  className?: string;
 }
 
 const ConfirmDeadline: React.FC<Props> = ({ createdAt, className }) => {
