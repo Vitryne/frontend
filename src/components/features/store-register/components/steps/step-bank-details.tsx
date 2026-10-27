@@ -3,17 +3,10 @@ import { FiCheck } from "react-icons/fi";
 import MaskedInput from "@/components/ui/masked-input";
 import { useState } from "react";
 import Input from "@/components/ui/input";
-import ButtonSecondary from "@/components/ui/button-secondary";
-import { LuArrowLeft, LuCheck } from "react-icons/lu";
-import Link from "next/link";
-
-interface Props {
-  onBack?: () => void;
-}
 
 const ACC_TYPE = ["Conta corrente", "Conta poupança", "Conta pagamento"];
 
-const StepBankDetails: React.FC<Props> = ({ onBack }) => {
+const StepBankDetails = () => {
   const [accType, setAccType] = useState("Conta corrente");
   const [cnpj, setCnpj] = useState("");
   const [checkDigit, setCheckDigit] = useState("");
@@ -21,7 +14,6 @@ const StepBankDetails: React.FC<Props> = ({ onBack }) => {
   return (
     <div>
       <StepHeader
-        steps="passo 5 de 5"
         title="Dados bancários"
         subtitle="É para onde transferimos seus repasses em D+2 após cada venda confirmada."
       />
@@ -124,23 +116,6 @@ const StepBankDetails: React.FC<Props> = ({ onBack }) => {
           Seus dados bancários são criptografados em repouso (AES-256) e nunca
           exibidos em texto claro.
         </p>
-      </div>
-
-      <div className="flex justify-between pt-17">
-        <ButtonSecondary
-          title="Voltar"
-          btnIcon={<LuArrowLeft />}
-          onClick={onBack}
-        />
-
-        <Link
-          href="/dashboard"
-          replace
-          className="inline-flex items-center justify-center gap-2 rounded-[10px] bg-primary hover:bg-primary-hover text-white font-semibold text-[14px] px-5 py-2.5 shadow-lg shadow-primary/30 transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-95"
-        >
-          Cadastrar loja
-          <LuCheck />
-        </Link>
       </div>
     </div>
   );

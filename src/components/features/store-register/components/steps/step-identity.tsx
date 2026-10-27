@@ -1,29 +1,21 @@
 import Image from "next/image";
 import StepHeader from "@/components/features/store-register/components/header";
 import { FiUpload } from "react-icons/fi";
-import ButtonSecondary from "@/components/ui/button-secondary";
-import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
-import ButtonPrimary from "@/components/ui/button-primary";
 
-interface Props {
-  onNext: () => void;
-  onBack?: () => void;
-}
 
-const StepIdentity: React.FC<Props> = ({ onNext, onBack }) => {
+const StepIdentity = () => {
   return (
     <div>
       <StepHeader
-        steps="passo 2 de 5"
         title="Identidade visual"
-        subtitle="Logo e banner são os primeiros elementos que o cliente vê na vitrine."
+        subtitle="Logo e banner são os primeiros elementos que o cliente vê em sua loja."
       />
 
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-bold text-[1rem]">Logo da loja</h2>
           <span className="text-[1rem] text-text-secondary">
-            JPG ou PNG · até 5MB · 512×512px mínimo
+            JPG ou PNG · até 5MB · 512x512px mínimo
           </span>
         </div>
 
@@ -52,7 +44,7 @@ const StepIdentity: React.FC<Props> = ({ onNext, onBack }) => {
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-bold text-[1rem]">Banner público</h2>
           <span className="text-[1rem] text-text-secondary">
-            JPG · 1600×480px · até 5MB
+            JPG · 1600x480px · até 5MB
           </span>
         </div>
 
@@ -80,20 +72,6 @@ const StepIdentity: React.FC<Props> = ({ onNext, onBack }) => {
             <input type="file" accept="image/*" className="hidden" />
           </label>
         </div>
-      </div>
-
-      <div className="flex justify-between pt-17">
-        <ButtonSecondary
-          title="Voltar"
-          btnIcon={<LuArrowLeft />}
-          onClick={onBack}
-        />
-
-        <ButtonPrimary
-          title="Próximo"
-          btnIcon={<LuArrowRight />}
-          onClick={onNext}
-        />
       </div>
     </div>
   );

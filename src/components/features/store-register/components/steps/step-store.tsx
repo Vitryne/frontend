@@ -6,14 +6,8 @@ import { useState } from "react";
 import SelectUf from "@/components/ui/select-uf";
 import MaskedInput from "@/components/ui/masked-input";
 import StepHeader from "@/components/features/store-register/components/header";
-import ButtonPrimary from "@/components/ui/button-primary";
-import { LuArrowRight } from "react-icons/lu";
 
-interface Props {
-  onNext: () => void;
-}
-
-const StepStore: React.FC<Props> = ({ onNext }) => {
+const StepStore = () => {
   const [uf, setUf] = useState("");
   const [cep, setCep] = useState("");
   const [cnpj, setCnpj] = useState("");
@@ -22,7 +16,6 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
   return (
     <div>
       <StepHeader
-        steps="passo 1 de 5"
         title="Conte sobre a sua loja"
         subtitle="Esses dados aparecem para os clientes no perfil público da loja."
       />
@@ -139,14 +132,6 @@ const StepStore: React.FC<Props> = ({ onNext }) => {
           />
         </div>
       </form>
-
-      <div className="flex justify-end pt-8">
-        <ButtonPrimary
-          title="Próximo"
-          btnIcon={<LuArrowRight />}
-          onClick={onNext}
-        />
-      </div>
     </div>
   );
 };

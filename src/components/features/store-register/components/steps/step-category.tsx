@@ -1,9 +1,6 @@
 import StepHeader from "@/components/features/store-register/components/header";
 import { FiCheck } from "react-icons/fi";
 import { useState } from "react";
-import ButtonSecondary from "@/components/ui/button-secondary";
-import ButtonPrimary from "@/components/ui/button-primary";
-import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 
 const CATEGORIES = [
   "Vestidos",
@@ -19,12 +16,7 @@ const CATEGORIES = [
 ];
 const PREP_TIMER = ["20 min", "30 min", "45 min", "60 min", "Personalizado"];
 
-interface Props {
-  onNext: () => void;
-  onBack?: () => void;
-}
-
-const StepCategory: React.FC<Props> = ({ onNext, onBack }) => {
+const StepCategory = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [radius, setRadius] = useState(12);
   const [prepTime, setPrepTime] = useState("30 min");
@@ -42,9 +34,8 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack }) => {
   return (
     <div>
       <StepHeader
-        steps="passo 3 de 5"
         title="Categorias e raio de entrega"
-        subtitle="Em quais categorias sua loja atua e até onde você entrega?"
+        subtitle="Até onde você entrega e em quais categorias sua loja atua?"
       />
 
       <div>
@@ -132,20 +123,6 @@ const StepCategory: React.FC<Props> = ({ onNext, onBack }) => {
             })}
           </div>
         </div>
-      </div>
-
-      <div className="flex justify-between pt-17">
-        <ButtonSecondary
-          title="Voltar"
-          btnIcon={<LuArrowLeft />}
-          onClick={onBack}
-        />
-
-        <ButtonPrimary
-          title="Próximo"
-          btnIcon={<LuArrowRight />}
-          onClick={onNext}
-        />
       </div>
     </div>
   );

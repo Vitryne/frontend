@@ -1,15 +1,7 @@
 import StepHeader from "@/components/features/store-register/components/header";
 import { FiClock } from "react-icons/fi";
 import { useState } from "react";
-import ButtonSecondary from "@/components/ui/button-secondary";
-import ButtonPrimary from "@/components/ui/button-primary";
-import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 import Switch from "@/components/ui/switch";
-
-interface Props {
-  onNext: () => void;
-  onBack?: () => void;
-}
 
 const DAYS_MODELS = [
   {
@@ -206,7 +198,7 @@ const PRESETS = [
   },
 ];
 
-const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
+const StepBusinessHours = () => {
   const [days, setDays] = useState(DAYS_MODELS);
   const [activePreset, setActivePreset] = useState(
     "Loja física (Seg-Sáb 10h-20h)",
@@ -234,9 +226,8 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
   return (
     <div>
       <StepHeader
-        steps="passo 4 de 5"
         title="Horário de funcionamento"
-        subtitle="Fora destes horários, a Vitryne fecha a loja automaticamente."
+        subtitle="Em quais dias e horários sua loja efetua vendas e entregas?"
       />
 
       <div className="flex items-center gap-3">
@@ -339,20 +330,6 @@ const StepBusinessHours: React.FC<Props> = ({ onNext, onBack }) => {
         <FiClock size={16} />
         Fora do horário, a Vitryne fecha sua loja automaticamente. Você pode
         abrir manualmente a qualquer momento.
-      </div>
-
-      <div className="flex justify-between pt-17">
-        <ButtonSecondary
-          title="Voltar"
-          btnIcon={<LuArrowLeft />}
-          onClick={onBack}
-        />
-
-        <ButtonPrimary
-          title="Próximo"
-          btnIcon={<LuArrowRight />}
-          onClick={onNext}
-        />
       </div>
     </div>
   );
