@@ -69,7 +69,7 @@ const StepCategory = () => {
       />
 
             <div>
-        <p className="mb-2 text-[12px] font-semibold text-text-primary">
+        <p className="mb-2 text-[15px] font-semibold text-text-primary">
           Categoria principal da loja
         </p>
 
