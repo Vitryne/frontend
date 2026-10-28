@@ -41,7 +41,7 @@ const StepStore = () => {
 
         <div className="flex items-center gap-3 py-5">
           <span className="h-px flex-1 bg-border-brand" />
-          <span className="text-[12px] text-primary-hover">
+          <span className="text-[13px] text-primary-hover">
             ou com e-mail e senha
           </span>
           <span className="h-px flex-1 bg-border-brand" />

@@ -12,20 +12,21 @@ interface BusinessDay {
   closeAfternoon: string;
 }
 
-type TimeField = | "openMorning" | "closeMorning" | "openAfternoon" | "closeAfternoon"
+type TimeField =
+  "openMorning" | "closeMorning" | "openAfternoon" | "closeAfternoon";
 
-const PERIODS: { label: string; open: TimeField; close: TimeField }[]  = [
+const PERIODS: { label: string; open: TimeField; close: TimeField }[] = [
   {
     label: "Manhã",
     open: "openMorning",
-    close: "closeMorning"
+    close: "closeMorning",
   },
   {
-     label: "Tarde", 
-     open: "openAfternoon", 
-     close: "closeAfternoon",
-  }
-]
+    label: "Tarde",
+    open: "openAfternoon",
+    close: "closeAfternoon",
+  },
+];
 
 const openDay = (
   name: string,
@@ -91,7 +92,9 @@ const PRESET_OPTIONS = [CUSTOM_PRESET, ...PRESETS.map((preset) => preset.name)];
 
 const StepBusinessHours = () => {
   const [days, setDays] = useState(DEFAULT_DAYS);
-  const [activePreset, setActivePreset] = useState("Comercial (Seg-Sex 8h-18h)");
+  const [activePreset, setActivePreset] = useState(
+    "Comercial (Seg-Sex 8h-18h)",
+  );
 
   const selectPreset = (name: string) => {
     const preset = PRESETS.find((p) => p.name === name);
@@ -140,7 +143,7 @@ const StepBusinessHours = () => {
                   : "border-border-strong bg-surface text-text-primary hover:border-primary"
               }`}
             >
-              { name }
+              {name}
             </button>
           );
         })}
@@ -155,7 +158,7 @@ const StepBusinessHours = () => {
               key={period.label}
               className="flex-1 text-center text-[11px] font-semibold uppercase tracking-wider text-text-tertiary"
             >
-              { period.label }
+              {period.label}
             </span>
           ))}
         </div>

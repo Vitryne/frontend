@@ -1,4 +1,5 @@
 import LogoSvg from "@/components/ui/logo-svg";
+import Link from "next/link";
 import { FaCheck } from "react-icons/fa";
 
 interface Step {
@@ -14,9 +15,9 @@ interface Props {
 const RegisterSidebar: React.FC<Props> = ({ steps, stepIndex, selectStep }) => {
   return (
     <div className="sticky top-0 flex h-screen w-100 shrink-0 flex-col gap-8 border-r border-border bg-surface px-6 py-8">
-      <div className="w-36">
+      <Link href="/login" className="block w-36">
         <LogoSvg color="black" />
-      </div>
+      </Link>
 
       <div className="rounded-xl bg-primary-soft px-4 py-3">
         <p className="text-primary-hover text-[13px]]">

@@ -18,16 +18,16 @@ const STEPS = [
 ];
 
 const Register = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [stepIndex, setStepIndex] = useState(0);
   const { label, Component } = STEPS[stepIndex];
 
-  const isFirstStep = stepIndex === 0
-  const isLastStep = stepIndex === STEPS.length - 1
+  const isFirstStep = stepIndex === 0;
+  const isLastStep = stepIndex === STEPS.length - 1;
 
-  const nextStep = () => 
+  const nextStep = () =>
     isLastStep ? router.replace("/dashboard") : setStepIndex(stepIndex + 1);
-  const previousStep = () => 
+  const previousStep = () =>
     isFirstStep ? router.push("/login") : setStepIndex(stepIndex - 1);
 
   return (

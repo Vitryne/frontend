@@ -38,7 +38,7 @@ const PREP_TIMER = ["15 min", "30 min", "45 min", "60 min", "Personalizado"];
 
 const StepCategory = () => {
   const [category, setCategory] = useState("");
-  const [tags, setTags] = useState<string[]>([])
+  const [tags, setTags] = useState<string[]>([]);
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showAllTags, setShowAllTags] = useState(false);
   const [radius, setRadius] = useState(12);
@@ -48,9 +48,8 @@ const StepCategory = () => {
     ? CATEGORIES
     : CATEGORIES.slice(0, 9);
   const visibleTags = showAllTags ? TAGS : TAGS.slice(0, 8);
-  
-  const radiusPercent =
-    ((radius - 1) / (50 - 1)) * 100;
+
+  const radiusPercent = ((radius - 1) / (50 - 1)) * 100;
 
   const toggleTag = (tag: string) => {
     setTags((current) =>
@@ -60,7 +59,6 @@ const StepCategory = () => {
     );
   };
 
-
   return (
     <div>
       <StepHeader
@@ -68,8 +66,8 @@ const StepCategory = () => {
         subtitle="Até onde você entrega e em quais categorias sua loja atua?"
       />
 
-            <div>
-        <p className="mb-2 text-[15px] font-semibold text-text-primary">
+      <div>
+        <p className="mb-2 text-[14px] font-semibold text-text-primary">
           Categoria principal da loja
         </p>
 
@@ -103,9 +101,8 @@ const StepCategory = () => {
         </div>
       </div>
 
-
       <div className="pt-8">
-        <p className="mb-2 text-[15px] font-semibold text-text-primary">
+        <p className="mb-2 text-[14px] font-semibold text-text-primary">
           Tags da loja
         </p>
 
@@ -141,7 +138,7 @@ const StepCategory = () => {
       </div>
 
       <div className="pt-8">
-        <p className="mb-2 text-[15px] font-semibold text-text-primary">
+        <p className="mb-2 text-[14px] font-semibold text-text-primary">
           Raio máximo da entrega
         </p>
 
