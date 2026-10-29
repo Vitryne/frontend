@@ -1,99 +1,82 @@
 import Image from "next/image";
 import StepHeader from "@/components/features/store-register/components/header";
 import { FiUpload } from "react-icons/fi";
-import ButtonSecondary from "@/components/ui/button-secondary";
-import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
-import ButtonPrimary from "@/components/ui/button-primary";
 
-interface Props {
-  onNext: () => void;
-  onBack?: () => void;
-}
-
-const StepIdentity: React.FC<Props> = ({ onNext, onBack }) => {
+const StepIdentity = () => {
   return (
     <div>
       <StepHeader
-        steps="passo 2 de 5"
         title="Identidade visual"
-        subtitle="Logo e banner são os primeiros elementos que o cliente vê na vitrine."
+        subtitle="Logo e banner são os primeiros elementos que o cliente vê em sua loja."
       />
 
       <div>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-bold text-[1rem]">Logo da loja</h2>
-          <span className="text-[1rem] text-text-secondary">
-            JPG ou PNG · até 5MB · 512×512px mínimo
+        <div className="mb-2 flex items-end justify-between">
+          <p className="text-[12px] font-semibold text-text-primary">
+            Logo da loja
+          </p>
+          <span className="text-[11px] text-text-tertiary">
+            JPG ou PNG · até 5MB · 512x512px mínimo
           </span>
         </div>
 
-        <div className="flex gap-4 items-center">
-          <div className="size-32 shrink-0 rounded-3xl bg-text-primary text-white font-bold text-5xl flex items-center justify-center">
+        <div className="flex items-center gap-6">
+          <div className="flex size-20 shrink-0 items-center justify-center rounded-[18px] bg-text-primary font-display text-2xl font-bold text-white">
             AN
           </div>
-          <label className="flex-1 flex items-center gap-4 rounded-xl py-6 border-2 border-dashed border-primary bg-primary-soft px-5 cursor-pointer">
-            <span className="flex size-14 text-2xl items-center justify-center rounded-xl bg-avatar text-primary">
-              <FiUpload />
+
+          <label className="flex h-20 flex-1 cursor-pointer items-center gap-4 rounded-2xl border border-dashed border-border-brand bg-primary-soft px-5 transition-colors hover:bg-primary-soft-2">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft-2 text-primary">
+              <FiUpload size={18} />
             </span>
             <span>
-              <p className="font-bold text-xl text-primary-hover">
+              <p className="text-[13px] font-semibold text-primary-hover">
                 Arraste o arquivo ou clique para enviar
               </p>
-              <p className="text-[1rem] text-text-secondary">
+              <p className="text-[12px] text-text-secondary">
                 Use uma versão limpa e legível em fundo claro
               </p>
             </span>
-            <input type="file" accept="image/*" className="hidden" />
+            <input
+              type="file"
+              accept="image/png, image/jpeg"
+              className="hidden"
+            />
           </label>
         </div>
       </div>
 
-      <div className="mt-10">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-bold text-[1rem]">Banner público</h2>
-          <span className="text-[1rem] text-text-secondary">
-            JPG · 1600×480px · até 5MB
+      <div className="mt-8">
+        <div className="mb-2 flex items-end justify-between">
+          <p className="text-[12px] font-semibold text-text-primary">
+            Banner público
+          </p>
+          <span className="text-[11px] text-text-tertiary">
+            JPG · até 5MB · 1600x480px
           </span>
         </div>
 
-        <div className="relative aspect-1700/480 overflow-hidden rounded-3xl">
+        <div className="relative aspect-1600/480 overflow-hidden rounded-[18px]">
           <Image
             src="/onboarding.jpg"
-            alt="Onboarding"
+            alt="Banner da loja"
             fill
             priority
-            className="size-full object-cover"
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
-          <div className="absolute bottom-6 left-10 text-white">
-            <p className="font-bold font-display text-3xl select-none">
-              Atelier Norte
-            </p>
-            <p className="font-display font-thin pt-1 select-none">
-              Moda autoral · São Paulo
-            </p>
+
+          <div className="absolute bottom-5 left-6 select-none text-white">
+            <p className="font-display text-2xl font-bold">Atelier Norte</p>
+            <p className="text-[13px] text-white/80">Moda feminina · Maringá</p>
           </div>
 
-          <label className="absolute bottom-4 right-4 cursor-pointer bg-white px-4 py-2 flex items-center gap-3 rounded-xl">
-            <FiUpload />
-            <span>Trocar banner</span>
-            <input type="file" accept="image/*" className="hidden" />
+          <label className="absolute bottom-5 right-5 flex h-8 cursor-pointer items-center gap-2 rounded-lg bg-white px-4 text-[12px] font-semibold text-text-primary transition-colors hover:bg-surface-subtle">
+            <FiUpload size={14} />
+            Trocar banner
+            <input type="file" accept="image/jpeg" className="hidden" />
           </label>
         </div>
-      </div>
-
-      <div className="flex justify-between pt-17">
-        <ButtonSecondary
-          title="Voltar"
-          btnIcon={<LuArrowLeft />}
-          onClick={onBack}
-        />
-
-        <ButtonPrimary
-          title="Próximo"
-          btnIcon={<LuArrowRight />}
-          onClick={onNext}
-        />
       </div>
     </div>
   );
