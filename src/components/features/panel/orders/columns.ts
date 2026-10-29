@@ -5,14 +5,45 @@ export const CONFIRM_WINDOW_MINUTES = 30;
 export const ORDER_COLUMNS: {
   status: OrderStatus;
   title: string;
+  label: string;
   dotClass: string;
 }[] = [
-  { status: "new", title: "Novos pedidos", dotClass: "bg-primary" },
-  { status: "confirmed", title: "Confirmados", dotClass: "bg-plum" },
-  { status: "preparing", title: "Em preparo", dotClass: "bg-warning" },
-  { status: "ready", title: "Pronto p/ coleta", dotClass: "bg-info-strong" },
-  { status: "delivering", title: "Em entrega", dotClass: "bg-info" },
-  { status: "completed", title: "Concluídos", dotClass: "bg-success" },
+  {
+    status: "new",
+    title: "Novos pedidos",
+    label: "Novo",
+    dotClass: "bg-primary",
+  },
+  {
+    status: "confirmed",
+    title: "Confirmados",
+    label: "Confirmado",
+    dotClass: "bg-plum",
+  },
+  {
+    status: "preparing",
+    title: "Em preparo",
+    label: "Em preparo",
+    dotClass: "bg-warning",
+  },
+  {
+    status: "ready",
+    title: "Pronto p/ coleta",
+    label: "Pronto p/ coleta",
+    dotClass: "bg-info-strong",
+  },
+  {
+    status: "delivering",
+    title: "Em entrega",
+    label: "Em entrega",
+    dotClass: "bg-info",
+  },
+  {
+    status: "completed",
+    title: "Concluídos",
+    label: "Concluído",
+    dotClass: "bg-success",
+  },
 ];
 
 export const getConfirmDeadline = (createdAt: string) =>

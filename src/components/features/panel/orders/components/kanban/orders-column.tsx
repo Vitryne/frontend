@@ -23,9 +23,11 @@ const OrdersColumn: React.FC<Props> = ({
         <h2 className="flex-1 text-[13px] font-semibold text-text-primary">
           {title}
         </h2>
-        <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-surface px-1.5 text-[11px] font-semibold text-text-secondary">
-          {count}
-        </span>
+        {count !== undefined && (
+          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-surface px-1.5 text-[11px] font-semibold text-text-secondary">
+            {count}
+          </span>
+        )}
       </header>
 
       <Droppable droppableId={status}>

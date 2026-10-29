@@ -1,9 +1,14 @@
-import { formatPrice, formatTime, formatTimeAgo } from "@/lib/format";
+import { formatPrice, formatTimeAgo } from "@/lib/format";
 import { Order } from "@/components/features/panel/orders/types";
 import { LuArrowRight, LuCheck, LuClock3 } from "react-icons/lu";
 import ButtonSecondary from "@/components/ui/button-secondary";
 import ButtonPrimary from "@/components/ui/button-primary";
-import ConfirmDeadline from "@/components/features/panel/orders/components/kanban/confirm-deadline";
+import ConfirmDeadline from "@/components/features/panel/orders/components/confirm-deadline";
+import {
+  getCourier,
+  getInfoLabel,
+  getItemsLabel,
+} from "@/components/features/panel/orders/labels";
 
 interface Props {
   order: Order;
@@ -11,40 +16,6 @@ interface Props {
   onAdvance: () => void;
   onRefuse: () => void;
 }
-
-const getItemsLabel = (order: Order) => {
-  const [first, ...rest] = order.items;
-  const parts = [first.name];
-
-  if (first.size) parts.push(first.size);
-  if (rest.length === 1) parts.push("+1 item");
-  if (rest.length > 1) parts.push(`+${rest.length} itens`);
-
-  return parts.join(" · ");
-};
-
-const getInfoLabel = (order: Order) => {
-  switch (order.status) {
-    case "confirmed":
-    case "preparing":
-      return order.readyBy && `Pronto até ${formatTime(order.readyBy)}`;
-    case "ready":
-      return order.courierStatus;
-    case "delivering":
-      return order.deliverBy && `Entrega às ${formatTime(order.deliverBy)}`;
-  }
-};
-
-const getCourier = (name: string) => {
-  const names = name.split(" ");
-  const firstName = names[0];
-  const lastName = names[names.length - 1];
-
-  return {
-    initials: `${firstName[0]}${lastName[0]}`,
-    shortName: `${firstName} ${lastName[0]}.`,
-  };
-};
 
 const OrderCard: React.FC<Props> = ({
   order,
@@ -74,19 +45,21 @@ const OrderCard: React.FC<Props> = ({
         <span className="text-[13px] font-semibold text-text-primary">
           #{order.id}
         </span>
-        <span className="text-[13px] font-medium text-text-primary">
+        <span className="text-[11px] text-text-tertiary">
           {formatTimeAgo(order.createdAt)}
         </span>
       </div>
 
-      <p className="mt-1 text-[12px] font-medium text-text-primary">
+      <p className="mt-1 text-[13px] font-medium text-text-primary">
         {order.customerName}
       </p>
       <p className="mt-0.5 truncate text-[12px] text-text-tertiary">
         {getItemsLabel(order)}
       </p>
 
-      {isNew && <ConfirmDeadline createdAt={order.createdAt} />}
+      {isNew && (
+        <ConfirmDeadline createdAt={order.createdAt} className="mt-2.5" />
+      )}
 
       {infoLabel && (
         <p className="mt-2.5 flex items-center gap-1.5 text-[11px] text-text-secondary">

@@ -1,4 +1,5 @@
 import LogoSvg from "@/components/ui/logo-svg";
+import Link from "next/link";
 import { FaCheck } from "react-icons/fa";
 
 interface Step {
@@ -13,14 +14,14 @@ interface Props {
 
 const RegisterSidebar: React.FC<Props> = ({ steps, stepIndex, selectStep }) => {
   return (
-    <div className="sticky top-0 flex h-screen w-100 shrink-0 flex-col gap-8 px-6 py-8 shadow-[4px_0_16px_rgba(0,0,0,0.04)]">
-      <div className="w-42.5">
+    <div className="sticky top-0 flex h-screen w-100 shrink-0 flex-col gap-8 border-r border-border bg-surface px-6 py-8">
+      <Link href="/login" className="block w-36">
         <LogoSvg color="black" />
-      </div>
+      </Link>
 
-      <div className="h-auto w-auto bg-primary-soft rounded-xl py-3 px-4">
-        <p className="text-primary-hover text-[.8rem]">
-          Vamos preparar sua loja na Vitryne em 5 passos rápidos.
+      <div className="rounded-xl bg-primary-soft px-4 py-3">
+        <p className="text-primary-hover text-[13px]]">
+          {`Vamos preparar sua loja na Vitryne em ${steps.length} passos rápidos.`}
         </p>
       </div>
 
@@ -31,44 +32,42 @@ const RegisterSidebar: React.FC<Props> = ({ steps, stepIndex, selectStep }) => {
 
           return (
             <li key={step.id}>
-              {stepCompleted ? (
-                <div
-                  onClick={() => selectStep(i)}
-                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 w-full cursor-pointer hover:bg-surface-subtle transition-colors"
-                >
-                  <span className="flex size-7 justify-center items-center rounded-full bg-success text-white">
-                    <FaCheck size={14} />
-                  </span>
-                  <span className="text-text-tertiary font-bold">
-                    {step.label}
-                  </span>
-                </div>
-              ) : (
-                <div
-                  className={`flex items-center gap-3 rounded-xl px-3 py-2.5 ${
-                    currentStep ? "bg-primary-soft" : "bg-transparent"
+              <button
+                type="button"
+                disabled={!stepCompleted}
+                onClick={() => selectStep(i)}
+                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors ${
+                  currentStep
+                    ? "bg-primary-soft"
+                    : stepCompleted
+                      ? "cursor-pointer hover:bg-surface-subtle"
+                      : ""
+                }`}
+              >
+                <span
+                  className={`flex size-7 shrink-0 items-center justify-center rounded-full text-[13px] font-semibold ${
+                    currentStep
+                      ? "bg-primary text-white"
+                      : stepCompleted
+                        ? "bg-success text-white"
+                        : "bg-surface-subtle text-text-tertiary"
                   }`}
                 >
-                  <span
-                    className={`flex size-7 justify-center items-center rounded-full ${
-                      currentStep
-                        ? "bg-primary text-white font-bold"
-                        : "bg-surface-subtle text-text-tertiary font-bold"
-                    }`}
-                  >
-                    {i + 1}
-                  </span>
-                  <span
-                    className={
-                      currentStep
-                        ? "font-bold text-primary-hover"
-                        : "text-text-disabled font-bold"
-                    }
-                  >
-                    {step.label}
-                  </span>
-                </div>
-              )}
+                  {stepCompleted ? <FaCheck size={12} /> : i + 1}
+                </span>
+
+                <span
+                  className={`text-[14px] ${
+                    currentStep
+                      ? "font-semibold text-primary-hover"
+                      : stepCompleted
+                        ? "text-text-secondary"
+                        : "text-text-disabled"
+                  }`}
+                >
+                  {step.label}
+                </span>
+              </button>
             </li>
           );
         })}
