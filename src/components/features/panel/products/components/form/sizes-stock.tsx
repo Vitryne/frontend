@@ -4,14 +4,28 @@ import {
   isCriticalStock,
 } from "@/components/features/panel/products/stock";
 import Alert from "@/components/ui/alert";
+import Menu, { MenuItem } from "@/components/ui/menu";
+import {
+  LuPencil,
+  LuPlus,
+  LuTrash2,
+  LuTrendingUp,
+  LuUpload,
+} from "react-icons/lu";
 
 interface Props {
   stock: ProductStock[];
   alertThreshold: number;
   onChange: (stock: ProductStock[]) => void;
+  onConfigureThreshold?: () => void;
 }
 
-const SizesStock: React.FC<Props> = ({ stock, alertThreshold, onChange }) => {
+const SizesStock: React.FC<Props> = ({
+  stock,
+  alertThreshold,
+  onChange,
+  onConfigureThreshold,
+}) => {
   const hasStock = getTotal(stock) > 0;
   const criticalSizes = hasStock
     ? stock
@@ -27,12 +41,35 @@ const SizesStock: React.FC<Props> = ({ stock, alertThreshold, onChange }) => {
     );
   };
 
+  const menuItems: MenuItem[] = [
+    { label: "Adicionar mais tamanhos", icon: LuPlus },
+    {
+      label: "Configurar limiar de aviso",
+      icon: LuPencil,
+      onClick: onConfigureThreshold,
+    },
+    { label: "Ver histórico de movimentação", icon: LuTrendingUp },
+    {
+      label: "Importar estoque por planilha",
+      icon: LuUpload,
+      disabled: true,
+      hint: "Em breve",
+    },
+    {
+      label: "Zerar todo o estoque",
+      icon: LuTrash2,
+      danger: true,
+      separated: true,
+      onClick: () => onChange(stock.map((item) => ({ ...item, quantity: 0 }))),
+    },
+  ];
+
   return (
     <div>
       <div
         className="grid items-center gap-x-2 gap-y-1.5"
         style={{
-          gridTemplateColumns: `auto repeat(${stock.length}, minmax(0, 1fr))`,
+          gridTemplateColumns: `auto repeat(${stock.length}, minmax(0, 1fr)) auto`,
         }}
       >
         <span className="pr-6 text-[12px] text-text-tertiary">Tamanho</span>
@@ -45,6 +82,8 @@ const SizesStock: React.FC<Props> = ({ stock, alertThreshold, onChange }) => {
             {item.size}
           </span>
         ))}
+
+        <span />
 
         <span className="pr-6 text-[13px] font-semibold text-text-primary">
           Estoque
@@ -60,14 +99,16 @@ const SizesStock: React.FC<Props> = ({ stock, alertThreshold, onChange }) => {
               placeholder="0"
               value={item.quantity === 0 ? "" : String(item.quantity)}
               onChange={(e) => changeQuantity(item.size, e.target.value)}
-              className={`h-9 w-full rounded-lg border px-2 text-center text-[14px] outline-none transition-colors placeholder:text-text-disabled ${
+              className={`h-7.5 w-full rounded-[10px] border px-2 text-center text-[14px] outline-none transition-colors placeholder:text-text-disabled ${
                 critical
                   ? "border-warning bg-warning-soft font-semibold text-warning"
-                  : "border-border bg-surface text-text-primary hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  : "border-border-strong bg-surface text-text-primary hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20"
               }`}
             />
           );
         })}
+
+        <Menu title="Estoque" items={menuItems} placement="top" />
       </div>
 
       {criticalSizes.length > 0 && (
