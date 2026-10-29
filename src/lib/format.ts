@@ -21,3 +21,28 @@ export const formatMoney = (cents: number) =>
 
 export const formatDate = (isoDate: string) =>
   new Date(`${isoDate}T00:00:00`).toLocaleDateString("pt-BR");
+
+export const formatTime = (iso: string) =>
+  new Date(iso).toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+export const formatTimeAgo = (iso: string) => {
+  const minutes = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+
+  if (minutes < 1) return "agora";
+  if (minutes < 60) return `há ${minutes} min`;
+
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+
+  return rest === 0 ? `há ${hours} h` : `há ${hours} h ${rest}`;
+};
+
+export const formatCountdown = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const rest = seconds % 60;
+
+  return `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
+};

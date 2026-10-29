@@ -26,7 +26,7 @@ const Input: React.FC<Props> = ({
       {title && (
         <label
           htmlFor={id}
-          className="mb-1.5 block text-[12px] font-semibold text-text-primary"
+          className="mb-1.5 block text-[14px] font-semibold text-text-primary"
         >
           {title}
         </label>

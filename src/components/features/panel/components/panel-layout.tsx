@@ -23,7 +23,7 @@ const PanelLayout: React.FC<Props> = ({ title, subtitle, children }) => {
         storeOpen={storeOpen}
         onToggleStore={setStoreOpen}
       />
-      <div className="flex flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col">
         <PanelTopbar title={title} subtitle={subtitle} />
         <main className="flex-1 bg-screen px-10 py-8">{children}</main>
       </div>
