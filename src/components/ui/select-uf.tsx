@@ -59,7 +59,7 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
 
   return (
     <div className="w-full" ref={containerRef}>
-      <label className="block font-semibold uppercase tracking-wider text-[11px] leading-snug text-text-primary mb-1.5">
+      <label className="mb-1.5 block text-[12px] font-semibold text-text-primary">
         {title}
       </label>
 
@@ -67,7 +67,7 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="w-full flex items-center justify-between rounded-[10px] bg-surface border border-border px-4 py-3 text-[14px] text-text-primary outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border-strong"
+          className="w-full flex items-center justify-between rounded-xl bg-surface border border-border-strong h-11 px-3.5 text-[13px] text-text-primary outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border-strong"
         >
           <span
             className={selected ? "text-text-primary" : "text-text-secondary"}
@@ -83,7 +83,7 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
         </button>
 
         {open && (
-          <ul className="absolute z-10 mt-2 max-h-60 w-full overflow-auto rounded-[10px] border border-border bg-surface py-1 shadow-lg">
+          <ul className="absolute z-10 mt-2 max-h-60 w-full overflow-auto rounded-xl border border-border-strong bg-surface py-1 shadow-lg">
             {states.map((state) => (
               <li key={state.acronym}>
                 <button
@@ -92,7 +92,7 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
                     onChange(state.acronym);
                     setOpen(false);
                   }}
-                  className={`w-full px-4 py-2.5 text-left text-[14px] transition-colors hover:bg-primary-soft hover:text-primary-hover ${
+                  className={`w-full px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-primary-soft hover:text-primary-hover ${
                     state.acronym === value
                       ? "bg-primary-soft text-primary-hover font-semibold"
                       : "text-text-primary"

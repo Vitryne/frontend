@@ -27,6 +27,7 @@ const Modal: React.FC<Props> = ({
   footer,
 }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const pressedOnBackdrop = useRef(false);
   const titleId = useId();
 
   useEffect(() => {
@@ -44,17 +45,21 @@ const Modal: React.FC<Props> = ({
   return (
     <dialog
       ref={dialogRef}
-      aria-labelledby={titleId}
       onClose={onClose}
+      onMouseDown={(e) => {
+        pressedOnBackdrop.current = e.target === e.currentTarget;
+      }}
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (pressedOnBackdrop.current && e.target === e.currentTarget) {
+          onClose();
+        }
+        pressedOnBackdrop.current = false;
       }}
       className="m-auto w-full max-w-140 rounded-2xl bg-surface p-0 shadow-xl backdrop:bg-scrim backdrop:backdrop-blur-sm"
     >
       <div className="flex flex-col gap-5 p-6">
         <div className="flex items-center gap-4">
           <span
-            aria-hidden="true"
             className={`flex size-12 shrink-0 items-center justify-center rounded-xl ${TONES[tone]}`}
           >
             {icon}
