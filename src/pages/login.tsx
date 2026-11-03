@@ -6,10 +6,57 @@ import { HiOutlineMail } from "react-icons/hi";
 import Image from "next/image";
 import Link from "next/link";
 import LogoSvg from "@/components/ui/logo-svg";
+import Head from "next/head";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
+import LoginService from "@/service/login-service";
+import { saveToken } from "@/lib/auth-storage";
 
 const Login: React.FC = ({}) => {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(true);
+  const [fieldErrors, setFieldErrors] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    if (loading) return;
+    const errors = {
+      email: email.trim() ? "" : "Informe o e-mail",
+      password: password ? "" : "Informe a senha",
+    };
+    setFieldErrors(errors);
+    setError("");
+    if (errors.email || errors.password) return;
+    setLoading(true);
+    try {
+      const { accessToken } = await LoginService().login({
+        email: email.trim(),
+        password,
+      });
+      saveToken(accessToken, remember);
+      router.replace("/dashboard");
+    } catch (err) {
+      const status = axios.isAxiosError(err) ? err.response?.status : undefined;
+      setError(
+        status === 401
+          ? "E-mail ou senha inválidos."
+          : "Não foi possível entrar. Tente novamente.",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen">
+      <Head>
+        <title>Entrar · Vitryne</title>
+      </Head>
+
       <div className="hidden lg:block lg:w-[46%] relative overflow-hidden">
         <Image
           src="/partner_hero.jpg"
@@ -62,13 +109,23 @@ const Login: React.FC = ({}) => {
             Acesse o painel da sua loja.
           </p>
 
-          <form className="space-y-4">
+          <form
+            className="space-y-4"
+            noValidate
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+          >
             <div>
               <Input
                 title="E-mail"
                 type="email"
                 placeholder="atelier@norte.com.br"
                 icon={<HiOutlineMail size={18} />}
+                value={email}
+                onChange={setEmail}
+                error={fieldErrors.email || undefined}
               />
             </div>
 
@@ -78,6 +135,9 @@ const Login: React.FC = ({}) => {
                 placeholder="digite sua senha..."
                 type="password"
                 icon={<IoEyeOutline size={18} />}
+                value={password}
+                onChange={setPassword}
+                error={fieldErrors.password || undefined}
               />
             </div>
 
@@ -85,7 +145,8 @@ const Login: React.FC = ({}) => {
               <label className="flex items-center gap-1.5 cursor-pointer select-none">
                 <input
                   type="checkbox"
-                  defaultChecked
+                  checked={remember}
+                  onChange={(e) => setRemember(e.target.checked)}
                   className="w-4 h-4 rounded border-border text-primary"
                 />
                 <span className=" text-[13px] text-text-primary">
@@ -100,13 +161,20 @@ const Login: React.FC = ({}) => {
               </a>
             </div>
 
+            {error && (
+              <p className="text-center text-[13px] font-semibold text-danger">
+                {error}
+              </p>
+            )}
+
             <div className="flex justify-center">
-              <Link
-                href="/dashboard"
-                className="w-full cursor-pointer inline-flex items-center justify-center gap-2 rounded-[10px] border border-primary/30 bg-white hover:bg-primary/5 text-primary font-semibold text-[14px] py-3.5 transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-95"
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full cursor-pointer inline-flex items-center justify-center gap-2 rounded-[10px] border border-primary/30 bg-white hover:bg-primary/5 text-primary font-semibold text-[14px] py-3.5 transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Entrar no painel
-              </Link>
+                {loading ? "Entrando..." : "Entrar no painel"}
+              </button>
             </div>
           </form>
 

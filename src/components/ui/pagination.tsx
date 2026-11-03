@@ -47,7 +47,6 @@ const Pagination: React.FC<Props> = ({ page, totalPages, onPageChange }) => {
           <button
             key={item}
             type="button"
-            aria-current={item === page ? "page" : undefined}
             onClick={() => onPageChange(item)}
             className={`flex size-7 items-center justify-center rounded-lg text-[.8rem] font-semibold transition-colors ${item === page ? "bg-primary text-white" : "cursor-pointer border border-border bg-white text-text-primary hover:bg-surface-subtle disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white"}`}
           >

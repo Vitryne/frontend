@@ -55,7 +55,6 @@ const ProductFilters: React.FC<Props> = ({
 
         <button
           type="button"
-          aria-pressed={criticalOnly}
           onClick={() => onCriticalOnlyChange(!criticalOnly)}
           className={`inline-flex h-10 cursor-pointer items-center gap-2.5 rounded-[10px] border px-3 text-[14px] outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary/20 ${
             criticalOnly

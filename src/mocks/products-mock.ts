@@ -1,12 +1,25 @@
-import type { Product } from "./types";
+import type { Product } from "@/components/features/panel/products/types";
 
 export const PRODUCTS_MOCK: Product[] = [
   {
     sku: "VTR-0142",
     name: "Vestido midi floral",
     category: "Vestidos",
-    priceInCents: 28900,
+    priceInCents: 35900,
+    promotion: {
+      priceInCents: 28900,
+      endsAt: "2026-10-31",
+    },
     image: "/p_vestido_seda.jpg",
+    images: [
+      "/p_vestido_seda.jpg",
+      "/Vestido_Branco.jpg",
+      "/Vestido_azul.jpg",
+      "/p_vestido_floral.jpg",
+    ],
+    description:
+      "Vestido midi com estampa floral, decote em V, cintura marcada com faixa e saia evasê. Composição 100% viscose, forro de algodão e caimento leve para o calor.",
+    tags: ["floral", "midi", "viscose"],
     stock: [
       { size: "P", quantity: 8 },
       { size: "M", quantity: 14 },
@@ -15,6 +28,8 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
+    ordersCount: 42,
   },
   {
     sku: "VTR-0138",
@@ -22,6 +37,9 @@ export const PRODUCTS_MOCK: Product[] = [
     category: "Camisas",
     priceInCents: 21900,
     image: "/p_camisa_linho.jpg",
+    description:
+      "Camisa de linho com manga longa, gola clássica e botões de madrepérola. Tecido respirável, ideal para dias quentes e looks de alfaiataria leve.",
+    tags: ["linho", "básico", "verão 2026"],
     stock: [
       { size: "P", quantity: 11 },
       { size: "M", quantity: 9 },
@@ -30,6 +48,7 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
     ordersCount: 27,
   },
   {
@@ -38,6 +57,9 @@ export const PRODUCTS_MOCK: Product[] = [
     category: "Jaquetas",
     priceInCents: 64900,
     image: "/p_jaqueta_couro.jpg",
+    description:
+      "Jaqueta de couro ecológico com zíper frontal, bolsos laterais e forro acetinado. Modelagem ajustada, perfeita para sobrepor em dias frios.",
+    tags: ["couro ecológico", "inverno"],
     stock: [
       { size: "P", quantity: 4 },
       { size: "M", quantity: 6 },
@@ -46,6 +68,7 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: true,
     ordersCount: 12,
   },
   {
@@ -54,6 +77,9 @@ export const PRODUCTS_MOCK: Product[] = [
     category: "Saias",
     priceInCents: 17900,
     image: "/p_saia_plissada.jpg",
+    description:
+      "Saia midi plissada com cós elástico e tecido fluido que acompanha o movimento. Combina com tênis ou salto.",
+    tags: ["midi", "plissada"],
     stock: [
       { size: "P", quantity: 3 },
       { size: "M", quantity: 5 },
@@ -62,6 +88,7 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: false,
+    featured: false,
   },
   {
     sku: "VTR-0096",
@@ -69,6 +96,9 @@ export const PRODUCTS_MOCK: Product[] = [
     category: "Tênis",
     priceInCents: 39900,
     image: "/p_tenis_branco.jpg",
+    description:
+      "Tênis branco de linhas limpas, cabedal em couro sintético e solado de borracha antiderrapante. Palmilha acolchoada para uso o dia todo.",
+    tags: ["básico", "casual"],
     stock: [
       { size: "37", quantity: 6 },
       { size: "38", quantity: 12 },
@@ -77,6 +107,8 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: true,
+    ordersCount: 18,
   },
   {
     sku: "VTR-0088",
@@ -84,6 +116,9 @@ export const PRODUCTS_MOCK: Product[] = [
     category: "Calças",
     priceInCents: 25900,
     image: "/p_calca_alfaiataria.jpg",
+    description:
+      "Calça de alfaiataria com cintura alta, pregas frontais e pernas retas. Tecido com elastano para mais conforto.",
+    tags: ["alfaiataria", "básico"],
     stock: [
       { size: "P", quantity: 7 },
       { size: "M", quantity: 15 },
@@ -92,6 +127,8 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
+    ordersCount: 9,
   },
   {
     sku: "VTR-0081",
@@ -99,6 +136,9 @@ export const PRODUCTS_MOCK: Product[] = [
     category: "Blazers",
     priceInCents: 44900,
     image: "/p_blazer_oversize.jpg",
+    description:
+      "Blazer de modelagem oversize, ombros estruturados e fechamento com um botão. Vai do escritório ao fim de semana.",
+    tags: ["alfaiataria", "oversize"],
     stock: [
       { size: "P", quantity: 4 },
       { size: "M", quantity: 7 },
@@ -107,6 +147,7 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
   },
   {
     sku: "VTR-0074",
@@ -114,6 +155,9 @@ export const PRODUCTS_MOCK: Product[] = [
     category: "Moletons",
     priceInCents: 22900,
     image: "/p_moletom.jpg",
+    description:
+      "Moletom oversized em algodão felpado, com capuz ajustável e bolso canguru. Toque macio e caimento solto.",
+    tags: ["algodão", "oversize", "inverno"],
     stock: [
       { size: "P", quantity: 9 },
       { size: "M", quantity: 12 },
@@ -122,13 +166,18 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
+    ordersCount: 6,
   },
   {
     sku: "VTR-0070",
     name: "Vestido longo de festa",
     category: "Vestidos",
     priceInCents: 45900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_vestidos.jpg",
+    description:
+      "Vestido longo em cetim com alças finas, decote nas costas e fenda lateral. Pensado para casamentos e eventos à noite.",
+    tags: ["festa", "longo", "cetim"],
     stock: [
       { size: "P", quantity: 6 },
       { size: "M", quantity: 9 },
@@ -137,13 +186,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: true,
   },
   {
     sku: "VTR-0069",
     name: "Camisa social branca",
     category: "Camisas",
     priceInCents: 18900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_camisas.jpg",
+    description:
+      "Camisa social branca em tricoline, com gola italiana e punho com botão. Peça coringa para o trabalho.",
+    tags: ["básico", "social"],
     stock: [
       { size: "P", quantity: 12 },
       { size: "M", quantity: 15 },
@@ -152,13 +205,18 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
+    ordersCount: 31,
   },
   {
     sku: "VTR-0068",
     name: "Jaqueta jeans oversized",
     category: "Jaquetas",
     priceInCents: 34900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_jaquetas.jpg",
+    description:
+      "Jaqueta jeans com lavagem clara, modelagem ampla e bolsos frontais com lapela. Fica bem com vestidos e calças.",
+    tags: ["jeans", "oversize"],
     stock: [
       { size: "P", quantity: 5 },
       { size: "M", quantity: 8 },
@@ -167,13 +225,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
   },
   {
     sku: "VTR-0067",
     name: "Saia midi de cetim",
     category: "Saias",
     priceInCents: 21900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_saias.jpg",
+    description:
+      "Saia midi de cetim com corte enviesado, que garante caimento fluido e brilho suave.",
+    tags: ["midi", "cetim", "festa"],
     stock: [
       { size: "P", quantity: 2 },
       { size: "M", quantity: 6 },
@@ -182,13 +244,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
   },
   {
     sku: "VTR-0066",
     name: "Tênis de corrida leve",
     category: "Tênis",
     priceInCents: 49900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_tenis.jpg",
+    description:
+      "Tênis de corrida com cabedal em tela respirável e entressola com amortecimento. Leve, para treinos diários.",
+    tags: ["esportivo", "corrida"],
     stock: [
       { size: "37", quantity: 4 },
       { size: "38", quantity: 9 },
@@ -197,13 +263,18 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
+    ordersCount: 14,
   },
   {
     sku: "VTR-0065",
     name: "Calça jeans reta",
     category: "Calças",
     priceInCents: 24900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_calcas.jpg",
+    description:
+      "Calça jeans de cintura média e pernas retas, em denim com elastano. Lavagem média que combina com tudo.",
+    tags: ["jeans", "básico"],
     stock: [
       { size: "P", quantity: 10 },
       { size: "M", quantity: 14 },
@@ -212,13 +283,18 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
+    ordersCount: 22,
   },
   {
     sku: "VTR-0064",
     name: "Blazer de linho cru",
     category: "Blazers",
     priceInCents: 47900,
-    image: "/p_vestido_seda.jpg",
+    image: "/p_blazer_oversize.jpg",
+    description:
+      "Blazer em linho cru, sem forro e com bolsos chapados. Versão leve do clássico, para meia-estação.",
+    tags: ["linho", "alfaiataria", "verão 2026"],
     stock: [
       { size: "P", quantity: 3 },
       { size: "M", quantity: 5 },
@@ -227,13 +303,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: false,
+    featured: false,
   },
   {
     sku: "VTR-0063",
     name: "Moletom canguru cinza",
     category: "Moletons",
     priceInCents: 21900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_moletons.jpg",
+    description:
+      "Moletom cinza mescla com capuz, bolso canguru e punhos canelados. Interior flanelado.",
+    tags: ["algodão", "básico", "inverno"],
     stock: [
       { size: "P", quantity: 8 },
       { size: "M", quantity: 11 },
@@ -242,13 +322,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
   },
   {
     sku: "VTR-0062",
     name: "Vestido curto de linho",
     category: "Vestidos",
     priceInCents: 23900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_vestidos.jpg",
+    description:
+      "Vestido curto de linho com alças reguláveis e botões frontais. Fresco e versátil para o verão.",
+    tags: ["linho", "curto", "verão 2026"],
     stock: [
       { size: "P", quantity: 7 },
       { size: "M", quantity: 10 },
@@ -257,13 +341,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
   },
   {
     sku: "VTR-0061",
     name: "Camisa xadrez flanela",
     category: "Camisas",
     priceInCents: 19900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_camisas.jpg",
+    description:
+      "Camisa xadrez em flanela de algodão, com bolsos no peito. Pode ser usada fechada ou aberta, como terceira peça.",
+    tags: ["xadrez", "flanela", "inverno"],
     stock: [
       { size: "P", quantity: 4 },
       { size: "M", quantity: 6 },
@@ -272,13 +360,18 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
+    ordersCount: 8,
   },
   {
     sku: "VTR-0060",
     name: "Jaqueta corta-vento",
     category: "Jaquetas",
     priceInCents: 29900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_jaquetas.jpg",
+    description:
+      "Jaqueta corta-vento leve, com capuz embutido na gola e tecido que repele água. Dobra e cabe na bolsa.",
+    tags: ["esportivo", "impermeável"],
     stock: [
       { size: "P", quantity: 9 },
       { size: "M", quantity: 13 },
@@ -287,13 +380,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
   },
   {
     sku: "VTR-0059",
     name: "Saia jeans curta",
     category: "Saias",
     priceInCents: 15900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_saias.jpg",
+    description:
+      "Saia jeans curta com barra desfiada e bolsos funcionais. Lavagem clara.",
+    tags: ["jeans", "curta", "verão 2026"],
     stock: [
       { size: "P", quantity: 14 },
       { size: "M", quantity: 16 },
@@ -302,13 +399,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
   },
   {
     sku: "VTR-0058",
     name: "Tênis casual de lona",
     category: "Tênis",
     priceInCents: 22900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_tenis.jpg",
+    description:
+      "Tênis de lona com cano baixo, cadarço de algodão e solado vulcanizado. Clássico do dia a dia.",
+    tags: ["casual", "básico"],
     stock: [
       { size: "37", quantity: 8 },
       { size: "38", quantity: 10 },
@@ -317,13 +418,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
   },
   {
     sku: "VTR-0057",
     name: "Calça pantalona de linho",
     category: "Calças",
     priceInCents: 27900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_calcas.jpg",
+    description:
+      "Calça pantalona de linho com cintura alta e elástico nas costas. Pernas amplas e muito fresca.",
+    tags: ["linho", "pantalona", "verão 2026"],
     stock: [
       { size: "P", quantity: 5 },
       { size: "M", quantity: 2 },
@@ -332,13 +437,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
   },
   {
     sku: "VTR-0056",
     name: "Blazer cropped preto",
     category: "Blazers",
     priceInCents: 39900,
-    image: "/p_vestido_seda.jpg",
+    image: "/p_blazer_oversize.jpg",
+    description:
+      "Blazer cropped preto com lapela larga e mangas longas. Comprimento curto que valoriza a cintura.",
+    tags: ["alfaiataria", "cropped"],
     stock: [
       { size: "P", quantity: 6 },
       { size: "M", quantity: 8 },
@@ -347,13 +456,17 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: true,
+    featured: false,
   },
   {
     sku: "VTR-0055",
     name: "Moletom cropped lilás",
     category: "Moletons",
     priceInCents: 19900,
-    image: "/p_vestido_seda.jpg",
+    image: "/cat_moletons.jpg",
+    description:
+      "Moletom cropped lilás em algodão, com gola careca e barra canelada.",
+    tags: ["algodão", "cropped"],
     stock: [
       { size: "P", quantity: 11 },
       { size: "M", quantity: 9 },
@@ -362,5 +475,6 @@ export const PRODUCTS_MOCK: Product[] = [
     ],
     stockAlertThreshold: 3,
     active: false,
+    featured: false,
   },
 ];

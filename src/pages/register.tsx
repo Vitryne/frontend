@@ -3,35 +3,87 @@ import StepBusinessHours from "@/components/features/store-register/components/s
 import StepCategory from "@/components/features/store-register/components/steps/step-category";
 import StepIdentity from "@/components/features/store-register/components/steps/step-identity";
 import StepStore from "@/components/features/store-register/components/steps/step-store";
-import SidebarRegister from "@/components/features/store-register/components/register-sidebar";
+import RegisterSidebar from "@/components/features/store-register/components/register-sidebar";
+import StepFooter from "@/components/features/store-register/components/footer";
+import {
+  INITIAL_REGISTER_DATA,
+  RegisterFormData,
+} from "@/interfaces/register-form";
+import { validateStep } from "@/lib/register-validation";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
 
 const STEPS = [
   { id: 0, label: "Dados da loja", Component: StepStore },
-  { id: 1, label: "Identidade visual", Component: StepIdentity },
-  { id: 2, label: "Categoria & entrega", Component: StepCategory },
+  { id: 1, label: "Dados bancários", Component: StepBankDetails },
+  { id: 2, label: "Entrega e categorias", Component: StepCategory },
   { id: 3, label: "Horários", Component: StepBusinessHours },
-  { id: 4, label: "Dados bancários", Component: StepBankDetails },
+  { id: 4, label: "Identidade visual", Component: StepIdentity },
 ];
 
 const Register = () => {
+  const router = useRouter();
   const [stepIndex, setStepIndex] = useState(0);
-  const { Component } = STEPS[stepIndex];
+  const [formData, setFormData] = useState(INITIAL_REGISTER_DATA);
+  const [attempted, setAttempted] = useState<number[]>([]);
+  const { label, Component } = STEPS[stepIndex];
 
-  const nextStep = () => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
-  const previousStep = () => setStepIndex((i) => (i > 0 ? i - 1 : i));
+  const errors = attempted.includes(stepIndex)
+    ? validateStep(stepIndex, formData)
+    : {};
+
+  const updateData = (fields: Partial<RegisterFormData>) =>
+    setFormData((prev) => ({ ...prev, ...fields }));
+
+  const isFirstStep = stepIndex === 0;
+  const isLastStep = stepIndex === STEPS.length - 1;
+
+  // Na última etapa revalida todas, porque dá para voltar e apagar algo.
+  const validate = () => {
+    const lastToCheck = isLastStep ? STEPS.length - 1 : stepIndex;
+
+    for (let i = 0; i <= lastToCheck; i++) {
+      if (Object.keys(validateStep(i, formData)).length === 0) continue;
+
+      setAttempted((prev) => (prev.includes(i) ? prev : [...prev, i]));
+      setStepIndex(i);
+      setTimeout(
+        () =>
+          document
+            .querySelector("[data-error='true']")
+            ?.scrollIntoView({ behavior: "smooth", block: "center" }),
+        50,
+      );
+      return false;
+    }
+
+    return true;
+  };
+
+  const nextStep = () => setStepIndex(stepIndex + 1);
+  const previousStep = () =>
+    isFirstStep ? router.push("/login") : setStepIndex(stepIndex - 1);
 
   return (
     <div className="flex min-h-screen">
-      <SidebarRegister
+      <Head>
+        <title>{`${label} · Cadastro · Vitryne`}</title>
+      </Head>
+
+      <RegisterSidebar
         steps={STEPS}
         stepIndex={stepIndex}
         selectStep={(i) => setStepIndex(i)}
       />
       <main className="flex-1 bg-screen py-16 px-56">
-        <Component
+        <Component data={formData} onChange={updateData} errors={errors} />
+        <StepFooter
+          isLastStep={isLastStep}
+          data={formData}
+          validate={validate}
           onNext={nextStep}
-          onBack={stepIndex > 0 ? previousStep : undefined}
+          onBack={previousStep}
         />
       </main>
     </div>

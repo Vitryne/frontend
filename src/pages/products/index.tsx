@@ -4,8 +4,8 @@ import DeactivateProductModal from "@/components/features/panel/products/compone
 import DeleteBlockedModal from "@/components/features/panel/products/components/list/delete-blocked-modal";
 import ProductEmpty from "@/components/features/panel/products/components/list/product-empty";
 import ProductTable from "@/components/features/panel/products/components/list/product-table";
-import ProductFilters from "@/components/features/panel/products/components/list/produtc-filters";
-import { PRODUCTS_MOCK } from "@/components/features/panel/products/products-mock";
+import ProductFilters from "@/components/features/panel/products/components/list/product-filters";
+import { PRODUCTS_MOCK } from "@/mocks/products-mock";
 import { hasCriticalStock } from "@/components/features/panel/products/stock";
 import {
   Product,
@@ -200,7 +200,7 @@ const Products: React.FC = ({}) => {
             <>
               <p className="text-[.75rem] text-text-tertiary">
                 Mostrando {pageStart + 1}–{pageStart + pagedProducts.length} de{" "}
-                {products.length} produtos
+                {filteredProducts.length} produtos
               </p>
               <Pagination
                 page={currentPage}

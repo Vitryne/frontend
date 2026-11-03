@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PanelSidebar from "@/components/features/panel/components/panel-sidebar";
 import PanelTopbar from "@/components/features/panel/components/panel-topbar";
+import Head from "next/head";
 
 interface Props {
   title: string;
@@ -13,12 +14,16 @@ const PanelLayout: React.FC<Props> = ({ title, subtitle, children }) => {
 
   return (
     <div className="flex min-h-screen">
+      <Head>
+        <title>{`${title} · Vitryne`}</title>
+      </Head>
+
       <PanelSidebar
         storeName="Atelier Norte"
         storeOpen={storeOpen}
         onToggleStore={setStoreOpen}
       />
-      <div className="flex flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col">
         <PanelTopbar title={title} subtitle={subtitle} />
         <main className="flex-1 bg-screen px-10 py-8">{children}</main>
       </div>

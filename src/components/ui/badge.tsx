@@ -1,12 +1,13 @@
 interface Props {
   title: string;
-  variant?: "neutral" | "primary" | "danger";
+  variant?: "neutral" | "primary" | "brand" | "danger";
   size?: "sm" | "md";
 }
 
 const VARIANTS = {
   neutral: "bg-cream text-text-primary",
   primary: "bg-primary-soft text-primary-hover",
+  brand: "bg-primary text-text-on-brand",
   danger: "bg-danger-soft text-danger",
 };
 

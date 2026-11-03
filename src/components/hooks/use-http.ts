@@ -1,4 +1,5 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { getToken } from "@/lib/auth-storage";
 
 export const useHttp = () => {
   const http = axios.create({
@@ -6,6 +7,16 @@ export const useHttp = () => {
     headers: {
       "Content-Type": "application/json",
     },
+  });
+
+  http.interceptors.request.use((config) => {
+    const token = getToken();
+
+    if (token && !config.url?.startsWith("/auth/")) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
   });
 
   http.interceptors.response.use(
