@@ -6,6 +6,7 @@ interface Props {
   onChange?: (checked: boolean) => void;
   indeterminate?: boolean;
   disabled?: boolean;
+  error?: boolean;
 }
 
 const CheckBox: React.FC<Props> = ({
@@ -13,6 +14,7 @@ const CheckBox: React.FC<Props> = ({
   onChange,
   indeterminate = false,
   disabled,
+  error,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,7 +33,7 @@ const CheckBox: React.FC<Props> = ({
         defaultChecked={checked === undefined ? true : undefined}
         onChange={(e) => onChange?.(e.target.checked)}
         disabled={disabled}
-        className="peer size-full cursor-pointer appearance-none rounded-md border-[1.5px] border-border-strong bg-surface outline-none transition-colors duration-200 hover:border-text-tertiary checked:border-primary checked:bg-primary indeterminate:border-primary indeterminate:bg-primary focus-visible:ring-2 focus-visible:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-50"
+        className={`peer size-full cursor-pointer appearance-none rounded-md border-[1.5px] ${error ? "border-danger" : "border-border-strong"} bg-surface outline-none transition-colors duration-200 hover:border-text-tertiary checked:border-primary checked:bg-primary indeterminate:border-primary indeterminate:bg-primary focus-visible:ring-2 focus-visible:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-50`}
       />
       <FaCheck
         size={10}

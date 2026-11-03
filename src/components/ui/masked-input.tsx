@@ -7,6 +7,7 @@ interface Props {
   placeholder?: string;
   className?: string;
   title?: string;
+  error?: string;
 }
 
 const MaskedInput: React.FC<Props> = ({
@@ -16,9 +17,10 @@ const MaskedInput: React.FC<Props> = ({
   placeholder,
   className,
   title,
+  error,
 }) => {
   return (
-    <div className="w-full">
+    <div className="w-full" data-error={error ? "true" : undefined}>
       <label className="mb-1.5 block text-[12px] font-semibold text-text-primary">
         {title}
       </label>
@@ -31,10 +33,15 @@ const MaskedInput: React.FC<Props> = ({
           className={
             className
               ? className
-              : "w-full rounded-xl bg-surface border border-border-strong h-11 px-3.5 pr-10 text-[13px] text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border-strong"
+              : `w-full rounded-xl bg-surface border h-11 px-3.5 pr-10 text-[13px] text-text-primary outline-none ${
+                  error
+                    ? "border-danger focus:border-danger focus:ring-2 focus:ring-danger/20"
+                    : "border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border-strong"
+                }`
           }
         />
       </div>
+      {error && <p className="mt-1.5 text-[12px] text-danger">{error}</p>}
     </div>
   );
 };

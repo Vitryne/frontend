@@ -1,20 +1,21 @@
 import StepHeader from "@/components/features/store-register/components/header";
 import { FiCheck } from "react-icons/fi";
 import MaskedInput from "@/components/ui/masked-input";
-import { useState } from "react";
+import type { StepProps } from "@/interfaces/register-form";
+import { BankAccountType } from "@/interfaces/register-interface";
 import Input from "@/components/ui/input";
 import SelectField from "@/components/ui/select-field";
 import { BANKS_MOCK } from "@/mocks/banks-mock";
 
-const ACC_TYPE = ["Conta corrente", "Conta poupança", "Conta pagamento"];
+const ACC_TYPES = [
+  { value: BankAccountType.CHECKING, label: "Conta corrente" },
+  { value: BankAccountType.SAVINGS, label: "Conta poupança" },
+  { value: BankAccountType.PAYMENT, label: "Conta pagamento" },
+];
 
-const StepBankDetails = () => {
-  const [accType, setAccType] = useState("Conta corrente");
-  const [holderDocument, setHolderDocument] = useState("");
-  const [bank, setBank] = useState("");
-
+const StepBankDetails = ({ data, onChange, errors }: StepProps) => {
   const documentMask =
-    holderDocument.replace(/\D/g, "").length > 11
+    data.holderDocument.replace(/\D/g, "").length > 11
       ? "00.000.000/0000-00"
       : "000.000.000-000";
 
@@ -39,14 +40,18 @@ const StepBankDetails = () => {
           <Input
             title="Titular da conta *"
             placeholder="Atelier Norte Comércio de Moda LTDA"
+            value={data.holderName}
+            onChange={(holderName) => onChange({ holderName })}
+            error={errors.holderName}
           />
         </div>
 
         <div className="col-span-12">
           <MaskedInput
             mask={documentMask}
-            value={holderDocument}
-            onAccept={setHolderDocument}
+            value={data.holderDocument}
+            onAccept={(holderDocument) => onChange({ holderDocument })}
+            error={errors.holderDocument}
             placeholder="34.221.876/0001-44"
             title="CPF/CNPJ do titular *"
           />
@@ -58,21 +63,21 @@ const StepBankDetails = () => {
           </p>
 
           <div className="flex flex-wrap gap-3">
-            {ACC_TYPE.map((type) => {
-              const active = accType === type;
+            {ACC_TYPES.map(({ value, label }) => {
+              const active = data.accountType === value;
 
               return (
                 <button
-                  key={type}
+                  key={value}
                   type="button"
-                  onClick={() => setAccType(type)}
+                  onClick={() => onChange({ accountType: value })}
                   className={`cursor-pointer rounded-xl border px-5 py-2.5 text-[13px] font-semibold transition-colors ${
                     active
                       ? "border-primary bg-primary-soft text-primary-hover"
                       : "border-border-strong bg-surface text-text-primary hover:border-primary"
                   }`}
                 >
-                  {type}
+                  {label}
                 </button>
               );
             })}
@@ -84,22 +89,39 @@ const StepBankDetails = () => {
             title="Banco *"
             placeholder="Selecione o banco"
             options={BANKS_MOCK}
-            value={bank}
-            onChange={setBank}
+            value={data.bank}
+            onChange={(bank) => onChange({ bank })}
+            error={!!errors.bank}
           />
         </div>
 
         <div className="col-span-3">
-          <Input title="Agência *" placeholder="3421" inputMode="numeric" />
+          <Input
+            title="Agência *"
+            placeholder="3421"
+            inputMode="numeric"
+            value={data.agency}
+            onChange={(agency) => onChange({ agency })}
+            error={errors.agency}
+          />
         </div>
         <div className="col-span-4">
-          <Input title="Conta *" placeholder="00264-2" inputMode="numeric" />
+          <Input
+            title="Conta *"
+            placeholder="00264-2"
+            inputMode="numeric"
+            value={data.accountNumber}
+            onChange={(accountNumber) => onChange({ accountNumber })}
+            error={errors.accountNumber}
+          />
         </div>
 
         <div className="col-span-12">
           <Input
             title="Chave PIX"
             placeholder="pagamento@vitryne.com (opcional)"
+            value={data.pixKey}
+            onChange={(pixKey) => onChange({ pixKey })}
           />
         </div>
       </div>

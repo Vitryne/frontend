@@ -1,16 +1,8 @@
 import StepHeader from "@/components/features/store-register/components/header";
 import { FiClock } from "react-icons/fi";
-import { useState } from "react";
+import { closedDay, openDay } from "@/interfaces/register-form";
+import type { StepProps } from "@/interfaces/register-form";
 import Switch from "@/components/ui/switch";
-
-interface BusinessDay {
-  name: string;
-  open: boolean;
-  openMorning: string;
-  closeMorning: string;
-  openAfternoon: string;
-  closeAfternoon: string;
-}
 
 type TimeField =
   "openMorning" | "closeMorning" | "openAfternoon" | "closeAfternoon";
@@ -26,40 +18,6 @@ const PERIODS: { label: string; open: TimeField; close: TimeField }[] = [
     open: "openAfternoon",
     close: "closeAfternoon",
   },
-];
-
-const openDay = (
-  name: string,
-  openMorning: string,
-  closeMorning: string,
-  openAfternoon = "",
-  closeAfternoon = "",
-): BusinessDay => ({
-  name,
-  open: true,
-  openMorning,
-  closeMorning,
-  openAfternoon,
-  closeAfternoon,
-});
-
-const closedDay = (name: string): BusinessDay => ({
-  name,
-  open: false,
-  openMorning: "",
-  closeMorning: "",
-  openAfternoon: "",
-  closeAfternoon: "",
-});
-
-const DEFAULT_DAYS: BusinessDay[] = [
-  openDay("Segunda", "09:00", "12:00", "13:30", "20:00"),
-  openDay("Terça", "09:00", "12:00", "13:30", "20:00"),
-  openDay("Quarta", "09:00", "12:00", "13:30", "20:00"),
-  openDay("Quinta", "09:00", "12:00", "13:30", "20:00"),
-  openDay("Sexta", "09:00", "12:00", "13:30", "22:00"),
-  openDay("Sábado", "10:00", "13:00"),
-  closedDay("Domingo"),
 ];
 
 const WEEK_DAYS = [
@@ -90,35 +48,34 @@ const CUSTOM_PRESET = "Personalizado";
 
 const PRESET_OPTIONS = [CUSTOM_PRESET, ...PRESETS.map((preset) => preset.name)];
 
-const StepBusinessHours = () => {
-  const [days, setDays] = useState(DEFAULT_DAYS);
-  const [activePreset, setActivePreset] = useState(
-    "Comercial (Seg-Sex 8h-18h)",
-  );
+const StepBusinessHours = ({ data, onChange, errors }: StepProps) => {
+  const days = data.businessDays;
+  const activePreset = data.hoursPreset;
 
   const selectPreset = (name: string) => {
     const preset = PRESETS.find((p) => p.name === name);
-
-    if (preset) setDays(preset.days);
-    setActivePreset(name);
+    onChange({
+      hoursPreset: name,
+      ...(preset && { businessDays: preset.days }),
+    });
   };
 
   const toggleDay = (i: number) => {
-    setDays((current) =>
-      current.map((day, index) =>
+    onChange({
+      businessDays: days.map((day, index) =>
         index === i ? { ...day, open: !day.open } : day,
       ),
-    );
-    setActivePreset(CUSTOM_PRESET);
+      hoursPreset: CUSTOM_PRESET,
+    });
   };
 
   const changeHour = (i: number, field: TimeField, value: string) => {
-    setDays((current) =>
-      current.map((day, index) =>
+    onChange({
+      businessDays: days.map((day, index) =>
         index === i ? { ...day, [field]: value } : day,
       ),
-    );
-    setActivePreset(CUSTOM_PRESET);
+      hoursPreset: CUSTOM_PRESET,
+    });
   };
 
   return (
@@ -148,6 +105,10 @@ const StepBusinessHours = () => {
           );
         })}
       </div>
+
+      {errors["hours.none"] && (
+        <p className="mt-4 text-[12px] text-danger">{errors["hours.none"]}</p>
+      )}
 
       <div className="rounded-2xl border border-border-strong bg-surface px-5 mt-6">
         <div className="flex items-center gap-6 border-b border-border py-3">
@@ -183,30 +144,38 @@ const StepBusinessHours = () => {
               </span>
             </div>
 
-            {PERIODS.map((period) => (
-              <div
-                key={period.label}
-                className="flex flex-1 items-center justify-center gap-2"
-              >
-                <input
-                  type="time"
-                  value={day[period.open]}
-                  disabled={!day.open}
-                  onChange={(e) => changeHour(i, period.open, e.target.value)}
-                  className="h-10 w-full max-w-30 rounded-xl border border-border-strong bg-surface px-3 text-center text-[13px] text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:border-border disabled:bg-screen disabled:text-text-disabled"
-                />
-                <span className="shrink-0 text-[12px] text-text-tertiary">
-                  até
-                </span>
-                <input
-                  type="time"
-                  value={day[period.close]}
-                  disabled={!day.open}
-                  onChange={(e) => changeHour(i, period.close, e.target.value)}
-                  className="h-10 w-full max-w-30 rounded-xl border border-border-strong bg-surface px-3 text-center text-[13px] text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:border-border disabled:bg-screen disabled:text-text-disabled"
-                />
-              </div>
-            ))}
+            {PERIODS.map((period) => {
+              const periodKey =
+                period.open === "openMorning" ? "morning" : "afternoon";
+              const periodError = !!errors[`hours.${i}.${periodKey}`];
+
+              return (
+                <div
+                  key={period.label}
+                  className="flex flex-1 items-center justify-center gap-2"
+                >
+                  <input
+                    type="time"
+                    value={day[period.open]}
+                    disabled={!day.open}
+                    onChange={(e) => changeHour(i, period.open, e.target.value)}
+                    className={`h-10 w-full max-w-30 rounded-xl border ${periodError ? "border-danger" : "border-border-strong"} bg-surface px-3 text-center text-[13px] text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:border-border disabled:bg-screen disabled:text-text-disabled`}
+                  />
+                  <span className="shrink-0 text-[12px] text-text-tertiary">
+                    até
+                  </span>
+                  <input
+                    type="time"
+                    value={day[period.close]}
+                    disabled={!day.open}
+                    onChange={(e) =>
+                      changeHour(i, period.close, e.target.value)
+                    }
+                    className={`h-10 w-full max-w-30 rounded-xl border ${periodError ? "border-danger" : "border-border-strong"} bg-surface px-3 text-center text-[13px] text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:border-border disabled:bg-screen disabled:text-text-disabled`}
+                  />
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>
