@@ -11,7 +11,7 @@ export const useHttp = () => {
 
   http.interceptors.request.use((config) => {
     const token = getToken();
-    
+
     if (token && !config.url?.startsWith("/auth/")) {
       config.headers.Authorization = `Bearer ${token}`;
     }

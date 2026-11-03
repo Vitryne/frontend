@@ -8,4 +8,3 @@ export interface LoginResponseDTO {
   tokenType: string;
   expiresIn: number;
 }
-

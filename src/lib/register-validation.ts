@@ -114,7 +114,6 @@ const validateHours = (d: RegisterFormData): StepErrors => {
   return errors;
 };
 
-
 const VALIDATORS = [
   validateStore,
   validateBank,
