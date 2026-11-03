@@ -5,8 +5,7 @@ import type {
   RegisterStoreRequestDTO,
 } from "@/interfaces/register-interface";
 
-// BETA: enquanto o upload de imagens não existe, todo cadastro usa estas URLs.
-// Trocar pelas URLs devolvidas pelo upload (ex: Cloudflare R2) quando ele existir.
+// essas duas URLS estão indo como padrão por em quanto até eu integrar o CloudFlareR2 no back-end para hospedar imagensß
 export const DEFAULT_LOGO_URL = "https://placehold.co/512x512.png";
 export const DEFAULT_BANNER_URL = "https://placehold.co/1600x480.png";
 

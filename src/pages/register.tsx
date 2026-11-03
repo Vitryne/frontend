@@ -29,8 +29,6 @@ const Register = () => {
   const [attempted, setAttempted] = useState<number[]>([]);
   const { label, Component } = STEPS[stepIndex];
 
-  // Os erros só aparecem depois da primeira tentativa de avançar na etapa
-  // e atualizam sozinhos conforme o usuário preenche.
   const errors = attempted.includes(stepIndex)
     ? validateStep(stepIndex, formData)
     : {};

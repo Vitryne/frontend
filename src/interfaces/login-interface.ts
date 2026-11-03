@@ -4,8 +4,8 @@ export interface LoginRequestDTO {
 }
 
 export interface LoginResponseDTO {
-    accessToken: string;
-    tokenType: string;
-    expiresIn: number;
+  accessToken: string;
+  tokenType: string;
+  expiresIn: number;
 }
 

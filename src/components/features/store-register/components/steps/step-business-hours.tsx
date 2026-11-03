@@ -54,7 +54,6 @@ const StepBusinessHours = ({ data, onChange, errors }: StepProps) => {
 
   const selectPreset = (name: string) => {
     const preset = PRESETS.find((p) => p.name === name);
-
     onChange({
       hoursPreset: name,
       ...(preset && { businessDays: preset.days }),
