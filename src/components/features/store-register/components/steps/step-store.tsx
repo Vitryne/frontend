@@ -2,20 +2,14 @@ import { FiUser } from "react-icons/fi";
 import ButtonGoogle from "@/components/ui/button-google";
 import { FcGoogle } from "react-icons/fc";
 import Input from "@/components/ui/input";
-import { useState } from "react";
+import type { StepProps } from "@/interfaces/register-form";
 import SelectUf from "@/components/ui/select-uf";
 import MaskedInput from "@/components/ui/masked-input";
 import StepHeader from "@/components/features/store-register/components/header";
 import CheckBox from "@/components/ui/checkbox";
 import Textarea from "@/components/ui/textarea";
 
-const StepStore = () => {
-  const [uf, setUf] = useState("");
-  const [cep, setCep] = useState("");
-  const [cnpj, setCnpj] = useState("");
-  const [tel, setTel] = useState("");
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-
+const StepStore = ({ data, onChange, errors }: StepProps) => {
   return (
     <div>
       <StepHeader
@@ -51,6 +45,9 @@ const StepStore = () => {
           title="E-mail *"
           placeholder="lojista@vitryne.com"
           type="email"
+          value={data.email}
+          onChange={(email) => onChange({ email })}
+          error={errors.email}
         />
 
         <div className="grid grid-cols-2 gap-4 pt-5">
@@ -59,6 +56,9 @@ const StepStore = () => {
               title=" Senha *"
               placeholder="Digite sua senha"
               type="password"
+              value={data.password}
+              onChange={(password) => onChange({ password })}
+              error={errors.password}
             />
             <p className="pt-2 text-[12px] text-text-secondary">
               Mínimo 6 caracteres, com 1 número e 1 letra maiúscula.
@@ -68,6 +68,9 @@ const StepStore = () => {
             title="Confirmar senha *"
             placeholder="Confirme sua senha"
             type="password"
+            value={data.confirmPassword}
+            onChange={(confirmPassword) => onChange({ confirmPassword })}
+            error={errors.confirmPassword}
           />
         </div>
       </div>
@@ -77,14 +80,21 @@ const StepStore = () => {
           <span className="absolute right-0 top-0 text-[12px] text-text-tertiary">
             Como aparece para o cliente
           </span>
-          <Input title="Nome da loja *" placeholder="Atelier Norte" />
+          <Input
+            title="Nome da loja *"
+            placeholder="Atelier Norte"
+            value={data.name}
+            onChange={(name) => onChange({ name })}
+            error={errors.name}
+          />
         </div>
 
         <div className="col-span-6">
           <MaskedInput
             mask="00.000.000/0000-00"
-            value={cnpj}
-            onAccept={setCnpj}
+            value={data.cnpj}
+            onAccept={(cnpj) => onChange({ cnpj })}
+            error={errors.cnpj}
             placeholder="34.221.876/0001-44"
             title="CNPJ *"
           />
@@ -92,8 +102,9 @@ const StepStore = () => {
         <div className="col-span-6">
           <MaskedInput
             mask="(00) 00000-0000"
-            value={tel}
-            onAccept={setTel}
+            value={data.phone}
+            onAccept={(phone) => onChange({ phone })}
+            error={errors.phone}
             placeholder="Telefone para contato"
             title="Telefone *"
           />
@@ -103,6 +114,9 @@ const StepStore = () => {
           <Input
             title="Razão social *"
             placeholder="Atelier Norte Comércio de Moda LTDA"
+            value={data.legalName}
+            onChange={(legalName) => onChange({ legalName })}
+            error={errors.legalName}
           />
         </div>
 
@@ -111,38 +125,75 @@ const StepStore = () => {
             title="Descrição da loja"
             placeholder="Descrição da sua loja. Ela aparecerá para o cliente."
             maxLength={200}
+            value={data.description}
+            onChange={(description) => onChange({ description })}
           />
         </div>
 
         <div className="col-span-2">
           <MaskedInput
             mask="00000-000"
-            value={cep}
-            onAccept={setCep}
+            value={data.zipCode}
+            onAccept={(zipCode) => onChange({ zipCode })}
+            error={errors.zipCode}
             placeholder="87020-190"
             title="CEP *"
           />
         </div>
         <div className="col-span-8">
-          <Input title="Endereço *" placeholder="R. Paranaguá" />
+          <Input
+            title="Endereço *"
+            placeholder="R. Paranaguá"
+            value={data.street}
+            onChange={(street) => onChange({ street })}
+            error={errors.street}
+          />
         </div>
         <div className="col-span-2">
-          <Input title="Número *" placeholder="123" inputMode="numeric" />
+          <Input
+            title="Número *"
+            placeholder="123"
+            inputMode="numeric"
+            value={data.number}
+            onChange={(number) => onChange({ number })}
+            error={errors.number}
+          />
         </div>
 
         <div className="col-span-5">
-          <Input title="Bairro *" placeholder="Jardim das Flores" />
+          <Input
+            title="Bairro *"
+            placeholder="Jardim das Flores"
+            value={data.neighborhood}
+            onChange={(neighborhood) => onChange({ neighborhood })}
+            error={errors.neighborhood}
+          />
         </div>
         <div className="col-span-5">
-          <Input title="Cidade *" placeholder="Maringá" />
+          <Input
+            title="Cidade *"
+            placeholder="Maringá"
+            value={data.city}
+            onChange={(city) => onChange({ city })}
+            error={errors.city}
+          />
         </div>
         <div className="col-span-2">
-          <SelectUf title="UF *" value={uf} onChange={setUf} />
+          <SelectUf
+            title="UF *"
+            value={data.state}
+            onChange={(state) => onChange({ state })}
+            error={!!errors.state}
+          />
         </div>
       </div>
 
       <label className="mt-6 flex cursor-pointer items-center gap-2.5 text-[13px] text-text-secondary">
-        <CheckBox checked={acceptedTerms} onChange={setAcceptedTerms} />
+        <CheckBox
+          checked={data.acceptedTerms}
+          onChange={(acceptedTerms) => onChange({ acceptedTerms })}
+          error={!!errors.acceptedTerms}
+        />
         <span>
           Declaro que li e aceito os{" "}
           <a href="#" className="text-primary underline">
@@ -155,6 +206,9 @@ const StepStore = () => {
           .
         </span>
       </label>
+      {errors.acceptedTerms && (
+        <p className="mt-2 text-[12px] text-danger">{errors.acceptedTerms}</p>
+      )}
     </div>
   );
 };

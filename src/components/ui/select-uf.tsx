@@ -5,6 +5,7 @@ interface Props {
   title?: string;
   value?: string;
   onChange: (value: string) => void;
+  error?: boolean;
 }
 
 const states = [
@@ -37,7 +38,7 @@ const states = [
   { acronym: "TO", name: "Tocantins" },
 ];
 
-const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
+const SelectUf: React.FC<Props> = ({ title, value, onChange, error }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -58,7 +59,11 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
   }, []);
 
   return (
-    <div className="w-full" ref={containerRef}>
+    <div
+      className="w-full"
+      ref={containerRef}
+      data-error={error ? "true" : undefined}
+    >
       <label className="mb-1.5 block text-[12px] font-semibold text-text-primary">
         {title}
       </label>
@@ -67,7 +72,11 @@ const SelectUf: React.FC<Props> = ({ title, value, onChange }) => {
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="w-full flex items-center justify-between rounded-xl bg-surface border border-border-strong h-11 px-3.5 text-[13px] text-text-primary outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border-strong"
+          className={`w-full flex items-center justify-between rounded-xl bg-surface border h-11 px-3.5 text-[13px] text-text-primary outline-none transition-colors ${
+            error
+              ? "border-danger focus:border-danger focus:ring-2 focus:ring-danger/20"
+              : "border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border-strong"
+          }`}
         >
           <span
             className={selected ? "text-text-primary" : "text-text-secondary"}

@@ -1,6 +1,8 @@
 import StepHeader from "@/components/features/store-register/components/header";
 import { FiCheck } from "react-icons/fi";
 import { useState } from "react";
+import Input from "@/components/ui/input";
+import type { StepProps } from "@/interfaces/register-form";
 
 const CATEGORIES = [
   "Moda feminina",
@@ -34,15 +36,16 @@ const TAGS = [
   "Acessórios",
 ];
 
-const PREP_TIMER = ["15 min", "30 min", "45 min", "60 min", "Personalizado"];
+const PREP_PRESETS = [15, 30, 45, 60];
 
-const StepCategory = () => {
-  const [category, setCategory] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+const StepCategory = ({ data, onChange, errors }: StepProps) => {
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showAllTags, setShowAllTags] = useState(false);
-  const [radius, setRadius] = useState(12);
-  const [prepTime, setPrepTime] = useState("30 min");
+  const [isCustomPrep, setIsCustomPrep] = useState(
+    !PREP_PRESETS.includes(data.preparationTimeMinutes),
+  );
+
+  const { mainCategory, tags, deliveryRadiusKm: radius } = data;
 
   const visibleCategories = showAllCategories
     ? CATEGORIES
@@ -52,11 +55,9 @@ const StepCategory = () => {
   const radiusPercent = ((radius - 1) / (50 - 1)) * 100;
 
   const toggleTag = (tag: string) => {
-    setTags((current) =>
-      current.includes(tag)
-        ? current.filter((t) => t !== tag)
-        : [...current, tag],
-    );
+    onChange({
+      tags: tags.includes(tag) ? tags.filter((t) => t !== tag) : [...tags, tag],
+    });
   };
 
   return (
@@ -70,16 +71,19 @@ const StepCategory = () => {
         <p className="mb-2 text-[14px] font-semibold text-text-primary">
           Categoria principal da loja
         </p>
+        {errors.mainCategory && (
+          <p className="mb-2 text-[12px] text-danger">{errors.mainCategory}</p>
+        )}
 
         <div className="flex flex-wrap gap-3">
           {visibleCategories.map((item) => {
-            const active = category === item;
+            const active = mainCategory === item;
 
             return (
               <button
                 key={item}
                 type="button"
-                onClick={() => setCategory(item)}
+                onClick={() => onChange({ mainCategory: item })}
                 className={`h-11 w-35 cursor-pointer rounded-2xl border text-[14px] font-semibold transition-colors ${
                   active
                     ? "border-primary bg-primary text-white shadow-lg shadow-primary/30"
@@ -157,7 +161,9 @@ const StepCategory = () => {
             min={1}
             max={50}
             value={radius}
-            onChange={(e) => setRadius(Number(e.target.value))}
+            onChange={(e) =>
+              onChange({ deliveryRadiusKm: Number(e.target.value) })
+            }
             style={{
               background: `linear-gradient(to right, var(--color-primary) ${radiusPercent}%, var(--color-border) ${radiusPercent}%)`,
             }}
@@ -178,25 +184,58 @@ const StepCategory = () => {
         </p>
 
         <div className="flex flex-wrap gap-3">
-          {PREP_TIMER.map((time) => {
-            const active = prepTime === time;
+          {PREP_PRESETS.map((minutes) => {
+            const active =
+              !isCustomPrep && data.preparationTimeMinutes === minutes;
 
             return (
               <button
-                key={time}
+                key={minutes}
                 type="button"
-                onClick={() => setPrepTime(time)}
+                onClick={() => {
+                  setIsCustomPrep(false);
+                  onChange({ preparationTimeMinutes: minutes });
+                }}
                 className={`h-11 cursor-pointer rounded-2xl border px-6 text-[14px] font-semibold transition-colors ${
                   active
                     ? "border-primary bg-primary-soft-2 text-primary-hover"
                     : "border-border-strong bg-surface text-text-primary hover:border-primary"
                 }`}
               >
-                {time}
+                {`${minutes} min`}
               </button>
             );
           })}
+
+          <button
+            type="button"
+            onClick={() => setIsCustomPrep(true)}
+            className={`h-11 cursor-pointer rounded-2xl border px-6 text-[14px] font-semibold transition-colors ${
+              isCustomPrep
+                ? "border-primary bg-primary-soft-2 text-primary-hover"
+                : "border-border-strong bg-surface text-text-primary hover:border-primary"
+            }`}
+          >
+            Personalizado
+          </button>
         </div>
+
+        {isCustomPrep && (
+          <div className="mt-3 w-48">
+            <Input
+              title="Minutos"
+              placeholder="Ex: 20"
+              error={errors.preparationTimeMinutes}
+              inputMode="numeric"
+              value={String(data.preparationTimeMinutes || "")}
+              onChange={(v) =>
+                onChange({
+                  preparationTimeMinutes: Number(v.replace(/\D/g, "")),
+                })
+              }
+            />
+          </div>
+        )}
       </div>
     </div>
   );

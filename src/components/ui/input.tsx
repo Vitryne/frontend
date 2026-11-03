@@ -8,6 +8,9 @@ interface Props {
   inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
   disabled?: boolean;
   defaultValue?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  error?: string;
 }
 
 const Input: React.FC<Props> = ({
@@ -18,11 +21,14 @@ const Input: React.FC<Props> = ({
   inputMode,
   disabled,
   defaultValue,
+  value,
+  onChange,
+  error,
 }) => {
   const id = useId();
 
   return (
-    <div className="w-full">
+    <div className="w-full" data-error={error ? "true" : undefined}>
       {title && (
         <label
           htmlFor={id}
@@ -38,8 +44,14 @@ const Input: React.FC<Props> = ({
           inputMode={inputMode}
           placeholder={placeholder}
           disabled={disabled}
-          defaultValue={defaultValue}
-          className={`h-11 w-full rounded-xl border border-border-strong bg-surface px-3.5 text-[13px] text-text-primary outline-none placeholder:text-text-disabled hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:border-border disabled:bg-screen disabled:text-text-disabled ${
+          defaultValue={value === undefined ? defaultValue : undefined}
+          value={value}
+          onChange={onChange ? (e) => onChange(e.target.value) : undefined}
+          className={`h-11 w-full rounded-xl border bg-surface px-3.5 text-[13px] text-text-primary outline-none placeholder:text-text-disabled ${
+            error
+              ? "border-danger focus:border-danger focus:ring-2 focus:ring-danger/20"
+              : "border-border-strong hover:border-border-strong focus:border-primary focus:ring-2 focus:ring-primary/20"
+          } disabled:cursor-not-allowed disabled:border-border disabled:bg-screen disabled:text-text-disabled ${
             icon ? "pr-10" : ""
           }`}
         />
@@ -50,6 +62,7 @@ const Input: React.FC<Props> = ({
           </span>
         )}
       </div>
+      {error && <p className="mt-1.5 text-[12px] text-danger">{error}</p>}
     </div>
   );
 };

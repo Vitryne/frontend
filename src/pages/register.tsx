@@ -5,6 +5,11 @@ import StepIdentity from "@/components/features/store-register/components/steps/
 import StepStore from "@/components/features/store-register/components/steps/step-store";
 import RegisterSidebar from "@/components/features/store-register/components/register-sidebar";
 import StepFooter from "@/components/features/store-register/components/footer";
+import {
+  INITIAL_REGISTER_DATA,
+  RegisterFormData,
+} from "@/interfaces/register-form";
+import { validateStep } from "@/lib/register-validation";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -20,13 +25,45 @@ const STEPS = [
 const Register = () => {
   const router = useRouter();
   const [stepIndex, setStepIndex] = useState(0);
+  const [formData, setFormData] = useState(INITIAL_REGISTER_DATA);
+  const [attempted, setAttempted] = useState<number[]>([]);
   const { label, Component } = STEPS[stepIndex];
+
+  // Os erros só aparecem depois da primeira tentativa de avançar na etapa
+  // e atualizam sozinhos conforme o usuário preenche.
+  const errors = attempted.includes(stepIndex)
+    ? validateStep(stepIndex, formData)
+    : {};
+
+  const updateData = (fields: Partial<RegisterFormData>) =>
+    setFormData((prev) => ({ ...prev, ...fields }));
 
   const isFirstStep = stepIndex === 0;
   const isLastStep = stepIndex === STEPS.length - 1;
 
-  const nextStep = () =>
-    isLastStep ? router.replace("/dashboard") : setStepIndex(stepIndex + 1);
+  // Na última etapa revalida todas, porque dá para voltar e apagar algo.
+  const validate = () => {
+    const lastToCheck = isLastStep ? STEPS.length - 1 : stepIndex;
+
+    for (let i = 0; i <= lastToCheck; i++) {
+      if (Object.keys(validateStep(i, formData)).length === 0) continue;
+
+      setAttempted((prev) => (prev.includes(i) ? prev : [...prev, i]));
+      setStepIndex(i);
+      setTimeout(
+        () =>
+          document
+            .querySelector("[data-error='true']")
+            ?.scrollIntoView({ behavior: "smooth", block: "center" }),
+        50,
+      );
+      return false;
+    }
+
+    return true;
+  };
+
+  const nextStep = () => setStepIndex(stepIndex + 1);
   const previousStep = () =>
     isFirstStep ? router.push("/login") : setStepIndex(stepIndex - 1);
 
@@ -42,9 +79,11 @@ const Register = () => {
         selectStep={(i) => setStepIndex(i)}
       />
       <main className="flex-1 bg-screen py-16 px-56">
-        <Component />
+        <Component data={formData} onChange={updateData} errors={errors} />
         <StepFooter
           isLastStep={isLastStep}
+          data={formData}
+          validate={validate}
           onNext={nextStep}
           onBack={previousStep}
         />

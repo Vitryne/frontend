@@ -8,6 +8,7 @@ interface Props {
   options: string[];
   value: string;
   onChange: (value: string) => void;
+  error?: boolean;
 }
 
 const SelectField: React.FC<Props> = ({
@@ -17,13 +18,18 @@ const SelectField: React.FC<Props> = ({
   options,
   value,
   onChange,
+  error,
 }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const id = useId();
 
   return (
-    <div className="relative w-full" ref={containerRef}>
+    <div
+      className="relative w-full"
+      ref={containerRef}
+      data-error={error ? "true" : undefined}
+    >
       {title && (
         <label
           htmlFor={id}
@@ -40,7 +46,9 @@ const SelectField: React.FC<Props> = ({
         className={`flex w-full cursor-pointer items-center justify-between rounded-xl border bg-surface h-11 px-3.5 text-[13px] outline-none transition-colors ${
           open
             ? "border-primary ring-2 ring-primary/20"
-            : "border-border-strong hover:border-border-strong"
+            : error
+              ? "border-danger"
+              : "border-border-strong hover:border-border-strong"
         }`}
       >
         <span className={value ? "text-text-primary" : "text-text-disabled"}>
