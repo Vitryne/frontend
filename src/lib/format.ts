@@ -37,6 +37,11 @@ export const formatTimeAgo = (iso: string) => {
   const hours = Math.floor(minutes / 60);
   const rest = minutes % 60;
 
+  if (hours >= 24) {
+    const days = Math.floor(hours / 24);
+    return `há ${days} ${days === 1 ? "dia" : "dias"}`;
+  }
+
   return rest === 0 ? `há ${hours} h` : `há ${hours} h ${rest}`;
 };
 
