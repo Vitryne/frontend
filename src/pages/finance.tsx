@@ -1,10 +1,11 @@
 import KpiCard from "@/components/features/panel/components/kpi-card";
 import PainelLayout from "@/components/features/panel/components/panel-layout";
 import BankAccountCard from "@/components/features/panel/finance/components/bank-account-card";
+import DailyReceiptsChart from "@/components/features/panel/finance/components/daily-receipts-chart";
 import ButtonPrimary from "@/components/ui/button-primary";
 import ButtonSecondary from "@/components/ui/button-secondary";
 import { formatChange, formatDayMonth, formatMoney, formatMoneyRounded } from "@/lib/format";
-import { BANK_ACCOUNT_MOCK, FINANCE_SUMMARY_MOCK, PAYOUTS_MOCK } from "@/mocks/finance-mock";
+import { BANK_ACCOUNT_MOCK, DAILY_RECEIPTS_MOCK, FINANCE_SUMMARY_MOCK, PAYOUTS_MOCK } from "@/mocks/finance-mock";
 import { LuDownload, LuListFilter, LuReceipt, LuTag, LuTrendingUp, LuWallet } from "react-icons/lu";
 
 const Finance: React.FC = ({}) => {
@@ -63,7 +64,7 @@ const Finance: React.FC = ({}) => {
           />
         </div>
         
-        <div className="grid gird-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-3">
           <div className="flex flex-col gap-3">
             <KpiCard
               label="Saldo disponível"
@@ -75,6 +76,9 @@ const Finance: React.FC = ({}) => {
             <BankAccountCard account={BANK_ACCOUNT_MOCK} />
           </div>
 
+          <div className="col-span-2">
+            <DailyReceiptsChart receipts={DAILY_RECEIPTS_MOCK} />
+          </div>
         </div>
       </div>
     </PainelLayout>

@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis,
 } from "recharts";
 
 interface Props {
@@ -66,7 +65,6 @@ const HourlyOrdersChart: React.FC<Props> = ({ hours }) => {
               tick={{ fontSize: 11, fill: "#6c6779" }}
               tickMargin={8}
             />
-            <YAxis hide />
 
             <Tooltip
               isAnimationActive={false}
