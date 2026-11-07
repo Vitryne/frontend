@@ -11,6 +11,7 @@ import type {
   OrderStatus,
   OrdersView,
 } from "@/components/features/panel/orders/types";
+import ButtonPrimary from "@/components/ui/button-primary";
 import {
   getOrders,
   refuseOrder,
@@ -23,11 +24,16 @@ const Orders: React.FC = () => {
   const router = useRouter();
   const view: OrdersView = router.query.view === "list" ? "list" : "kanban";
 
+  const [isMounted, setIsMounted] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loadState, setLoadState] = useState<"loading" | "error" | "ready">(
     "loading",
   );
   const [orderToRefuse, setOrderToRefuse] = useState<Order | null>(null);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     if (loadState !== "loading") return;
@@ -103,12 +109,18 @@ const Orders: React.FC = () => {
       title="Pedidos"
       subtitle={`${view === "list" ? "Lista" : "Quadro kanban"} · atualizado em tempo real`}
     >
-      {router.isReady && (
+      {isMounted && router.isReady && (
         <>
           <OrdersToolbar view={view} onViewChange={handleViewChange}>
             <PendingOrdersBanner
               orders={newOrders}
-              onAcceptAll={handleAcceptAll}
+              action={
+                <ButtonPrimary
+                  title="Aceitar todos"
+                  onClick={handleAcceptAll}
+                  className="inline-flex h-8 cursor-pointer items-center justify-center rounded-lg bg-primary px-3.5 text-[12px] font-semibold text-white transition-colors hover:bg-primary-hover"
+                />
+              }
             />
           </OrdersToolbar>
 

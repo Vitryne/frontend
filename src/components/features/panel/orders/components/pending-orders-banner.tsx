@@ -1,4 +1,3 @@
-import ButtonPrimary from "@/components/ui/button-primary";
 import {
   CONFIRM_WINDOW_MINUTES,
   getConfirmDeadline,
@@ -13,10 +12,10 @@ import { LuBell } from "react-icons/lu";
 
 interface Props {
   orders: Order[];
-  onAcceptAll: () => void;
+  action: React.ReactNode;
 }
 
-const PendingOrdersBanner: React.FC<Props> = ({ orders, onAcceptAll }) => {
+const PendingOrdersBanner: React.FC<Props> = ({ orders, action }) => {
   const now = useNow();
 
   if (orders.length === 0) return null;
@@ -55,11 +54,7 @@ const PendingOrdersBanner: React.FC<Props> = ({ orders, onAcceptAll }) => {
         </span>
       )}
 
-      <ButtonPrimary
-        title="Aceitar todos"
-        onClick={onAcceptAll}
-        className="inline-flex h-8 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-primary px-3.5 text-[12px] font-semibold text-white transition-colors hover:bg-primary-hover"
-      />
+      <div className="shrink-0">{action}</div>
     </div>
   );
 };
