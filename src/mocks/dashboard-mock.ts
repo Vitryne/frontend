@@ -1,5 +1,7 @@
 import type {
+  CriticalStockItem,
   DashboardKpis,
+  HourlyOrders,
   SalesPoint,
   TopProduct,
 } from "@/components/features/panel/dashboard/types";
@@ -75,4 +77,44 @@ export const TOP_PRODUCTS_MOCK: TopProduct[] = [
     salesCount: 14,
     revenueInCents: 250600,
   },
+];
+
+export const CRITICAL_STOCK_MOCK: CriticalStockItem[] = [
+  {
+    name: "Tênis off-white",
+    image: "/p_tenis_branco.jpg",
+    size: "39",
+    quantity: 0,
+  },
+  {
+    name: "Jaqueta de couro",
+    image: "/p_jaqueta_couro.jpg",
+    size: "P",
+    quantity: 1,
+  },
+  {
+    name: "Vestido midi floral",
+    image: "/p_vestido_floral.jpg",
+    size: "GG",
+    quantity: 2,
+  },
+  {
+    name: "Blazer oversize",
+    image: "/p_blazer_oversize.jpg",
+    size: "G",
+    quantity: 2,
+  },
+];
+
+export const HOURLY_ORDERS_MOCK: HourlyOrders[] = [
+  { hour: 9, today: 4, average: 3 },
+  { hour: 10, today: 5, average: 4 },
+  { hour: 11, today: 2, average: 3 },
+  { hour: 12, today: 5, average: 5 },
+  { hour: 13, today: 8, average: 6 },
+  { hour: 14, today: 6, average: 5 },
+  { hour: 15, today: 2, average: 3 },
+  { hour: 16, today: 7, average: 5 },
+  { hour: 17, today: 5, average: 5 },
+  { hour: 18, today: 3, average: 4 },
 ];

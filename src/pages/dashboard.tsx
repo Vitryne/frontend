@@ -1,40 +1,60 @@
 import KpiCard from "@/components/features/panel/components/kpi-card";
 import PainelLayout from "@/components/features/panel/components/panel-layout";
+import CriticalStock from "@/components/features/panel/dashboard/components/criticala-stock";
+import HourlyOrdersChart from "@/components/features/panel/dashboard/components/hourly-orders-chart";
 import SalesChart from "@/components/features/panel/dashboard/components/sales-chart";
 import TopProducts from "@/components/features/panel/dashboard/components/top-products";
 import PendingOrdersBanner from "@/components/features/panel/orders/components/pending-orders-banner";
 import { Order } from "@/components/features/panel/orders/types";
-import { formatChange, formatMoney, formatMoneyRounded, formatToday } from "@/lib/format";
-import { KPIS_MOCK, SALES_MOCK, TOP_PRODUCTS_MOCK } from "@/mocks/dashboard-mock";
+import {
+  formatChange,
+  formatMoney,
+  formatMoneyRounded,
+  formatToday,
+} from "@/lib/format";
+import {
+  CRITICAL_STOCK_MOCK,
+  HOURLY_ORDERS_MOCK,
+  KPIS_MOCK,
+  SALES_MOCK,
+  TOP_PRODUCTS_MOCK,
+} from "@/mocks/dashboard-mock";
 import { getOrders } from "@/service/orders-service";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { LuChartColumn, LuCheck, LuHeart, LuReceipt, LuStar, LuTag, LuUser, LuWallet } from "react-icons/lu";
+import {
+  LuChartColumn,
+  LuCheck,
+  LuHeart,
+  LuReceipt,
+  LuStar,
+  LuTag,
+  LuUser,
+  LuWallet,
+} from "react-icons/lu";
 
 const Dashboard: React.FC = ({}) => {
-  
-  const [today, setToday] = useState("")
-  const [newOrders, setNewOrders] = useState<Order[]>([])
+  const [today, setToday] = useState("");
+  const [newOrders, setNewOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    setToday(formatToday())
+    setToday(formatToday());
 
     getOrders()
       .then((orders) =>
-        setNewOrders(orders.filter((order) => order.status === "new"))
-    )
+        setNewOrders(orders.filter((order) => order.status === "new")),
+      )
 
-    .catch(() => setNewOrders([]))
-  }, [])
-
+      .catch(() => setNewOrders([]));
+  }, []);
 
   return (
-    <PainelLayout 
+    <PainelLayout
       title="Dashboard"
       subtitle={
         today
-        ? `Resumo da Atelier Norte - ${today} · Maringá`
-        : "Resumo da Atelier NOrte"
+          ? `Resumo da Atelier Norte - ${today} · Maringá`
+          : "Resumo da Atelier NOrte"
       }
     >
       <div className="flex flex-col gap-3">
@@ -74,7 +94,10 @@ const Dashboard: React.FC = ({}) => {
             value={`R$ ${formatMoney(KPIS_MOCK.averageTicketInCents)}`}
             icon={<LuTag size={16} />}
             trend={{
-              label: formatMoneyRounded(KPIS_MOCK.averageTicketChangeInCents, true),
+              label: formatMoneyRounded(
+                KPIS_MOCK.averageTicketChangeInCents,
+                true,
+              ),
               positive: KPIS_MOCK.averageTicketChangeInCents >= 0,
             }}
           />
@@ -122,10 +145,17 @@ const Dashboard: React.FC = ({}) => {
         </div>
 
         <div className="grid grid-cols-3 gap-3">
-            <div className="col-span-2">
-              <SalesChart sales={SALES_MOCK} />
-            </div>
-            <TopProducts products={TOP_PRODUCTS_MOCK} />
+          <div className="col-span-2">
+            <SalesChart sales={SALES_MOCK} />
+          </div>
+          <TopProducts products={TOP_PRODUCTS_MOCK} />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-3">
+        <CriticalStock items={CRITICAL_STOCK_MOCK} />
+        <div className="col-span-2">
+          <HourlyOrdersChart hours={HOURLY_ORDERS_MOCK} />
         </div>
       </div>
     </PainelLayout>

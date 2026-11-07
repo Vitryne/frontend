@@ -28,3 +28,16 @@ export interface DashboardKpis {
   reviewsCount: number;
   newReviewsToday: number;
 }
+
+export interface CriticalStockItem {
+  name: string;
+  image: string;
+  size: string;
+  quantity: number;
+}
+
+export interface HourlyOrders {
+  hour: number;
+  today: number;
+  average: number;
+}

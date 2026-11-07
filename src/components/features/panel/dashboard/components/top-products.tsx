@@ -2,10 +2,8 @@ import { TopProduct } from "@/components/features/panel/dashboard/types";
 import { formatMoneyRounded } from "@/lib/format";
 import Image from "next/image";
 
-
-
 interface Props {
-  products: TopProduct[]
+  products: TopProduct[];
 }
 
 const TopProducts: React.FC<Props> = ({ products }) => {
@@ -25,13 +23,13 @@ const TopProducts: React.FC<Props> = ({ products }) => {
               height={44}
               className="size-11 shrink-0 rounded-[10px] object-cover"
             />
-            
+
             <div className="min-w-0 flex-1">
               <p className="truncate text-[13px] font-semibold text-text-primary">
-                { product.name }
+                {product.name}
               </p>
               <p className="text-[12px] text-text-tertiary">
-                { product.salesCount } vendas
+                {product.salesCount} vendas
               </p>
             </div>
             <span className="text-[13px] font-bold whitespace-nowrap text-text-primary">
@@ -39,10 +37,9 @@ const TopProducts: React.FC<Props> = ({ products }) => {
             </span>
           </li>
         ))}
-
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default TopProducts
+export default TopProducts;
