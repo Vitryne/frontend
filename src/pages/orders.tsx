@@ -1,13 +1,16 @@
 import PanelLayout from "@/components/features/panel/components/panel-layout";
 import { getNextStatus } from "@/components/features/panel/orders/columns";
+import OrdersFiltersModal from "@/components/features/panel/orders/components/filters/orders-filters-modal";
 import OrdersBoard from "@/components/features/panel/orders/components/kanban/orders-board";
 import OrdersTable from "@/components/features/panel/orders/components/list/orders-table";
 import OrdersError from "@/components/features/panel/orders/components/orders-error";
 import OrdersToolbar from "@/components/features/panel/orders/components/orders-toolbar";
 import PendingOrdersBanner from "@/components/features/panel/orders/components/pending-orders-banner";
 import RefuseOrderModal from "@/components/features/panel/orders/components/refuse-order-modal";
+import { EMPTY_FILTERS, filterOrders } from "@/components/features/panel/orders/filters";
 import type {
   Order,
+  OrderFilters,
   OrderStatus,
   OrdersView,
 } from "@/components/features/panel/orders/types";
@@ -30,6 +33,9 @@ const Orders: React.FC = () => {
     "loading",
   );
   const [orderToRefuse, setOrderToRefuse] = useState<Order | null>(null);
+
+  const [filters, setFilters] = useState<OrderFilters>(EMPTY_FILTERS);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -85,6 +91,11 @@ const Orders: React.FC = () => {
 
   const newOrders = orders.filter((order) => order.status === "new");
 
+  const visibleOrders = filterOrders(
+    orders,
+    view === "list" ? filters : { ...filters, statuses: [] },
+  );
+
   const handleAcceptAll = () => {
     newOrders.forEach((order) => handleMove(order, "confirmed"));
   };
@@ -111,7 +122,11 @@ const Orders: React.FC = () => {
     >
       {isMounted && router.isReady && (
         <>
-          <OrdersToolbar view={view} onViewChange={handleViewChange}>
+          <OrdersToolbar 
+            view={view} 
+            onViewChange={handleViewChange}
+            onFiltersClick={() => setIsFiltersOpen(true)}
+          >
             <PendingOrdersBanner
               orders={newOrders}
               action={
@@ -128,14 +143,14 @@ const Orders: React.FC = () => {
             <OrdersError onRetry={() => setLoadState("loading")} />
           ) : view === "list" ? (
             <OrdersTable
-              orders={orders}
+              orders={visibleOrders}
               loading={loadState === "loading"}
               onAdvance={handleAdvance}
               onRefuse={setOrderToRefuse}
             />
           ) : (
             <OrdersBoard
-              orders={orders}
+              orders={visibleOrders}
               loading={loadState === "loading"}
               onAdvance={handleAdvance}
               onRefuse={setOrderToRefuse}
@@ -150,6 +165,19 @@ const Orders: React.FC = () => {
         onCancel={() => setOrderToRefuse(null)}
         onConfirm={handleConfirmRefuse}
       />
+
+      {isFiltersOpen && (
+        <OrdersFiltersModal
+          orders={orders}
+          filters={filters}
+          view={view}
+          onClose={() => setIsFiltersOpen(false)}
+          onApply={(nextFilters) => {
+            setFilters(nextFilters);
+            setIsFiltersOpen(false);
+          }}
+        />
+      )}
     </PanelLayout>
   );
 };

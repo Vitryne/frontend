@@ -7,6 +7,7 @@ interface Props {
   subtitle?: string;
   icon: React.ReactElement;
   tone?: "primary" | "warning";
+  headerAction?: React.ReactNode
   children?: React.ReactNode;
   footer?: React.ReactNode;
 }
@@ -23,6 +24,7 @@ const Modal: React.FC<Props> = ({
   subtitle,
   icon,
   tone = "primary",
+  headerAction,
   children,
   footer,
 }) => {
@@ -64,7 +66,7 @@ const Modal: React.FC<Props> = ({
           >
             {icon}
           </span>
-          <div>
+          <div className="flex-1">
             <h2
               id={titleId}
               className="font-display text-[20px] font-semibold leading-[1.3] text-text-primary"
@@ -75,6 +77,7 @@ const Modal: React.FC<Props> = ({
               <p className="mt-1 text-[14px] text-text-tertiary">{subtitle}</p>
             )}
           </div>
+          {headerAction}
         </div>
 
         {children && (
