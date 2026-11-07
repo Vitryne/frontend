@@ -1,13 +1,20 @@
 import type { DailyReceipt } from "@/components/features/panel/finance/types";
 import { formatDayMonth, formatMoney } from "@/lib/format";
-import { Bar, BarChart, BarShapeProps, Rectangle, ResponsiveContainer, Tooltip, XAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  BarShapeProps,
+  Rectangle,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+} from "recharts";
 
 interface Props {
-  receipts: DailyReceipt[]
+  receipts: DailyReceipt[];
 }
 
 const DailyReceiptsChart: React.FC<Props> = ({ receipts }) => {
-
   const maxValue = Math.max(...receipts.map((item) => item.totalInCents));
 
   const data = receipts.map((item) => ({
@@ -65,11 +72,10 @@ const DailyReceiptsChart: React.FC<Props> = ({ receipts }) => {
               )}
             />
           </BarChart>
-
         </ResponsiveContainer>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DailyReceiptsChart
+export default DailyReceiptsChart;

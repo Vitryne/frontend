@@ -2,22 +2,39 @@ import KpiCard from "@/components/features/panel/components/kpi-card";
 import PainelLayout from "@/components/features/panel/components/panel-layout";
 import BankAccountCard from "@/components/features/panel/finance/components/bank-account-card";
 import DailyReceiptsChart from "@/components/features/panel/finance/components/daily-receipts-chart";
+import PayoutsTable from "@/components/features/panel/finance/components/payouts-table";
 import ButtonPrimary from "@/components/ui/button-primary";
 import ButtonSecondary from "@/components/ui/button-secondary";
-import { formatChange, formatDayMonth, formatMoney, formatMoneyRounded } from "@/lib/format";
-import { BANK_ACCOUNT_MOCK, DAILY_RECEIPTS_MOCK, FINANCE_SUMMARY_MOCK, PAYOUTS_MOCK } from "@/mocks/finance-mock";
-import { LuDownload, LuListFilter, LuReceipt, LuTag, LuTrendingUp, LuWallet } from "react-icons/lu";
+import {
+  formatChange,
+  formatDayMonth,
+  formatMoney,
+  formatMoneyRounded,
+} from "@/lib/format";
+import {
+  BANK_ACCOUNT_MOCK,
+  DAILY_RECEIPTS_MOCK,
+  FINANCE_SUMMARY_MOCK,
+  PAYOUTS_MOCK,
+} from "@/mocks/finance-mock";
+import {
+  LuDownload,
+  LuListFilter,
+  LuReceipt,
+  LuTag,
+  LuTrendingUp,
+  LuWallet,
+} from "react-icons/lu";
 
 const Finance: React.FC = ({}) => {
-
   const scheduledPayouts = PAYOUTS_MOCK.filter(
     (payout) => payout.status === "scheduled",
   );
   const nextPayout = scheduledPayouts[scheduledPayouts.length - 1];
 
   return (
-    <PainelLayout 
-      title="Financeiro" 
+    <PainelLayout
+      title="Financeiro"
       subtitle="Repasses, comissões e fluxo de caixa"
     >
       <div className="flex flex-col gap-3">
@@ -41,7 +58,7 @@ const Finance: React.FC = ({}) => {
             icon={<LuTrendingUp size={16} />}
             trend={{
               label: `${formatChange(FINANCE_SUMMARY_MOCK.receivedChangePercent)}%`,
-              positive: FINANCE_SUMMARY_MOCK.receivedChangePercent >= 0
+              positive: FINANCE_SUMMARY_MOCK.receivedChangePercent >= 0,
             }}
           />
           <KpiCard
@@ -57,13 +74,13 @@ const Finance: React.FC = ({}) => {
             trend={{
               label: formatMoneyRounded(
                 FINANCE_SUMMARY_MOCK.averageTicketChangeInCents,
-                true
+                true,
               ),
-              positive: FINANCE_SUMMARY_MOCK.averageTicketChangeInCents >= 0
+              positive: FINANCE_SUMMARY_MOCK.averageTicketChangeInCents >= 0,
             }}
           />
         </div>
-        
+
         <div className="grid grid-cols-3 gap-3">
           <div className="flex flex-col gap-3">
             <KpiCard
@@ -80,6 +97,8 @@ const Finance: React.FC = ({}) => {
             <DailyReceiptsChart receipts={DAILY_RECEIPTS_MOCK} />
           </div>
         </div>
+
+        <PayoutsTable payouts={PAYOUTS_MOCK} />
       </div>
     </PainelLayout>
   );
