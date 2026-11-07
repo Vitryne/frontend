@@ -1,9 +1,10 @@
 import KpiCard from "@/components/features/panel/components/kpi-card";
 import PainelLayout from "@/components/features/panel/components/panel-layout";
+import SalesChart from "@/components/features/panel/dashboard/components/sales-chart";
 import PendingOrdersBanner from "@/components/features/panel/orders/components/pending-orders-banner";
 import { Order } from "@/components/features/panel/orders/types";
 import { formatChange, formatMoney, formatMoneyRounded, formatToday } from "@/lib/format";
-import { KPIS_MOCK } from "@/mocks/dashboard-mock";
+import { KPIS_MOCK, SALES_MOCK } from "@/mocks/dashboard-mock";
 import { getOrders } from "@/service/orders-service";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -117,6 +118,12 @@ const Dashboard: React.FC = ({}) => {
               </>
             }
           />
+        </div>
+
+        <div className="grid grid-cols-3 gap-3">
+            <div className="col-span-2">
+              <SalesChart sales={SALES_MOCK} />
+            </div>
         </div>
       </div>
     </PainelLayout>

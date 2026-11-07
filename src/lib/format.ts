@@ -71,3 +71,12 @@ export const formatMoneyRounded = (cents: number, signed = false) =>
 
 export const formatChange = (value: number) =>
   value.toLocaleString("pt-BR", { signDisplay: "exceptZero" });
+
+export const formatShortDate = (isoDate: string) => {
+  const date = new Date(`${isoDate}T00:00:00`);
+  const month = date
+    .toLocaleDateString("pt-BR", { month: "short" })
+    .replace(".", "");
+
+  return `${date.getDate()} ${month}`;
+};
