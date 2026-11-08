@@ -4,7 +4,9 @@ import Input from "@/components/ui/input";
 import SelectField from "@/components/ui/select-field";
 import Textarea from "@/components/ui/textarea";
 import { PRODUCTS_MOCK } from "@/mocks/products-mock";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { LuChevronLeft } from "react-icons/lu";
 import TagsInput from "./tag-input";
@@ -20,6 +22,9 @@ import SizesStock from "@/components/features/panel/products/components/form/siz
 import PriceSection from "./price-section";
 import VisibilitySection from "@/components/features/panel/products/components/form/visibility-section";
 import StockThresholdModal from "./stock-threshold-modal";
+import { ProductStatus } from "@/interfaces/product-interface";
+import { toCreateProductDTO, toEditProductDTO } from "@/lib/product-mapper";
+import ProductService from "@/service/product-service";
 
 const CATEGORIES = [
   ...new Set(PRODUCTS_MOCK.map((product) => product.category)),
@@ -39,11 +44,22 @@ interface Props {
   product?: Product;
 }
 
+interface FieldErrors {
+  name?: string;
+  description?: string;
+  category?: string;
+  price?: string;
+  stocks?: string;
+}
+
 const SIZES = ["PP", "P", "M", "G", "GG"];
 
 const ProductForm: React.FC<Props> = ({ product }) => {
+  const router = useRouter();
   const isEdit = product !== undefined;
 
+  const [name, setName] = useState(product?.name ?? "");
+  const [description, setDescription] = useState(product?.description ?? "");
   const [category, setCategory] = useState(product?.category ?? "");
   const [tags, setTags] = useState<string[]>(product?.tags ?? []);
   const [photos, setPhotos] = useState<ProductPhoto[]>(() =>
@@ -53,7 +69,9 @@ const ProductForm: React.FC<Props> = ({ product }) => {
     })),
   );
   const [stock, setStock] = useState<ProductStock[]>(
-    product?.stock ?? SIZES.map((size) => ({ size, quantity: 0 })),
+    product?.stock && product.stock.length > 0
+      ? product.stock
+      : SIZES.map((size) => ({ size, quantity: 0 })),
   );
   const totalStock = getTotal(stock);
   const [priceInCents, setPriceInCents] = useState(product?.priceInCents ?? 0);
@@ -64,6 +82,175 @@ const ProductForm: React.FC<Props> = ({ product }) => {
     product?.stockAlertThreshold ?? 3,
   );
   const [thresholdModalOpen, setThresholdModalOpen] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [formError, setFormError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const categoryOptions =
+    category && !CATEGORIES.includes(category)
+      ? [...CATEGORIES, category].sort()
+      : CATEGORIES;
+
+  const validate = (): boolean => {
+    const nextErrors: FieldErrors = {};
+
+    if (!name.trim()) {
+      nextErrors.name = "O nome do produto é obrigatório.";
+    }
+    if (!description.trim()) {
+      nextErrors.description = "A descrição do produto é obrigatória.";
+    }
+    if (!category.trim()) {
+      nextErrors.category = "Selecione uma categoria.";
+    }
+    if (priceInCents <= 0) {
+      nextErrors.price = "O preço do produto deve ser maior que zero.";
+    }
+    if (stock.length === 0) {
+      nextErrors.stocks = "Informe pelo menos um tamanho de estoque.";
+    }
+
+    setFieldErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const applyApiErrors = (err: unknown) => {
+    if (!axios.isAxiosError(err)) {
+      setFormError("Não foi possível salvar o produto. Tente novamente.");
+      return;
+    }
+
+    const data = err.response?.data as
+      | {
+          message?: string;
+          detail?: string;
+          fields?: Record<string, string>;
+        }
+      | undefined;
+
+    const apiFields = data?.fields;
+    if (apiFields && Object.keys(apiFields).length > 0) {
+      const mappedErrors: FieldErrors = {};
+
+      if (apiFields.name) mappedErrors.name = apiFields.name;
+      if (apiFields.description)
+        mappedErrors.description = apiFields.description;
+      if (apiFields.type) mappedErrors.category = apiFields.type;
+      if (apiFields.price) mappedErrors.price = apiFields.price;
+
+      const stockFieldKey = Object.keys(apiFields).find((key) =>
+        key.startsWith("stocks"),
+      );
+      if (stockFieldKey) {
+        mappedErrors.stocks = apiFields[stockFieldKey];
+      }
+
+      setFieldErrors(mappedErrors);
+    }
+
+    const detailMessage = data?.detail ?? data?.message;
+    if (detailMessage) {
+      if (detailMessage.toLowerCase().includes("preço")) {
+        setFieldErrors((prev) => ({ ...prev, price: detailMessage }));
+      } else if (detailMessage.toLowerCase().includes("nome")) {
+        setFieldErrors((prev) => ({ ...prev, name: detailMessage }));
+      } else if (detailMessage.toLowerCase().includes("descrição")) {
+        setFieldErrors((prev) => ({ ...prev, description: detailMessage }));
+      } else if (detailMessage.toLowerCase().includes("tipo")) {
+        setFieldErrors((prev) => ({ ...prev, category: detailMessage }));
+      } else if (
+        detailMessage.toLowerCase().includes("estoque") ||
+        detailMessage.toLowerCase().includes("tamanho")
+      ) {
+        setFieldErrors((prev) => ({ ...prev, stocks: detailMessage }));
+      }
+      setFormError(detailMessage);
+      return;
+    }
+
+    setFormError("Não foi possível salvar o produto. Tente novamente.");
+  };
+
+  const syncEditedStocks = async (productId: number) => {
+    const service = ProductService();
+    const initialStocksById = new Map(
+      (product?.stock ?? [])
+        .filter((item) => item.id !== undefined)
+        .map((item) => [item.id as number, item]),
+    );
+
+    for (const item of stock) {
+      if (item.id === undefined) {
+        await service.addStock(productId, {
+          size: item.size,
+          quantity: item.quantity,
+        });
+        continue;
+      }
+
+      const initial = initialStocksById.get(item.id);
+      if (!initial || item.quantity === initial.quantity) continue;
+
+      if (item.quantity > initial.quantity) {
+        await service.replenishStock(productId, item.id, {
+          quantity: item.quantity - initial.quantity,
+        });
+      } else {
+        await service.adjustStock(productId, item.id, {
+          quantity: item.quantity,
+          version: item.version ?? initial.version ?? 0,
+        });
+      }
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (submitting) return;
+    setFormError("");
+    if (!validate()) return;
+
+    setSubmitting(true);
+    const service = ProductService();
+    const formValues = {
+      name,
+      description,
+      category,
+      color: product?.color,
+      priceInCents,
+      stockAlertThreshold: alertThreshold,
+      photoUrls: photos.map((photo) => photo.url),
+      stock,
+    };
+
+    try {
+      if (isEdit && product.id !== undefined) {
+        await service.editProduct(product.id, toEditProductDTO(formValues));
+        await syncEditedStocks(product.id);
+
+        if (active !== product.active) {
+          await service.alterStatus(product.id, {
+            status: active ? ProductStatus.ACTIVE : ProductStatus.INACTIVE,
+          });
+        }
+      } else {
+        const created = await service.createProduct(
+          toCreateProductDTO(formValues),
+        );
+
+        if (!active) {
+          await service.alterStatus(created.id, {
+            status: ProductStatus.INACTIVE,
+          });
+        }
+      }
+
+      router.push("/products");
+    } catch (err) {
+      applyApiErrors(err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div>
@@ -84,10 +271,23 @@ const ProductForm: React.FC<Props> = ({ product }) => {
             {isEdit ? "Descartar" : "Cancelar"}
           </Link>
           <ButtonPrimary
-            title={isEdit ? "Salvar alterações" : "Cadastrar produto"}
+            title={
+              submitting
+                ? "Salvando..."
+                : isEdit
+                  ? "Salvar alterações"
+                  : "Cadastrar produto"
+            }
+            onClick={handleSubmit}
           />
         </div>
       </div>
+
+      {formError && (
+        <p className="mb-4 text-[13px] font-semibold text-danger">
+          {formError}
+        </p>
+      )}
 
       <div className="flex items-start gap-5">
         <div className="flex min-w-0 flex-1 flex-col gap-4">
@@ -98,7 +298,17 @@ const ProductForm: React.FC<Props> = ({ product }) => {
                   <Input
                     title="Nome do produto *"
                     placeholder="Ex.: Vestido midi floral"
-                    defaultValue={product?.name}
+                    value={name}
+                    onChange={(value) => {
+                      setName(value);
+                      if (fieldErrors.name) {
+                        setFieldErrors((prev) => ({
+                          ...prev,
+                          name: undefined,
+                        }));
+                      }
+                    }}
+                    error={fieldErrors.name}
                   />
                 </div>
 
@@ -115,21 +325,53 @@ const ProductForm: React.FC<Props> = ({ product }) => {
                 </div>
               </div>
 
-              <Textarea
-                title="Descrição *"
-                placeholder="Descreva a peça: tecido, caimento, composição e cuidados de lavagem."
-                defaultValue={product?.description}
-              />
+              <div>
+                <Textarea
+                  title="Descrição *"
+                  placeholder="Descreva a peça: tecido, caimento, composição e cuidados de lavagem."
+                  value={description}
+                  onChange={(value) => {
+                    setDescription(value);
+                    if (fieldErrors.description) {
+                      setFieldErrors((prev) => ({
+                        ...prev,
+                        description: undefined,
+                      }));
+                    }
+                  }}
+                />
+                {fieldErrors.description && (
+                  <p className="mt-1.5 text-[12px] text-danger">
+                    {fieldErrors.description}
+                  </p>
+                )}
+              </div>
 
               <div className="grid grid-cols-2 gap-3.5">
-                <SelectField
-                  title="Categoria *"
-                  placeholder="Selecione uma categoria"
-                  listTitle="Categoria"
-                  options={CATEGORIES}
-                  value={category}
-                  onChange={setCategory}
-                />
+                <div>
+                  <SelectField
+                    title="Categoria *"
+                    placeholder="Selecione uma categoria"
+                    listTitle="Categoria"
+                    options={categoryOptions}
+                    value={category}
+                    onChange={(value) => {
+                      setCategory(value);
+                      if (fieldErrors.category) {
+                        setFieldErrors((prev) => ({
+                          ...prev,
+                          category: undefined,
+                        }));
+                      }
+                    }}
+                    error={!!fieldErrors.category}
+                  />
+                  {fieldErrors.category && (
+                    <p className="mt-1.5 text-[12px] text-danger">
+                      {fieldErrors.category}
+                    </p>
+                  )}
+                </div>
 
                 <TagsInput
                   title="Tags"
@@ -159,8 +401,14 @@ const ProductForm: React.FC<Props> = ({ product }) => {
             <SizesStock
               stock={stock}
               alertThreshold={alertThreshold}
-              onChange={setStock}
+              onChange={(nextStock) => {
+                setStock(nextStock);
+                if (fieldErrors.stocks) {
+                  setFieldErrors((prev) => ({ ...prev, stocks: undefined }));
+                }
+              }}
               onConfigureThreshold={() => setThresholdModalOpen(true)}
+              error={fieldErrors.stocks}
             />
           </Card>
         </div>
@@ -169,9 +417,15 @@ const ProductForm: React.FC<Props> = ({ product }) => {
           <Card title="Preço">
             <PriceSection
               priceInCents={priceInCents}
-              onChange={setPriceInCents}
+              onChange={(value) => {
+                setPriceInCents(value);
+                if (fieldErrors.price) {
+                  setFieldErrors((prev) => ({ ...prev, price: undefined }));
+                }
+              }}
               isEdit={isEdit}
               promotion={product?.promotion}
+              error={fieldErrors.price}
             />
           </Card>
 
