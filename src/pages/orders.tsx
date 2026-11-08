@@ -11,11 +11,13 @@ import type {
   OrderStatus,
   OrdersView,
 } from "@/components/features/panel/orders/types";
+import { BackendOrderStatus } from "@/interfaces/orders-interface";
 import {
-  getOrders,
-  refuseOrder,
-  updateOrderStatus,
-} from "@/service/orders-service";
+  parseOrderId,
+  toBackendOrderStatus,
+  toOrder,
+} from "@/lib/orders-mapper";
+import OrdersService from "@/service/orders-service";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -32,9 +34,10 @@ const Orders: React.FC = () => {
   useEffect(() => {
     if (loadState !== "loading") return;
 
-    getOrders()
+    OrdersService()
+      .listStoreOrders()
       .then((data) => {
-        setOrders(data);
+        setOrders(data.map(toOrder));
         setLoadState("ready");
       })
       .catch(() => setLoadState("error"));
@@ -52,6 +55,9 @@ const Orders: React.FC = () => {
   };
 
   const handleMove = async (order: Order, status: OrderStatus) => {
+    const orderId = parseOrderId(order.id);
+    if (!orderId || order.status === status) return;
+
     setOrders((current) =>
       current.map((item) =>
         item.id === order.id ? { ...item, status } : item,
@@ -59,10 +65,12 @@ const Orders: React.FC = () => {
     );
 
     try {
-      const updated = await updateOrderStatus(order.id, status);
+      const updated = await OrdersService().updateStoreOrderStatus(orderId, {
+        status: toBackendOrderStatus(status),
+      });
 
       setOrders((current) =>
-        current.map((item) => (item.id === updated.id ? updated : item)),
+        current.map((item) => (item.id === order.id ? toOrder(updated) : item)),
       );
     } catch {
       setOrders((current) =>
@@ -87,12 +95,17 @@ const Orders: React.FC = () => {
     if (!orderToRefuse) return;
 
     const order = orderToRefuse;
+    const orderId = parseOrderId(order.id);
 
     setOrderToRefuse(null);
+    if (!orderId) return;
+
     setOrders((current) => current.filter((item) => item.id !== order.id));
 
     try {
-      await refuseOrder(order.id);
+      await OrdersService().updateStoreOrderStatus(orderId, {
+        status: BackendOrderStatus.CANCELED,
+      });
     } catch {
       setOrders((current) => [...current, order]);
     }
