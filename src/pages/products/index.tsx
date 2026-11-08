@@ -3,19 +3,25 @@ import BulkActionBar from "@/components/features/panel/products/components/list/
 import DeactivateProductModal from "@/components/features/panel/products/components/list/deactivate-product-modal";
 import DeleteBlockedModal from "@/components/features/panel/products/components/list/delete-blocked-modal";
 import ProductEmpty from "@/components/features/panel/products/components/list/product-empty";
+import ProductError from "@/components/features/panel/products/components/list/product-error";
 import ProductTable from "@/components/features/panel/products/components/list/product-table";
 import ProductFilters from "@/components/features/panel/products/components/list/product-filters";
-import { PRODUCTS_MOCK } from "@/mocks/products-mock";
 import { hasCriticalStock } from "@/components/features/panel/products/stock";
 import {
   Product,
   ProductStatusFilter,
 } from "@/components/features/panel/products/types";
 import Pagination from "@/components/ui/pagination";
-import { useState } from "react";
+import { ProductStatus } from "@/interfaces/product-interface";
+import { toProduct } from "@/lib/product-mapper";
+import ProductService from "@/service/product-service";
+import { useEffect, useState } from "react";
 
 const Products: React.FC = ({}) => {
-  const [products, setProducts] = useState<Product[]>(PRODUCTS_MOCK);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loadState, setLoadState] = useState<"loading" | "error" | "ready">(
+    "loading",
+  );
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState<ProductStatusFilter>("all");
   const [criticalOnly, setCriticalOnly] = useState(false);
@@ -24,6 +30,18 @@ const Products: React.FC = ({}) => {
   const [productToDeactivate, setProductToDeactivate] =
     useState<Product | null>(null);
   const [blockedProducts, setBlockedProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    if (loadState !== "loading") return;
+
+    ProductService()
+      .listManagedProducts()
+      .then((data) => {
+        setProducts(data.map(toProduct));
+        setLoadState("ready");
+      })
+      .catch(() => setLoadState("error"));
+  }, [loadState]);
 
   const categories = [
     ...new Set(products.map((product) => product.category)),
@@ -43,27 +61,47 @@ const Products: React.FC = ({}) => {
   const pageStart = (currentPage - 1) * 8;
   const pagedProducts = filteredProducts.slice(pageStart, pageStart + 8);
 
-  const setProductActive = (sku: string, active: boolean) => {
+  const updateProductStatus = async (product: Product, active: boolean) => {
+    if (!product.id || product.active === active) return;
+
     setProducts((current) =>
-      current.map((product) =>
-        product.sku === sku ? { ...product, active } : product,
+      current.map((item) =>
+        item.sku === product.sku ? { ...item, active } : item,
       ),
     );
+
+    try {
+      const updated = await ProductService().alterStatus(product.id, {
+        status: active ? ProductStatus.ACTIVE : ProductStatus.INACTIVE,
+      });
+
+      setProducts((current) =>
+        current.map((item) =>
+          item.sku === product.sku ? toProduct(updated) : item,
+        ),
+      );
+    } catch {
+      setProducts((current) =>
+        current.map((item) => (item.sku === product.sku ? product : item)),
+      );
+    }
   };
 
   const handleToggleStatus = (sku: string, active: boolean) => {
+    const product = products.find((item) => item.sku === sku);
+    if (!product) return;
+
     if (active) {
-      setProductActive(sku, true);
+      updateProductStatus(product, true);
       return;
     }
 
-    const product = products.find((item) => item.sku === sku);
-    if (product) setProductToDeactivate(product);
+    setProductToDeactivate(product);
   };
 
   const handleConfirmDeactivate = () => {
     if (productToDeactivate) {
-      setProductActive(productToDeactivate.sku, false);
+      updateProductStatus(productToDeactivate, false);
     }
     setProductToDeactivate(null);
   };
@@ -81,13 +119,12 @@ const Products: React.FC = ({}) => {
   };
 
   const handleSetActiveForSelected = (active: boolean) => {
-    setProducts((current) =>
-      current.map((product) =>
-        selectedSkus.includes(product.sku) ? { ...product, active } : product,
-      ),
+    const selectedProducts = products.filter((product) =>
+      selectedSkus.includes(product.sku),
     );
 
     setSelectedSkus([]);
+    selectedProducts.forEach((product) => updateProductStatus(product, active));
   };
 
   const handleDeleteSelected = () => {
@@ -110,15 +147,7 @@ const Products: React.FC = ({}) => {
   };
 
   const handleConfirmDeactivateBlocked = () => {
-    const blockedSkus = blockedProducts.map((product) => product.sku);
-
-    setProducts((current) =>
-      current.map((product) =>
-        blockedSkus.includes(product.sku)
-          ? { ...product, active: false }
-          : product,
-      ),
-    );
+    blockedProducts.forEach((product) => updateProductStatus(product, false));
     setBlockedProducts([]);
     setSelectedSkus([]);
   };
@@ -154,7 +183,18 @@ const Products: React.FC = ({}) => {
     setSelectedSkus([]);
   };
 
-  if (products.length === 0) {
+  if (loadState === "error") {
+    return (
+      <PanelLayout
+        title="Produtos"
+        subtitle="Não foi possível carregar os produtos"
+      >
+        <ProductError onRetry={() => setLoadState("loading")} />
+      </PanelLayout>
+    );
+  }
+
+  if (loadState === "ready" && products.length === 0) {
     return (
       <PanelLayout title="Produtos" subtitle="Nenhum produto cadastrado">
         <ProductEmpty storeName="Atelier Norte" />
@@ -165,7 +205,11 @@ const Products: React.FC = ({}) => {
   return (
     <PanelLayout
       title="Produtos"
-      subtitle={`${products.length} produtos · ${categories.length} categorias · ${criticalCount} com estoque crítico`}
+      subtitle={
+        loadState === "loading"
+          ? "Carregando produtos..."
+          : `${products.length} produtos · ${categories.length} categorias · ${criticalCount} com estoque crítico`
+      }
     >
       <ProductFilters
         categories={categories}
@@ -190,6 +234,7 @@ const Products: React.FC = ({}) => {
 
       <ProductTable
         products={pagedProducts}
+        loading={loadState === "loading"}
         selectedSkus={selectedSkus}
         onToggleSelect={handleToggleSelect}
         onToggleSelectAll={handleToggleSelectAll}
