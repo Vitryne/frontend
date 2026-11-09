@@ -47,4 +47,3 @@ export interface OrderResponseDTO {
 export interface UpdateOrderStatusRequestDTO {
   status: BackendOrderStatus;
 }
-

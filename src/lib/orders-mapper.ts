@@ -129,4 +129,3 @@ export const toOrder = (dto: OrderResponseDTO): Order => {
     ...getStatusTrackingFields(dto.id, status, referenceDate),
   };
 };
-
