@@ -15,7 +15,7 @@ const PanelLayout: React.FC<Props> = ({ title, subtitle, children }) => {
   return (
     <div className="flex min-h-screen">
       <Head>
-        <title>{`${title} · Vitryne`}</title>
+        <title>{`Vitryne - ${title}`}</title>
       </Head>
 
       <PanelSidebar

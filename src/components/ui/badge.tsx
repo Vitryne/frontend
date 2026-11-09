@@ -1,6 +1,6 @@
 interface Props {
   title: string;
-  variant?: "neutral" | "primary" | "brand" | "danger";
+  variant?: "neutral" | "primary" | "brand" | "danger" | "warning";
   size?: "sm" | "md";
 }
 
@@ -9,6 +9,7 @@ const VARIANTS = {
   primary: "bg-primary-soft text-primary-hover",
   brand: "bg-primary text-text-on-brand",
   danger: "bg-danger-soft text-danger",
+  warning: "bg-warning-soft text-warning",
 };
 
 const SIZES = {

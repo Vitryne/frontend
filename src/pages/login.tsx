@@ -54,7 +54,7 @@ const Login: React.FC = ({}) => {
   return (
     <div className="flex min-h-screen">
       <Head>
-        <title>Entrar · Vitryne</title>
+        <title>Vitryne - Entrar</title>
       </Head>
 
       <div className="hidden lg:block lg:w-[46%] relative overflow-hidden">
