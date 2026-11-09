@@ -408,8 +408,12 @@ const ProductForm: React.FC<Props> = ({ product }) => {
                 }
               }}
               onConfigureThreshold={() => setThresholdModalOpen(true)}
-              error={fieldErrors.stocks}
             />
+            {fieldErrors.stocks && (
+              <p className="mt-1.5 text-[12px] text-danger">
+                {fieldErrors.stocks}
+              </p>
+            )}
           </Card>
         </div>
 
@@ -425,8 +429,12 @@ const ProductForm: React.FC<Props> = ({ product }) => {
               }}
               isEdit={isEdit}
               promotion={product?.promotion}
-              error={fieldErrors.price}
             />
+            {fieldErrors.price && (
+              <p className="mt-1.5 text-[12px] text-danger">
+                {fieldErrors.price}
+              </p>
+            )}
           </Card>
 
           <Card title="Visibilidade">
