@@ -1,9 +1,11 @@
 import CheckBox from "@/components/ui/checkbox";
 import type { Product } from "@/components/features/panel/products/types";
 import ProductRow from "@/components/features/panel/products/components/list/product-row";
+import ProductRowSkeleton from "@/components/features/panel/products/components/list/product-row-skeleton";
 
 interface Props {
   products: Product[];
+  loading?: boolean;
   selectedSkus: string[];
   onToggleSelect: (sku: string, selected: boolean) => void;
   onToggleSelectAll: (selected: boolean) => void;
@@ -14,6 +16,7 @@ interface Props {
 
 const ProductTable: React.FC<Props> = ({
   products,
+  loading,
   selectedSkus,
   onToggleSelect,
   onToggleSelectAll,
@@ -36,7 +39,7 @@ const ProductTable: React.FC<Props> = ({
               <CheckBox
                 checked={allSelected}
                 indeterminate={someSelected}
-                disabled={products.length === 0}
+                disabled={loading || products.length === 0}
                 onChange={onToggleSelectAll}
               />
             </th>
@@ -65,7 +68,11 @@ const ProductTable: React.FC<Props> = ({
           </tr>
         </thead>
         <tbody>
-          {products.length > 0 ? (
+          {loading ? (
+            Array.from({ length: 5 }).map((_, index) => (
+              <ProductRowSkeleton key={index} />
+            ))
+          ) : products.length > 0 ? (
             products.map((product) => (
               <ProductRow
                 key={product.sku}

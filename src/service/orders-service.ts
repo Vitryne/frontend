@@ -1,63 +1,72 @@
+import { useHttp } from "@/components/hooks/use-http";
 import type {
   Order,
   OrderStatus,
 } from "@/components/features/panel/orders/types";
-import { ORDERS_MOCK } from "@/mocks/orders-mock";
+import {
+  BackendOrderStatus,
+  OrderResponseDTO,
+  UpdateOrderStatusRequestDTO,
+} from "@/interfaces/orders-interface";
+import {
+  parseOrderId,
+  toBackendOrderStatus,
+  toOrder,
+} from "@/lib/orders-mapper";
 
-const RESPONSE_DELAY = 600;
+const OrdersService = () => {
+  const http = useHttp();
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const minutesFromNow = (minutes: number) =>
-  new Date(Date.now() + minutes * 60000).toISOString();
-
-let orders: Order[] = [...ORDERS_MOCK];
-
-const getStatusData = (order: Order, status: OrderStatus): Partial<Order> => {
-  switch (status) {
-    case "confirmed":
-    case "preparing":
-      return { readyBy: order.readyBy ?? minutesFromNow(30) };
-    case "ready":
-      return {
-        pickupCode:
-          order.pickupCode ?? String(Math.floor(1000 + Math.random() * 9000)),
-        courierStatus: order.courierStatus ?? "Buscando entregador",
-      };
-    case "delivering":
-      return {
-        courierName: order.courierName ?? "Rafa Moreira",
-        deliverBy: order.deliverBy ?? minutesFromNow(20),
-      };
-    default:
-      return {};
-  }
+  return {
+    listStoreOrders: () => {
+      return http.get<OrderResponseDTO[]>("/store/orders").then((r) => r.data);
+    },
+    getStoreOrder: (orderId: number) => {
+      return http
+        .get<OrderResponseDTO>(`/store/orders/${orderId}`)
+        .then((r) => r.data);
+    },
+    updateStoreOrderStatus: (
+      orderId: number,
+      request: UpdateOrderStatusRequestDTO,
+    ) => {
+      return http
+        .patch<OrderResponseDTO>(`/store/orders/${orderId}/status`, request)
+        .then((r) => r.data);
+    },
+  };
 };
 
 export const getOrders = async (): Promise<Order[]> => {
-  await wait(RESPONSE_DELAY);
-
-  return orders.map((order) => ({ ...order }));
+  const data = await OrdersService().listStoreOrders();
+  return data.map(toOrder);
 };
 
 export const updateOrderStatus = async (
   id: string,
   status: OrderStatus,
 ): Promise<Order> => {
-  await wait(RESPONSE_DELAY);
+  const orderId = parseOrderId(id);
+  if (!orderId) {
+    throw new Error("ID do pedido inválido");
+  }
 
-  const order = orders.find((item) => item.id === id);
+  const updated = await OrdersService().updateStoreOrderStatus(orderId, {
+    status: toBackendOrderStatus(status),
+  });
 
-  if (!order) throw new Error("Pedido não encontrado");
-
-  const updated = { ...order, ...getStatusData(order, status), status };
-  orders = orders.map((item) => (item.id === id ? updated : item));
-
-  return { ...updated };
+  return toOrder(updated);
 };
 
 export const refuseOrder = async (id: string): Promise<void> => {
-  await wait(RESPONSE_DELAY);
+  const orderId = parseOrderId(id);
+  if (!orderId) {
+    throw new Error("ID do pedido inválido");
+  }
 
-  orders = orders.filter((item) => item.id !== id);
+  await OrdersService().updateStoreOrderStatus(orderId, {
+    status: BackendOrderStatus.CANCELED,
+  });
 };
+
+export default OrdersService;
