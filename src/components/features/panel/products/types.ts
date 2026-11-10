@@ -1,6 +1,8 @@
 export interface ProductStock {
+  id?: number;
   size: string;
   quantity: number;
+  version?: number;
 }
 
 export interface Product {
@@ -8,6 +10,7 @@ export interface Product {
   sku: string;
   name: string;
   category: string;
+  color?: string;
   priceInCents: number;
   image: string;
   images?: string[];
