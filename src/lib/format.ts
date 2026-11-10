@@ -46,3 +46,43 @@ export const formatCountdown = (seconds: number) => {
 
   return `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
 };
+
+export const formatToday = () => {
+  const today = new Date();
+  const weekday = today
+    .toLocaleDateString("pt-BR", { weekday: "long" })
+    .split("-")[0];
+  const dayAndMonth = today.toLocaleDateString("pt-BR", {
+    day: "numeric",
+    month: "long",
+  });
+
+  return `${weekday[0].toUpperCase()}${weekday.slice(1)}, ${dayAndMonth}`;
+};
+
+export const formatMoneyRounded = (cents: number, signed = false) =>
+  (cents / 100).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    signDisplay: signed ? "exceptZero" : "auto",
+  });
+
+export const formatChange = (value: number) =>
+  value.toLocaleString("pt-BR", { signDisplay: "exceptZero" });
+
+export const formatShortDate = (isoDate: string) => {
+  const date = new Date(`${isoDate}T00:00:00`);
+  const month = date
+    .toLocaleDateString("pt-BR", { month: "short" })
+    .replace(".", "");
+
+  return `${date.getDate()} ${month}`;
+};
+
+export const formatDayMonth = (isoDate: string) =>
+  new Date(`${isoDate}T00:00:00`).toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+  });
