@@ -11,6 +11,7 @@ interface Props {
   value?: string;
   onChange?: (value: string) => void;
   error?: string;
+  onIconClick?: () => void;
 }
 
 const Input: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const Input: React.FC<Props> = ({
   value,
   onChange,
   error,
+  onIconClick,
 }) => {
   const id = useId();
 
@@ -56,11 +58,20 @@ const Input: React.FC<Props> = ({
           }`}
         />
 
-        {icon && (
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary">
-            {icon}
-          </span>
-        )}
+        {icon &&
+          (onIconClick ? (
+            <button
+              type="button"
+              onClick={onIconClick}
+              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-text-secondary transition-colors hover:text-text-primary"
+            >
+              {icon}
+            </button>
+          ) : (
+            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary">
+              {icon}
+            </span>
+          ))}
       </div>
       {error && <p className="mt-1.5 text-[12px] text-danger">{error}</p>}
     </div>

@@ -45,6 +45,7 @@ const ProductRow: React.FC<Props> = ({
               src={product.image}
               alt=""
               fill
+              unoptimized
               sizes="40px"
               className="object-cover"
             />
