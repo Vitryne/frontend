@@ -6,20 +6,31 @@ interface Props {
   view: OrdersView;
   onViewChange: (view: OrdersView) => void;
   onFiltersClick: () => void;
+  onReportsClick: () => void;
   children?: React.ReactNode;
 }
 
-const OrdersToolbar: React.FC<Props> = ({ view, onViewChange, onFiltersClick, children }) => {
+const OrdersToolbar: React.FC<Props> = ({
+  view,
+  onViewChange,
+  onFiltersClick,
+  onReportsClick,
+  children,
+}) => {
   return (
     <div className="mb-5 flex items-center gap-3">
       <div className="min-w-0 flex-1">{children}</div>
 
-      <ButtonSecondary 
-        title="Filtros" 
-        btnIcon={<LuListFilter size={16} />} 
+      <ButtonSecondary
+        title="Filtros"
+        btnIcon={<LuListFilter size={16} />}
         onClick={onFiltersClick}
       />
-      <ButtonSecondary title="Relatórios" btnIcon={<LuDownload size={16} />} />
+      <ButtonSecondary
+        title="Relatórios"
+        btnIcon={<LuDownload size={16} />}
+        onClick={onReportsClick}
+      />
 
       <div className="flex items-center rounded-xl bg-surface-subtle p-1">
         <button

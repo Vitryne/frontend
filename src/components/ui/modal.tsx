@@ -7,7 +7,7 @@ interface Props {
   subtitle?: string;
   icon: React.ReactElement;
   tone?: "primary" | "warning";
-  headerAction?: React.ReactNode
+  headerAction?: React.ReactNode;
   children?: React.ReactNode;
   footer?: React.ReactNode;
 }

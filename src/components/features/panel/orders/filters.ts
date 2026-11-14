@@ -90,7 +90,7 @@ export const filterOrders = (orders: Order[], filters: OrderFilters) =>
     return true;
   });
 
-  export const toggleValue = <T>(list: T[], value: T) =>
+export const toggleValue = <T>(list: T[], value: T) =>
   list.includes(value)
     ? list.filter((item) => item !== value)
     : [...list, value];

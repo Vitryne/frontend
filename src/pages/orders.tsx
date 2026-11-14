@@ -1,13 +1,17 @@
 import PanelLayout from "@/components/features/panel/components/panel-layout";
 import { getNextStatus } from "@/components/features/panel/orders/columns";
 import OrdersFiltersModal from "@/components/features/panel/orders/components/filters/orders-filters-modal";
+import OrdersReportModal from "@/components/features/panel/orders/components/filters/orders-report-modal";
 import OrdersBoard from "@/components/features/panel/orders/components/kanban/orders-board";
 import OrdersTable from "@/components/features/panel/orders/components/list/orders-table";
 import OrdersError from "@/components/features/panel/orders/components/orders-error";
 import OrdersToolbar from "@/components/features/panel/orders/components/orders-toolbar";
 import PendingOrdersBanner from "@/components/features/panel/orders/components/pending-orders-banner";
 import RefuseOrderModal from "@/components/features/panel/orders/components/refuse-order-modal";
-import { EMPTY_FILTERS, filterOrders } from "@/components/features/panel/orders/filters";
+import {
+  EMPTY_FILTERS,
+  filterOrders,
+} from "@/components/features/panel/orders/filters";
 import type {
   Order,
   OrderFilters,
@@ -36,6 +40,8 @@ const Orders: React.FC = () => {
 
   const [filters, setFilters] = useState<OrderFilters>(EMPTY_FILTERS);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  const [isReportsOpen, setIsReportsOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -122,10 +128,11 @@ const Orders: React.FC = () => {
     >
       {isMounted && router.isReady && (
         <>
-          <OrdersToolbar 
-            view={view} 
+          <OrdersToolbar
+            view={view}
             onViewChange={handleViewChange}
             onFiltersClick={() => setIsFiltersOpen(true)}
+            onReportsClick={() => setIsReportsOpen(true)}
           >
             <PendingOrdersBanner
               orders={newOrders}
@@ -176,6 +183,14 @@ const Orders: React.FC = () => {
             setFilters(nextFilters);
             setIsFiltersOpen(false);
           }}
+        />
+      )}
+
+      {isReportsOpen && (
+        <OrdersReportModal
+          orders={orders}
+          visibleOrders={visibleOrders}
+          onClose={() => setIsReportsOpen(false)}
         />
       )}
     </PanelLayout>

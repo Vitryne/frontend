@@ -1,12 +1,7 @@
 import type { DateRange } from "react-day-picker";
 
 export type OrderStatus =
-  | "new"
-  | "confirmed"
-  | "preparing"
-  | "ready"
-  | "delivering"
-  | "completed";
+  "new" | "confirmed" | "preparing" | "ready" | "delivering" | "completed";
 
 export type PaymentMethod = "pix" | "credit_card";
 
