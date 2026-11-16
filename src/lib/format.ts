@@ -86,3 +86,11 @@ export const formatDayMonth = (isoDate: string) =>
     day: "2-digit",
     month: "2-digit",
   });
+
+export const formatMoneyCompact = (cents: number) =>
+  (cents / 100).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    notation: "compact",
+    maximumFractionDigits: 1,
+  });

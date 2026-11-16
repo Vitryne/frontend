@@ -1,3 +1,4 @@
+import CategoryDetails from "@/components/features/panel/categories/components/category-details";
 import CategoryList from "@/components/features/panel/categories/components/category-list";
 import PanelLayout from "@/components/features/panel/components/panel-layout";
 import { CATEGORIES_MOCK } from "@/mocks/categories-mock";
@@ -22,11 +23,9 @@ const Categories: React.FC = () => {
           onSelect={setSelectedName}
         />
 
-        <section className="rounded-[14px] border border-border bg-surface p-5">
-          <h2 className="font-display text-[22px] font-semibold text-text-primary">
-            {selectedCategory.name}
-          </h2>
-        </section>
+        <div className="flex flex-col gap-4">
+          <CategoryDetails category={selectedCategory} />
+        </div>
       </div>
     </PanelLayout>
   );

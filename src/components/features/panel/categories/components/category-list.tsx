@@ -14,7 +14,7 @@ const CategoryList: React.FC<Props> = ({
   onSelect,
 }) => {
   return (
-    <section className="overflow-hidden rounded-[14px] border border-border bg-surface">
+    <div className="overflow-hidden rounded-[14px] border border-border bg-surface">
       <div className="flex items-center justify-between gap-3 px-4 py-4">
         <h2 className="font-display text-[15px] font-semibold text-text-primary">
           Categorias da plataforma
@@ -61,7 +61,7 @@ const CategoryList: React.FC<Props> = ({
           className="inline-flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 rounded-[10px] border border-primary/30 bg-surface text-[12px] font-semibold text-primary transition-colors hover:bg-primary/5"
         />
       </div>
-    </section>
+    </div>
   );
 };
 
