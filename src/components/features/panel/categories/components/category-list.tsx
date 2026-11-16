@@ -41,11 +41,13 @@ const CategoryList: React.FC<Props> = ({
                   {category.name}
                 </p>
                 <p className="text-[11px] text-text-tertiary">
-                  {category.visible ? "Visível na vitrine" : "Oculta na vitrine"}
+                  {category.visible
+                    ? "Visível na vitrine"
+                    : "Oculta na vitrine"}
                 </p>
               </div>
               <span className="shrink-0 text-[12px] text-text-secondary">
-                {`${category.productsCount} ${category.productsCount === 1 ? "produto" : "produtos"}`}      
+                {`${category.productsCount} ${category.productsCount === 1 ? "produto" : "produtos"}`}
               </span>
             </button>
           </li>
