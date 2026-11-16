@@ -1,5 +1,6 @@
 import CategoryDetails from "@/components/features/panel/categories/components/category-details";
 import CategoryList from "@/components/features/panel/categories/components/category-list";
+import CategoryProductsTable from "@/components/features/panel/categories/components/category-product-table";
 import PanelLayout from "@/components/features/panel/components/panel-layout";
 import { CATEGORIES_MOCK } from "@/mocks/categories-mock";
 import { useState } from "react";
@@ -25,6 +26,7 @@ const Categories: React.FC = () => {
 
         <div className="flex flex-col gap-4">
           <CategoryDetails category={selectedCategory} />
+          <CategoryProductsTable category={selectedCategory} />
         </div>
       </div>
     </PanelLayout>
