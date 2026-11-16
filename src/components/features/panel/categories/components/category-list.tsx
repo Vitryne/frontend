@@ -45,8 +45,7 @@ const CategoryList: React.FC<Props> = ({
                 </p>
               </div>
               <span className="shrink-0 text-[12px] text-text-secondary">
-                {category.productsCount}{" "}
-                {category.productsCount === 1 ? "produto" : "produtos"}
+                {`${category.productsCount} ${category.productsCount === 1 ? "produto" : "produtos"}`}      
               </span>
             </button>
           </li>

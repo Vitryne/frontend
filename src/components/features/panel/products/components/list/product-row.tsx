@@ -82,7 +82,7 @@ const ProductRow: React.FC<Props> = ({
       <td
         className={`whitespace-nowrap px-2 py-3 text-right text-[.9rem] font-bold text-text-primary ${dimmed}`}
       >
-        {total}{" "}
+        {`${total} `}
         <span className="text-[.75rem] font-normal text-text-tertiary">
           un.
         </span>

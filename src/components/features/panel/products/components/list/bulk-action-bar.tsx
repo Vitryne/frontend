@@ -19,8 +19,7 @@ const BulkActionBar: React.FC<Props> = ({
     <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-border-brand bg-primary-soft px-4 py-2.5">
       <div className="flex items-center gap-3">
         <p className="text-[14px] font-semibold text-primary-hover">
-          {count}{" "}
-          {count === 1 ? "produto selecionado" : "produtos selecionados"}
+          {`${count} ${count === 1 ? "produto selecionado" : "produtos selecionados"}`}       
         </p>
 
         <span className="h-5 w-px bg-border-brand" />

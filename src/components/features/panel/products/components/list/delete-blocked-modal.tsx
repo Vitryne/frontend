@@ -51,8 +51,7 @@ const DeleteBlockedModal: React.FC<Props> = ({
       }
     >
       <p className="text-[13px] font-semibold text-text-primary">
-        Aparece em {ordersCount}{" "}
-        {ordersCount === 1 ? "pedido já realizado" : "pedidos já realizados"}
+        {`Aparece em ${ordersCount} ${ordersCount === 1 ? "pedido já realizado" : "pedidos já realizados"}`} 
       </p>
       <p className="text-[12px] text-text-tertiary">
         Excluir apagaria o histórico de compra desses clientes
