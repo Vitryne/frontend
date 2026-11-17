@@ -1,8 +1,12 @@
 import AddCategoryModal from "@/components/features/panel/categories/components/add-category-modal";
+import AddProductsModal from "@/components/features/panel/categories/components/add-products-modal";
 import CategoryDetails from "@/components/features/panel/categories/components/category-details";
 import CategoryList from "@/components/features/panel/categories/components/category-list";
 import CategoryProductsTable from "@/components/features/panel/categories/components/category-product-table";
-import type { Category } from "@/components/features/panel/categories/types";
+import type {
+  Category,
+  CategoryProduct,
+} from "@/components/features/panel/categories/types";
 import PanelLayout from "@/components/features/panel/components/panel-layout";
 import { CATEGORIES_MOCK } from "@/mocks/categories-mock";
 import { useState } from "react";
@@ -11,6 +15,7 @@ const Categories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>(CATEGORIES_MOCK);
   const [selectedName, setSelectedName] = useState(CATEGORIES_MOCK[0].name);
   const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
+  const [isAddProductsOpen, setIsAddProductsOpen] = useState(false);
 
   const selectedCategory =
     categories.find((category) => category.name === selectedName) ??
@@ -37,6 +42,24 @@ const Categories: React.FC = () => {
     setIsAddCategoryOpen(false);
   };
 
+  const handleAddProducts = (products: CategoryProduct[]) => {
+    setCategories((current) =>
+      current.map((category) =>
+        category.name === selectedName
+          ? {
+              ...category,
+              products: [...category.products, ...products],
+              productsCount: category.productsCount + products.length,
+              inStockCount:
+                category.inStockCount +
+                products.filter((product) => product.stock > 0).length,
+            }
+          : category,
+      ),
+    );
+    setIsAddProductsOpen(false);
+  };
+
   return (
     <PanelLayout
       title="Categorias"
@@ -52,7 +75,10 @@ const Categories: React.FC = () => {
 
         <div className="flex flex-col gap-4">
           <CategoryDetails category={selectedCategory} />
-          <CategoryProductsTable category={selectedCategory} />
+          <CategoryProductsTable
+            category={selectedCategory}
+            onAddProduct={() => setIsAddProductsOpen(true)}
+          />
         </div>
       </div>
 
@@ -61,6 +87,14 @@ const Categories: React.FC = () => {
         categoryNames={categories.map((category) => category.name)}
         onClose={() => setIsAddCategoryOpen(false)}
         onConfirm={handleAddCategory}
+      />
+
+      <AddProductsModal
+        open={isAddProductsOpen}
+        category={selectedCategory}
+        categories={categories}
+        onClose={() => setIsAddProductsOpen(false)}
+        onConfirm={handleAddProducts}
       />
     </PanelLayout>
   );

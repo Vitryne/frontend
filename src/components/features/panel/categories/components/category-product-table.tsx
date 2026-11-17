@@ -6,9 +6,10 @@ import { LuPlus, LuTrash2 } from "react-icons/lu";
 
 interface Props {
   category: Category;
+  onAddProduct: () => void;
 }
 
-const CategoryProductsTable: React.FC<Props> = ({ category }) => {
+const CategoryProductsTable: React.FC<Props> = ({ category, onAddProduct }) => {
   return (
     <div className="overflow-hidden rounded-[14px] border border-border bg-surface">
       <div className="flex items-center justify-between gap-3 px-5 py-4">
@@ -19,6 +20,7 @@ const CategoryProductsTable: React.FC<Props> = ({ category }) => {
           title="Adicionar produto"
           btnIcon={<LuPlus size={14} />}
           iconPosition="left"
+          onClick={onAddProduct}
           className="inline-flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-primary/30 bg-surface px-3 text-[12px] font-semibold text-primary transition-colors hover:bg-primary/5"
         />
       </div>
