@@ -105,7 +105,9 @@ const AddCategoryModal: React.FC<Props> = ({
           placeholder="Digite o nome da categoria"
           value={customName}
           onChange={handleCustomNameChange}
-          error={isDuplicate ? "Já existe uma categoria com esse nome" : undefined}
+          error={
+            isDuplicate ? "Já existe uma categoria com esse nome" : undefined
+          }
         />
 
         {customName && !isDuplicate && (
