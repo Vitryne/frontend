@@ -3,6 +3,7 @@ import AddProductsModal from "@/components/features/panel/categories/components/
 import CategoryDetails from "@/components/features/panel/categories/components/category-details";
 import CategoryList from "@/components/features/panel/categories/components/category-list";
 import CategoryProductsTable from "@/components/features/panel/categories/components/category-product-table";
+import HideCategoryModal from "@/components/features/panel/categories/components/hide-category-modal";
 import type {
   Category,
   CategoryProduct,
@@ -16,6 +17,7 @@ const Categories: React.FC = () => {
   const [selectedName, setSelectedName] = useState(CATEGORIES_MOCK[0].name);
   const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
   const [isAddProductsOpen, setIsAddProductsOpen] = useState(false);
+  const [isHideCategoryOpen, setIsHideCategoryOpen] = useState(false);
 
   const selectedCategory =
     categories.find((category) => category.name === selectedName) ??
@@ -60,6 +62,28 @@ const Categories: React.FC = () => {
     setIsAddProductsOpen(false);
   };
 
+  const setCategoryVisible = (visible: boolean) => {
+    setCategories((current) =>
+      current.map((category) =>
+        category.name === selectedName ? { ...category, visible } : category,
+      ),
+    );
+  };
+
+  const handleToggleVisibility = () => {
+    if (selectedCategory.visible) {
+      setIsHideCategoryOpen(true);
+      return;
+    }
+
+    setCategoryVisible(true);
+  };
+
+  const handleHideCategory = () => {
+    setCategoryVisible(false);
+    setIsHideCategoryOpen(false);
+  };
+
   return (
     <PanelLayout
       title="Categorias"
@@ -74,7 +98,10 @@ const Categories: React.FC = () => {
         />
 
         <div className="flex flex-col gap-4">
-          <CategoryDetails category={selectedCategory} />
+          <CategoryDetails
+            category={selectedCategory}
+            onToggleVisibility={handleToggleVisibility}
+          />
           <CategoryProductsTable
             category={selectedCategory}
             onAddProduct={() => setIsAddProductsOpen(true)}
@@ -95,6 +122,13 @@ const Categories: React.FC = () => {
         categories={categories}
         onClose={() => setIsAddProductsOpen(false)}
         onConfirm={handleAddProducts}
+      />
+
+      <HideCategoryModal
+        open={isHideCategoryOpen}
+        category={selectedCategory}
+        onClose={() => setIsHideCategoryOpen(false)}
+        onConfirm={handleHideCategory}
       />
     </PanelLayout>
   );

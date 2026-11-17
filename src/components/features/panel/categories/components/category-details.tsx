@@ -15,9 +15,10 @@ import {
 
 interface Props {
   category: Category;
+  onToggleVisibility: () => void;
 }
 
-const CategoryDetails: React.FC<Props> = ({ category }) => {
+const CategoryDetails: React.FC<Props> = ({ category, onToggleVisibility }) => {
   return (
     <div className="rounded-[14px] border border-border bg-surface p-5">
       <div className="flex items-center gap-3">
@@ -40,6 +41,7 @@ const CategoryDetails: React.FC<Props> = ({ category }) => {
             category.visible ? <LuEyeOff size={14} /> : <LuEye size={14} />
           }
           iconPosition="left"
+          onClick={onToggleVisibility}
           className="inline-flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-border-strong bg-surface px-3 text-[12px] font-semibold text-text-primary transition-colors hover:bg-surface-subtle"
         />
         <ButtonSecondary
