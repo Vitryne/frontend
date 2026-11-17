@@ -23,67 +23,73 @@ const CategoryProductsTable: React.FC<Props> = ({ category }) => {
         />
       </div>
 
-      <table className="w-full">
-        <thead className="bg-surface-subtle">
-          <tr className="text-left text-[11px] font-semibold tracking-wider text-text-tertiary uppercase">
-            <th scope="col" className="py-2.5 pr-2 pl-5">
-              Produto
-            </th>
-            <th scope="col" className="px-2 py-2.5">
-              SKU
-            </th>
-            <th scope="col" className="px-2 py-2.5">
-              Preço
-            </th>
-            <th scope="col" className="px-2 py-2.5">
-              Estoque
-            </th>
-            <th scope="col" className="w-px py-2.5 pr-5 pl-2" />
-          </tr>
-        </thead>
-        <tbody>
-          {category.products.map((product) => {
-            const price = formatPrice(product.priceInCents);
+      {category.products.length === 0 ? (
+        <p className="border-t border-border px-5 py-8 text-center text-[13px] text-text-tertiary">
+          Nenhum produto nesta categoria ainda.
+        </p>
+      ) : (
+        <table className="w-full">
+          <thead className="bg-surface-subtle">
+            <tr className="text-left text-[11px] font-semibold tracking-wider text-text-tertiary uppercase">
+              <th scope="col" className="py-2.5 pr-2 pl-5">
+                Produto
+              </th>
+              <th scope="col" className="px-2 py-2.5">
+                SKU
+              </th>
+              <th scope="col" className="px-2 py-2.5">
+                Preço
+              </th>
+              <th scope="col" className="px-2 py-2.5">
+                Estoque
+              </th>
+              <th scope="col" className="w-px py-2.5 pr-5 pl-2" />
+            </tr>
+          </thead>
+          <tbody>
+            {category.products.map((product) => {
+              const price = formatPrice(product.priceInCents);
 
-            return (
-              <tr key={product.sku} className="border-t border-border">
-                <td className="py-3 pr-2 pl-5">
-                  <div className="flex items-center gap-3">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      width={40}
-                      height={40}
-                      className="size-10 shrink-0 rounded-lg object-cover"
-                    />
-                    <span className="text-[13px] font-semibold text-text-primary">
-                      {product.name}
-                    </span>
-                  </div>
-                </td>
-                <td className="px-2 py-3 text-[12px] text-text-tertiary">
-                  {product.sku}
-                </td>
-                <td className="px-2 py-3 text-[13px] font-bold whitespace-nowrap text-text-primary">
-                  R$ {price.reais}
-                  <span className="text-[10px]">,{price.cents}</span>
-                </td>
-                <td className="px-2 py-3 text-[12px] text-text-tertiary">
-                  {product.stock} un.
-                </td>
-                <td className="py-3 pr-5 pl-2">
-                  <button
-                    type="button"
-                    className="flex size-8 cursor-pointer items-center justify-center rounded-lg text-text-secondary transition-colors hover:bg-danger-soft hover:text-danger"
-                  >
-                    <LuTrash2 size={16} />
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              return (
+                <tr key={product.sku} className="border-t border-border">
+                  <td className="py-3 pr-2 pl-5">
+                    <div className="flex items-center gap-3">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        width={40}
+                        height={40}
+                        className="size-10 shrink-0 rounded-lg object-cover"
+                      />
+                      <span className="text-[13px] font-semibold text-text-primary">
+                        {product.name}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3 text-[12px] text-text-tertiary">
+                    {product.sku}
+                  </td>
+                  <td className="px-2 py-3 text-[13px] font-bold whitespace-nowrap text-text-primary">
+                    R$ {price.reais}
+                    <span className="text-[10px]">,{price.cents}</span>
+                  </td>
+                  <td className="px-2 py-3 text-[12px] text-text-tertiary">
+                    {product.stock} un.
+                  </td>
+                  <td className="py-3 pr-5 pl-2">
+                    <button
+                      type="button"
+                      className="flex size-8 cursor-pointer items-center justify-center rounded-lg text-text-secondary transition-colors hover:bg-danger-soft hover:text-danger"
+                    >
+                      <LuTrash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
