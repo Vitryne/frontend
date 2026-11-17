@@ -4,6 +4,11 @@ import CategoryDetails from "@/components/features/panel/categories/components/c
 import CategoryList from "@/components/features/panel/categories/components/category-list";
 import CategoryProductsTable from "@/components/features/panel/categories/components/category-product-table";
 import HideCategoryModal from "@/components/features/panel/categories/components/hide-category-modal";
+import MoveProductModal from "@/components/features/panel/categories/components/move-product-modal";
+import {
+  addProducts,
+  removeProduct,
+} from "@/components/features/panel/categories/products";
 import type {
   Category,
   CategoryProduct,
@@ -18,6 +23,9 @@ const Categories: React.FC = () => {
   const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
   const [isAddProductsOpen, setIsAddProductsOpen] = useState(false);
   const [isHideCategoryOpen, setIsHideCategoryOpen] = useState(false);
+  const [productToMove, setProductToMove] = useState<CategoryProduct | null>(
+    null,
+  );
 
   const selectedCategory =
     categories.find((category) => category.name === selectedName) ??
@@ -48,14 +56,7 @@ const Categories: React.FC = () => {
     setCategories((current) =>
       current.map((category) =>
         category.name === selectedName
-          ? {
-              ...category,
-              products: [...category.products, ...products],
-              productsCount: category.productsCount + products.length,
-              inStockCount:
-                category.inStockCount +
-                products.filter((product) => product.stock > 0).length,
-            }
+          ? addProducts(category, products)
           : category,
       ),
     );
@@ -84,6 +85,44 @@ const Categories: React.FC = () => {
     setIsHideCategoryOpen(false);
   };
 
+  const handleRemoveProduct = (product: CategoryProduct) => {
+    const isInOtherCategory = categories.some(
+      (category) =>
+        category.name !== selectedName &&
+        category.products.some((item) => item.sku === product.sku),
+    );
+
+    if (!isInOtherCategory) {
+      setProductToMove(product);
+      return;
+    }
+
+    setCategories((current) =>
+      current.map((category) =>
+        category.name === selectedName
+          ? removeProduct(category, product)
+          : category,
+      ),
+    );
+  };
+
+  const handleMoveProduct = (targetName: string) => {
+    if (!productToMove) return;
+
+    setCategories((current) =>
+      current.map((category) => {
+        if (category.name === selectedName) {
+          return removeProduct(category, productToMove);
+        }
+        if (category.name === targetName) {
+          return addProducts(category, [productToMove]);
+        }
+        return category;
+      }),
+    );
+    setProductToMove(null);
+  };
+
   return (
     <PanelLayout
       title="Categorias"
@@ -105,6 +144,7 @@ const Categories: React.FC = () => {
           <CategoryProductsTable
             category={selectedCategory}
             onAddProduct={() => setIsAddProductsOpen(true)}
+            onRemoveProduct={handleRemoveProduct}
           />
         </div>
       </div>
@@ -129,6 +169,16 @@ const Categories: React.FC = () => {
         category={selectedCategory}
         onClose={() => setIsHideCategoryOpen(false)}
         onConfirm={handleHideCategory}
+      />
+
+      <MoveProductModal
+        product={productToMove}
+        categoryName={selectedCategory.name}
+        options={categories
+          .filter((category) => category.name !== selectedName)
+          .map((category) => category.name)}
+        onClose={() => setProductToMove(null)}
+        onConfirm={handleMoveProduct}
       />
     </PanelLayout>
   );
