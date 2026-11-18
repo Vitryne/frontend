@@ -135,10 +135,10 @@ const Dashboard: React.FC = ({}) => {
             icon={<LuStar size={16} />}
             description={
               <>
-                {KPIS_MOCK.reviewsCount} avaliações ·{" "}
-                <strong className="font-semibold text-text-primary">
+                {`${KPIS_MOCK.reviewsCount} avaliações. `}
+                <p className="font-semibold text-text-primary inline">
                   {KPIS_MOCK.newReviewsToday} novas hoje
-                </strong>
+                </p>
               </>
             }
           />

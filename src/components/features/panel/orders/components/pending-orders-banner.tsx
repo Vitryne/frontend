@@ -41,11 +41,10 @@ const PendingOrdersBanner: React.FC<Props> = ({ orders, action }) => {
       </span>
 
       <p className="min-w-0 flex-1 truncate text-[13px] text-text-secondary">
-        <strong className="font-semibold text-text-primary">
-          {orders.length}{" "}
-          {orders.length === 1 ? "novo pedido" : "novos pedidos"}
-        </strong>{" "}
-        aguardando confirmação · prazo de {CONFIRM_WINDOW_MINUTES} min
+        <p className="font-semibold text-text-primary inline">
+          {`${orders.length} ${orders.length === 1 ? "novo pedido" : "novos pedidos"} `}
+        </p>
+        aguardando confirmação - prazo de {CONFIRM_WINDOW_MINUTES} min
       </p>
 
       {pill && (
