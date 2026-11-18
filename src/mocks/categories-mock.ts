@@ -18,6 +18,13 @@ export const CATEGORIES_MOCK: Category[] = [
         priceInCents: 44900,
         stock: 8,
       },
+      {
+        sku: "VTR-0168",
+        name: "Vestido blazer",
+        image: "/Vestido_azul.jpg",
+        priceInCents: 38900,
+        stock: 5,
+      },
     ],
   },
   {
@@ -70,6 +77,13 @@ export const CATEGORIES_MOCK: Category[] = [
         priceInCents: 18900,
         stock: 9,
       },
+      {
+        sku: "VTR-0171",
+        name: "Vestido chemise floral",
+        image: "/p_vestido_floral.jpg",
+        priceInCents: 22900,
+        stock: 7,
+      },
     ],
   },
   {
@@ -121,6 +135,13 @@ export const CATEGORIES_MOCK: Category[] = [
         image: "/cat_moletons.jpg",
         priceInCents: 24900,
         stock: 6,
+      },
+      {
+        sku: "VTR-0175",
+        name: "Vestido moletom",
+        image: "/p_moletom.jpg",
+        priceInCents: 19900,
+        stock: 0,
       },
     ],
   },
@@ -216,4 +237,23 @@ export const CATEGORIES_MOCK: Category[] = [
       },
     ],
   },
+];
+
+export const PLATFORM_CATEGORIES_MOCK: string[] = [
+  "Acessórios",
+  "Bermudas",
+  "Blazers",
+  "Blusas",
+  "Bolsas",
+  "Calças",
+  "Camisas",
+  "Jaquetas",
+  "Macacões",
+  "Moda praia",
+  "Moletons",
+  "Saias",
+  "Shorts",
+  "Tênis",
+  "Tricôs",
+  "Vestidos",
 ];

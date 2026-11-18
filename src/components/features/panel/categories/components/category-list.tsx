@@ -6,12 +6,14 @@ interface Props {
   categories: Category[];
   selectedName: string;
   onSelect: (name: string) => void;
+  onAdd: () => void;
 }
 
 const CategoryList: React.FC<Props> = ({
   categories,
   selectedName,
   onSelect,
+  onAdd,
 }) => {
   return (
     <div className="overflow-hidden rounded-[14px] border border-border bg-surface">
@@ -59,6 +61,7 @@ const CategoryList: React.FC<Props> = ({
           title="Adicionar categoria"
           btnIcon={<LuPlus size={14} />}
           iconPosition="left"
+          onClick={onAdd}
           className="inline-flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 rounded-[10px] border border-primary/30 bg-surface text-[12px] font-semibold text-primary transition-colors hover:bg-primary/5"
         />
       </div>
