@@ -94,8 +94,7 @@ const OrdersTable: React.FC<Props> = ({
       {totalPages > 1 && (
         <div className="flex items-center justify-between gap-3 border-t border-border px-4.5 py-2.75">
           <p className="text-[.75rem] text-text-tertiary">
-            Mostrando {pageStart + 1}-{pageStart + pagedOrders.length} de{" "}
-            {sortedOrders.length} pedidos
+            {`Mostrando ${pageStart + 1}-${pageStart + pagedOrders.length} - de ${sortedOrders.length} pedidos`}
           </p>
           <Pagination
             page={currentPage}

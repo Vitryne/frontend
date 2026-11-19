@@ -6,6 +6,7 @@ interface Props {
   btnIcon?: React.ReactElement;
   iconPosition?: "left" | "right";
   type?: "button" | "submit";
+  disabled?: boolean;
 }
 
 const ButtonPrimary: React.FC<Props> = ({
@@ -16,10 +17,12 @@ const ButtonPrimary: React.FC<Props> = ({
   titleClassName,
   iconPosition = "right",
   type = "button",
+  disabled,
 }) => {
   return (
     <button
       type={type}
+      disabled={disabled}
       className={`${className ? className : "inline-flex cursor-pointer items-center justify-center gap-2 rounded-[10px] bg-primary hover:bg-primary-hover text-white font-semibold text-[14px] px-5 py-2.5 shadow-lg shadow-primary/30 transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2"}`}
       onClick={onClick}
     >

@@ -244,8 +244,7 @@ const Products: React.FC = ({}) => {
           totalPages > 1 && (
             <>
               <p className="text-[.75rem] text-text-tertiary">
-                Mostrando {pageStart + 1}–{pageStart + pagedProducts.length} de{" "}
-                {filteredProducts.length} produtos
+                {`Mostrando ${pageStart + 1}-${pageStart + pagedProducts.length} de ${filteredProducts.length} produtos`}
               </p>
               <Pagination
                 page={currentPage}

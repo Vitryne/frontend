@@ -1,7 +1,6 @@
 import ButtonGoogle from "@/components/ui/button-google";
 import Input from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
-import { IoEyeOutline } from "react-icons/io5";
 import { HiOutlineMail } from "react-icons/hi";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,10 +11,14 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import LoginService from "@/service/login-service";
 import { saveToken } from "@/lib/auth-storage";
+import CheckBox from "@/components/ui/checkbox";
+import ButtonPrimary from "@/components/ui/button-primary";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 
 const Login: React.FC = ({}) => {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
   const [fieldErrors, setFieldErrors] = useState({ email: "", password: "" });
@@ -54,48 +57,35 @@ const Login: React.FC = ({}) => {
   return (
     <div className="flex min-h-screen">
       <Head>
-        <title>Entrar · Vitryne</title>
+        <title>Vitryne - Entrar</title>
       </Head>
 
       <div className="hidden lg:block lg:w-[46%] relative overflow-hidden">
         <Image
-          src="/partner_hero.jpg"
-          alt="Partner hero"
+          src="/login.jpg"
+          alt="imagem login"
           fill
           priority
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-linear-to-br from-primary/90 via-primary/85 to-[#3B0F63]/90" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary/85 to-primary-deep/70" />
 
         <div className="relative z-10 flex h-full flex-col justify-between p-10 lg:p-12 text-white">
-          <div className="w-42.5">
+          <div className="w-60">
             <LogoSvg color="white" />
           </div>
           <div>
-            <span className="inline-block rounded-full border border-white/30 px-3 py-1  text-[11px] font-semibold uppercase tracking-wider text-white/90">
+            <span className="inline-block rounded-full border border-white/50 bg-white/18 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
               Portal do parceiro
             </span>
-            <h2 className="font-display font-bold text-[34px] leading-[1.15] mt-4">
-              Gerencie sua loja em um só lugar.
+            <h2 className="max-w-120 font-display font-bold text-[38px] leading-[1.1] mt-4">
+              Sua loja merece chegar mais longe.
             </h2>
-            <p className="text-[15px] leading-relaxed text-white/80 mt-4 max-w-105">
-              Catálogo, pedidos em tempo real, financeiro e entrega — desenhado
-              para quem vive de moda.
+            <p className="text-[15px] leading-relaxed text-white/80 mt-4 max-w-120">
+              Leve seus produtos para o digital, conquiste novos clientes e
+              acompanhe suas vendas em um só lugar. A Vitryne conecta sua loja a
+              quem está procurando moda perto de você.
             </p>
-            <div className="flex items-center gap-8 mt-8">
-              <div>
-                <p className="font-display font-bold text-2xl">+12k</p>
-                <p className=" text-[13px] text-white/70">lojas ativas</p>
-              </div>
-              <div>
-                <p className="font-display font-bold text-2xl">94%</p>
-                <p className="text-[13px] text-white/70">aprovação</p>
-              </div>
-              <div>
-                <p className="font-display font-bold text-2xl">45min</p>
-                <p className="text-[13px] text-white/70">entrega média</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -133,29 +123,27 @@ const Login: React.FC = ({}) => {
               <Input
                 title="Senha"
                 placeholder="digite sua senha..."
-                type="password"
-                icon={<IoEyeOutline size={18} />}
+                type={showPassword ? "text" : "password"}
+                icon={
+                  showPassword ? <LuEyeOff size={18} /> : <LuEye size={18} />
+                }
+                onIconClick={() => setShowPassword(!showPassword)}
                 value={password}
                 onChange={setPassword}
                 error={fieldErrors.password || undefined}
               />
             </div>
 
-            <div className="flex items-center justify-between pt-1">
-              <label className="flex items-center gap-1.5 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  checked={remember}
-                  onChange={(e) => setRemember(e.target.checked)}
-                  className="w-4 h-4 rounded border-border text-primary"
-                />
-                <span className=" text-[13px] text-text-primary">
+            <div className="flex items-center justify-between">
+              <label className="flex cursor-pointer items-center gap-2 select-none">
+                <CheckBox checked={remember} onChange={setRemember} />
+                <span className="text-[13px] text-text-primary">
                   Lembrar este dispositivo
                 </span>
               </label>
               <a
                 href="#"
-                className=" text-[13px] text-primary font-semibold hover:underline"
+                className="text-[13px] font-semibold text-primary hover:underline"
               >
                 Problemas ao acessar?
               </a>
@@ -167,20 +155,17 @@ const Login: React.FC = ({}) => {
               </p>
             )}
 
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full cursor-pointer inline-flex items-center justify-center gap-2 rounded-[10px] border border-primary/30 bg-white hover:bg-primary/5 text-primary font-semibold text-[14px] py-3.5 transition-transform duration-200 ease-in-out hover:scale-[1.02] active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {loading ? "Entrando..." : "Entrar no painel"}
-              </button>
-            </div>
+            <ButtonPrimary
+              type="submit"
+              disabled={loading}
+              title={loading ? "Entrando..." : "Entrar no painel"}
+              className="inline-flex w-full cursor-pointer items-center justify-center rounded-[10px] bg-primary py-3 text-[14px] font-semibold text-white shadow-lg shadow-primary/30 transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+            />
           </form>
 
           <div className="flex items-center gap-4 my-6">
             <div className="h-px flex-1 bg-border" />
-            <span className=" text-[13px] text-text-secondary">ou</span>
+            <span className="text-[12px] text-text-tertiary">ou</span>
             <div className="h-px flex-1 bg-border" />
           </div>
 
@@ -189,7 +174,7 @@ const Login: React.FC = ({}) => {
             title="Entrar com o Google"
           />
 
-          <p className="text-center  text-[13px] text-text-secondary mt-8">
+          <p className="text-center text-[13px] text-text-secondary mt-8">
             Ainda não vende na Vitryne?{" "}
             <Link
               href="/register"

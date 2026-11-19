@@ -68,7 +68,7 @@ const Register = () => {
   return (
     <div className="flex min-h-screen">
       <Head>
-        <title>{`${label} · Cadastro · Vitryne`}</title>
+        <title>{`Vitryne - Cadastro - ${label}`}</title>
       </Head>
 
       <RegisterSidebar
