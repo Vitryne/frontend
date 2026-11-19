@@ -8,14 +8,14 @@ export enum BackendOrderStatus {
   CANCELED = "CANCELED",
 }
 
-export type PaymentMethod = "PIX" | "CREDIT_CARD" | "DEBIT_CARD";
+export type BackendPaymentMethod = "PIX" | "CREDIT_CARD" | "DEBIT_CARD";
 
 export type PaymentResult = "APPROVED" | "DECLINED";
 
 export interface PaymentResponseDTO {
   id: number;
   amount: number;
-  method: PaymentMethod;
+  method: BackendPaymentMethod;
   result: PaymentResult;
   createdAt: string;
 }

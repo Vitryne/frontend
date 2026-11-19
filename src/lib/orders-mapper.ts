@@ -1,10 +1,13 @@
 import type {
+  ItemCategory,
   Order,
   OrderItem,
   OrderStatus,
+  PaymentMethod,
 } from "@/components/features/panel/orders/types";
 import {
   BackendOrderStatus,
+  BackendPaymentMethod,
   OrderItemResponseDTO,
   OrderResponseDTO,
 } from "@/interfaces/orders-interface";
@@ -73,11 +76,37 @@ export const toBackendOrderStatus = (
   }
 };
 
+export const inferItemCategory = (productName: string): ItemCategory => {
+  const lower = productName.toLowerCase();
+  if (lower.includes("vestido")) return "dresses";
+  if (lower.includes("saia")) return "skirts";
+  if (lower.includes("camisa") || lower.includes("camiseta")) return "shirts";
+  if (lower.includes("calça") || lower.includes("calca")) return "pants";
+  if (lower.includes("blazer")) return "blazers";
+  if (lower.includes("jaqueta")) return "jackets";
+  if (lower.includes("moletom")) return "sweatshirts";
+  if (
+    lower.includes("tênis") ||
+    lower.includes("tenis") ||
+    lower.includes("sapato")
+  ) {
+    return "sneakers";
+  }
+  return "shirts";
+};
+
+export const toFrontendPaymentMethod = (
+  method?: BackendPaymentMethod | string,
+): PaymentMethod => {
+  if (!method) return "pix";
+  return method.toUpperCase() === "PIX" ? "pix" : "credit_card";
+};
+
 export const toOrderItems = (
   items: OrderItemResponseDTO[] = [],
 ): OrderItem[] => {
   if (items.length === 0) {
-    return [{ name: "Pedido sem itens" }];
+    return [{ name: "Pedido sem itens", category: "shirts" }];
   }
 
   return items.flatMap((item) => {
@@ -85,6 +114,7 @@ export const toOrderItems = (
     return Array.from({ length: count }, () => ({
       name: item.productName,
       size: item.size || undefined,
+      category: inferItemCategory(item.productName),
     }));
   });
 };
@@ -126,6 +156,8 @@ export const toOrder = (dto: OrderResponseDTO): Order => {
     totalInCents: Math.round((dto.totalAmount ?? 0) * 100),
     status,
     createdAt: dto.createdAt,
+    paymentMethod: toFrontendPaymentMethod(dto.payment?.method),
+    hasCoupon: false,
     ...getStatusTrackingFields(dto.id, status, referenceDate),
   };
 };
