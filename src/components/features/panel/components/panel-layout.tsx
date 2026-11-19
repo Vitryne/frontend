@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PanelSidebar from "@/components/features/panel/components/panel-sidebar";
 import PanelTopbar from "@/components/features/panel/components/panel-topbar";
 import Head from "next/head";
@@ -11,6 +11,16 @@ interface Props {
 
 const PanelLayout: React.FC<Props> = ({ title, subtitle, children }) => {
   const [storeOpen, setStoreOpen] = useState(true);
+  const [storeName, setStoreName] = useState("Atelier Norte");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("vitryne:store-name");
+      if (saved?.trim()) {
+        setStoreName(saved.trim());
+      }
+    }
+  }, []);
 
   return (
     <div className="flex min-h-screen">
@@ -19,7 +29,7 @@ const PanelLayout: React.FC<Props> = ({ title, subtitle, children }) => {
       </Head>
 
       <PanelSidebar
-        storeName="Atelier Norte"
+        storeName={storeName}
         storeOpen={storeOpen}
         onToggleStore={setStoreOpen}
       />
