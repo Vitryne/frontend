@@ -1,4 +1,7 @@
-import type { Category } from "@/components/features/panel/categories/types";
+import type {
+  Category,
+  CategoryProduct,
+} from "@/components/features/panel/categories/types";
 import ButtonSecondary from "@/components/ui/button-secondary";
 import { formatPrice } from "@/lib/format";
 import Image from "next/image";
@@ -7,9 +10,14 @@ import { LuPlus, LuTrash2 } from "react-icons/lu";
 interface Props {
   category: Category;
   onAddProduct: () => void;
+  onRemoveProduct: (product: CategoryProduct) => void;
 }
 
-const CategoryProductsTable: React.FC<Props> = ({ category, onAddProduct }) => {
+const CategoryProductsTable: React.FC<Props> = ({
+  category,
+  onAddProduct,
+  onRemoveProduct,
+}) => {
   return (
     <div className="overflow-hidden rounded-[14px] border border-border bg-surface">
       <div className="flex items-center justify-between gap-3 px-5 py-4">
@@ -81,6 +89,7 @@ const CategoryProductsTable: React.FC<Props> = ({ category, onAddProduct }) => {
                   <td className="py-3 pr-5 pl-2">
                     <button
                       type="button"
+                      onClick={() => onRemoveProduct(product)}
                       className="flex size-8 cursor-pointer items-center justify-center rounded-lg text-text-secondary transition-colors hover:bg-danger-soft hover:text-danger"
                     >
                       <LuTrash2 size={16} />
