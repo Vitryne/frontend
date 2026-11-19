@@ -56,6 +56,13 @@ const Orders: React.FC = () => {
       .listStoreOrders()
       .then((data) => {
         setOrders(data.map(toOrder));
+        if (
+          typeof window !== "undefined" &&
+          data.length > 0 &&
+          data[0].storeName
+        ) {
+          localStorage.setItem("vitryne:store-name", data[0].storeName);
+        }
         setLoadState("ready");
       })
       .catch(() => setLoadState("error"));

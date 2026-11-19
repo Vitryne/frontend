@@ -34,6 +34,9 @@ const StepFooter: React.FC<Props> = ({
     setError("");
 
     try {
+      if (data.name?.trim()) {
+        localStorage.setItem("vitryne:store-name", data.name.trim());
+      }
       await registerService.registerStore(toRegisterDTO(data));
       router.replace("/dashboard");
     } catch (e) {
