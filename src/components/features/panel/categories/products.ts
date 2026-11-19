@@ -24,3 +24,22 @@ export const removeProduct = (
   productsCount: category.productsCount - 1,
   inStockCount: category.inStockCount - (product.stock > 0 ? 1 : 0),
 });
+
+export const isOnlyInCategory = (
+  categories: Category[],
+  categoryName: string,
+  product: CategoryProduct,
+) =>
+  !categories.some(
+    (category) =>
+      category.name !== categoryName &&
+      category.products.some((item) => item.sku === product.sku),
+  );
+
+export const getExclusiveProducts = (
+  categories: Category[],
+  category: Category,
+) =>
+  category.products.filter((product) =>
+    isOnlyInCategory(categories, category.name, product),
+  );

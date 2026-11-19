@@ -16,9 +16,14 @@ import {
 interface Props {
   category: Category;
   onToggleVisibility: () => void;
+  onDelete: () => void;
 }
 
-const CategoryDetails: React.FC<Props> = ({ category, onToggleVisibility }) => {
+const CategoryDetails: React.FC<Props> = ({
+  category,
+  onToggleVisibility,
+  onDelete,
+}) => {
   return (
     <div className="rounded-[14px] border border-border bg-surface p-5">
       <div className="flex items-center gap-3">
@@ -48,6 +53,7 @@ const CategoryDetails: React.FC<Props> = ({ category, onToggleVisibility }) => {
           title="Excluir"
           btnIcon={<LuTrash2 size={14} />}
           iconPosition="left"
+          onClick={onDelete}
           className="inline-flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-danger/30 bg-surface px-3 text-[12px] font-semibold text-danger transition-colors hover:bg-danger-soft"
         />
       </div>
