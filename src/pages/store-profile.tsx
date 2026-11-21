@@ -3,6 +3,7 @@ import ContactCard from "@/components/features/panel/store-profile/components/co
 import CoverLogoCard from "@/components/features/panel/store-profile/components/cover-logo-card";
 import PublicIdentityCard from "@/components/features/panel/store-profile/components/public-identity-card";
 import SocialCard from "@/components/features/panel/store-profile/components/social-card";
+import StorePreviewCard from "@/components/features/panel/store-profile/components/store-preview-card";
 import type { StoreProfile } from "@/components/features/panel/store-profile/types";
 import { STORE_PROFILE_MOCK } from "@/mocks/store-profile-mock";
 import { useState } from "react";
@@ -26,6 +27,8 @@ const StoreProfilePage: React.FC = () => {
           <ContactCard profile={profile} onChange={handleChange} />
           <SocialCard profile={profile} onChange={handleChange} />
         </div>
+
+        <StorePreviewCard profile={profile} />
       </div>
     </PanelLayout>
   );
