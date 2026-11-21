@@ -21,7 +21,7 @@ export const STORE_PROFILE_MOCK: StoreProfile = {
   tiktok: "@ateliernorte",
   pinterest: "",
   website: "ateliernorte.com.br",
-  coverImage: "/Card_loja2.jpg",
+  coverImage: "/bg_loja.jpg",
   logoImage: "/Logo_AtelierNorte.jpg",
   rating: 4.9,
   reviewsCount: 1254,

@@ -3,14 +3,12 @@ import Input from "@/components/ui/input";
 import { FaInstagram, FaPinterest, FaTiktok } from "react-icons/fa";
 import { LuGlobe } from "react-icons/lu";
 
-
 interface Props {
-  profile: StoreProfile
-  onChange: (data: Partial<StoreProfile>) => void
+  profile: StoreProfile;
+  onChange: (data: Partial<StoreProfile>) => void;
 }
 
-const SocialCard: React.FC<Props> = ({ profile, onChange}) => {
-
+const SocialCard: React.FC<Props> = ({ profile, onChange }) => {
   const networks = [
     {
       label: "Instagram",
@@ -56,10 +54,10 @@ const SocialCard: React.FC<Props> = ({ profile, onChange}) => {
           >
             <div className="flex items-center gap-3">
               <span className="flex size-8 items-center justify-center rounded-lg bg-surface-subtle text-text-secondary">
-                { network.icon }
+                {network.icon}
               </span>
               <span className="text-[13px] font-semibold text-text-primary">
-                { network.label }
+                {network.label}
               </span>
             </div>
 
@@ -74,8 +72,7 @@ const SocialCard: React.FC<Props> = ({ profile, onChange}) => {
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-
-export default SocialCard
+export default SocialCard;
