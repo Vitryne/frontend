@@ -65,7 +65,9 @@ A aplicação sobe em [http://localhost:3000](http://localhost:3000).
 | `npm run format` | Formata o código com o Prettier |
 | `npm run format:check` | Verifica a formatação sem alterar arquivos |
 
-Antes de abrir um PR, rode `format`, `lint`, `typecheck` e `build`: são as mesmas verificações do CI.
+A formatação e o lint rodam sozinhos a cada commit, por um hook de pre-commit (`husky` + `lint-staged`): os arquivos que entram no commit passam por `eslint --fix` e `prettier --write`, e o commit é bloqueado se sobrar algum erro de lint. O hook é instalado no `npm install`; depois de clonar o projeto ou puxar esta mudança, rode `npm install` uma vez.
+
+Antes de abrir um PR, rode `typecheck` e `build`: junto com o lint e a formatação, são as verificações do CI.
 
 ---
 
