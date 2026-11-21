@@ -66,7 +66,7 @@ const PublicIdentityCard: React.FC<Props> = ({ profile, onChange }) => {
             ))}
           </div>
           <p className="mt-2 text-[11px] text-text-tertiary">
-            {`Escolha na lista de tags da Vitryne · ${tagsCount} ${tagsCount === 1 ? "selecionada" : "selecionadas"}`}
+            {`Escolha na lista de tags da Vitryne - ${tagsCount} ${tagsCount === 1 ? "selecionada" : "selecionadas"}`}
           </p>
         </div>
       </div>

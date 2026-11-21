@@ -1,6 +1,8 @@
 import PanelLayout from "@/components/features/panel/components/panel-layout";
+import ContactCard from "@/components/features/panel/store-profile/components/contact-card";
 import CoverLogoCard from "@/components/features/panel/store-profile/components/cover-logo-card";
 import PublicIdentityCard from "@/components/features/panel/store-profile/components/public-identity-card";
+import SocialCard from "@/components/features/panel/store-profile/components/social-card";
 import type { StoreProfile } from "@/components/features/panel/store-profile/types";
 import { STORE_PROFILE_MOCK } from "@/mocks/store-profile-mock";
 import { useState } from "react";
@@ -21,6 +23,8 @@ const StoreProfilePage: React.FC = () => {
         <div className="flex flex-col gap-4">
           <CoverLogoCard profile={profile} />
           <PublicIdentityCard profile={profile} onChange={handleChange} />
+          <ContactCard profile={profile} onChange={handleChange} />
+          <SocialCard profile={profile} onChange={handleChange} />
         </div>
       </div>
     </PanelLayout>
