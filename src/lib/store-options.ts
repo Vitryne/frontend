@@ -1,0 +1,31 @@
+export const STORE_CATEGORIES = [
+  "Moda feminina",
+  "Moda masculina",
+  "Infantil",
+  "Fitness",
+  "Plus Size",
+  "Brechó",
+  "Streetwear",
+  "Country",
+  "Alfaiataria",
+  "Moda praia",
+  "Moda gestante",
+  "Lingerie",
+];
+
+export const STORE_TAGS = [
+  "Vestidos",
+  "Saias",
+  "Camisas",
+  "Calças",
+  "Conjuntos",
+  "Kimonos",
+  "Shorts",
+  "Cardigans",
+  "Blazers",
+  "Tricô",
+  "Jaquetas",
+  "Macacões",
+  "Bolsas",
+  "Acessórios",
+];

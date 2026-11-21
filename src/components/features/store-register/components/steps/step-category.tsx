@@ -3,38 +3,7 @@ import { FiCheck } from "react-icons/fi";
 import { useState } from "react";
 import Input from "@/components/ui/input";
 import type { StepProps } from "@/interfaces/register-form";
-
-const CATEGORIES = [
-  "Moda feminina",
-  "Moda masculina",
-  "Infantil",
-  "Fitness",
-  "Plus Size",
-  "Brechó",
-  "Streetwear",
-  "Country",
-  "Alfaiataria",
-  "Moda praia",
-  "Moda gestante",
-  "Lingerie",
-];
-
-const TAGS = [
-  "Vestidos",
-  "Saias",
-  "Camisas",
-  "Calças",
-  "Conjuntos",
-  "Kimonos",
-  "Shorts",
-  "Cardigans",
-  "Blazers",
-  "Tricô",
-  "Jaquetas",
-  "Macacões",
-  "Bolsas",
-  "Acessórios",
-];
+import { STORE_CATEGORIES, STORE_TAGS } from "@/lib/store-options";
 
 const PREP_PRESETS = [15, 30, 45, 60];
 
@@ -48,9 +17,9 @@ const StepCategory = ({ data, onChange, errors }: StepProps) => {
   const { mainCategory, tags, deliveryRadiusKm: radius } = data;
 
   const visibleCategories = showAllCategories
-    ? CATEGORIES
-    : CATEGORIES.slice(0, 9);
-  const visibleTags = showAllTags ? TAGS : TAGS.slice(0, 8);
+    ? STORE_CATEGORIES
+    : STORE_CATEGORIES.slice(0, 9);
+  const visibleTags = showAllTags ? STORE_TAGS : STORE_TAGS.slice(0, 8);
 
   const radiusPercent = ((radius - 1) / (50 - 1)) * 100;
 
