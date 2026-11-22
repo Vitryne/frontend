@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getToken } from "@/lib/auth-storage";
+import { clearToken, getToken } from "@/lib/auth-storage";
 
 export const useHttp = () => {
   const http = axios.create({
@@ -22,6 +22,17 @@ export const useHttp = () => {
   http.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error: AxiosError) => {
+      const isAuthRoute = error.config?.url?.startsWith("/auth/");
+
+      if (
+        error.response?.status === 401 &&
+        !isAuthRoute &&
+        typeof window !== "undefined"
+      ) {
+        clearToken();
+        window.location.replace("/login");
+      }
+
       console.error("Erro na requisição:", error);
       return Promise.reject(error);
     },
