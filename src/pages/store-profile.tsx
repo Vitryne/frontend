@@ -1,13 +1,34 @@
-import PainelLayout from "@/components/features/panel/components/panel-layout";
+import PanelLayout from "@/components/features/panel/components/panel-layout";
+import ContactCard from "@/components/features/panel/store-profile/components/contact-card";
+import CoverLogoCard from "@/components/features/panel/store-profile/components/cover-logo-card";
+import PublicIdentityCard from "@/components/features/panel/store-profile/components/public-identity-card";
+import SocialCard from "@/components/features/panel/store-profile/components/social-card";
+import type { StoreProfile } from "@/components/features/panel/store-profile/types";
+import { STORE_PROFILE_MOCK } from "@/mocks/store-profile-mock";
+import { useState } from "react";
 
-const PerfilLoja: React.FC = ({}) => {
+const StoreProfilePage: React.FC = () => {
+  const [profile, setProfile] = useState<StoreProfile>(STORE_PROFILE_MOCK);
+
+  const handleChange = (data: Partial<StoreProfile>) => {
+    setProfile((current) => ({ ...current, ...data }));
+  };
+
   return (
-    <PainelLayout title="Perfil Loja" subtitle="Tela de Perfil Loja">
-      <h1 className="font-display text-[24px] font-bold text-text-primary">
-        <p className="text-text-secondary">Em construção.</p>
-      </h1>
-    </PainelLayout>
+    <PanelLayout
+      title="Perfil da loja"
+      subtitle="Como sua loja aparece para os clientes na vitrine"
+    >
+      <div className="grid grid-cols-[1fr_360px] items-start gap-5">
+        <div className="flex flex-col gap-4">
+          <CoverLogoCard profile={profile} />
+          <PublicIdentityCard profile={profile} onChange={handleChange} />
+          <ContactCard profile={profile} onChange={handleChange} />
+          <SocialCard profile={profile} onChange={handleChange} />
+        </div>
+      </div>
+    </PanelLayout>
   );
 };
 
-export default PerfilLoja;
+export default StoreProfilePage;

@@ -136,9 +136,9 @@ const Dashboard: React.FC = ({}) => {
             description={
               <>
                 {`${KPIS_MOCK.reviewsCount} avaliações. `}
-                <p className="font-semibold text-text-primary inline">
+                <span className="font-semibold text-text-primary">
                   {KPIS_MOCK.newReviewsToday} novas hoje
-                </p>
+                </span>
               </>
             }
           />
