@@ -79,16 +79,26 @@ Variáveis com prefixo `NEXT_PUBLIC_` ficam visíveis no navegador: nunca coloqu
 
 ## 🗂️ Estrutura
 
-```
+```bash
 src/
 ├── components/
-│   ├── ui/              # componentes globais (botões, inputs, modal, tabela...)
-│   └── features/        # componentes de cada área
-│       ├── panel/       # layout do painel e telas internas (produtos...)
+│   ├── ui/                  # componentes globais (botões, inputs, modal, tabela...)
+│   ├── hooks/               # hooks compartilhados, incluindo o cliente HTTP
+│   └── features/            # componentes de cada área
+│       ├── panel/           # painel do lojista
+│       │   ├── components/  # layout do painel (sidebar, topbar) e peças comuns
+│       │   ├── dashboard/
+│       │   ├── products/
+│       │   ├── categories/
+│       │   ├── orders/
+│       │   └── finance/
 │       └── store-register/  # etapas do cadastro da loja
-├── lib/                 # funções utilitárias, sem React
-├── pages/               # rotas (Pages Router): cada arquivo é uma URL
-└── styles/              # estilos globais e tokens do tema
+├── service/                 # chamadas à API, um arquivo por domínio (login, produtos, pedidos...)
+├── interfaces/              # tipos das requisições e respostas da API
+├── lib/                     # funções utilitárias, sem React (token, formatação, mappers, validação)
+├── mocks/                   # dados fictícios das telas ainda não integradas à API
+├── pages/                   # rotas (Pages Router): cada arquivo é uma URL
+└── styles/                  # estilos globais e tokens do tema
 ```
 
 ---
