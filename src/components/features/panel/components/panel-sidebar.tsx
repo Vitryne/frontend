@@ -1,5 +1,6 @@
 import LogoSvg from "@/components/ui/logo-svg";
 import Switch from "@/components/ui/switch";
+import { clearToken } from "@/lib/auth-storage";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
@@ -147,6 +148,7 @@ const PanelSidebar: React.FC<Props> = ({
         </div>
         <Link
           href="/login"
+          onClick={clearToken}
           className="rounded-lg p-1.5 text-text-disabled transition-colors hover:bg-surface-subtle hover:text-text-primary"
         >
           <LuLogOut size={16} />
