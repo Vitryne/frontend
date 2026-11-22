@@ -9,7 +9,15 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\""
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.css": "prettier --write"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
@@ -31,6 +39,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^15.5.28",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.1",
     "prettier": "3.9.10",
     "tailwindcss": "^4",
     "typescript": "^5"
