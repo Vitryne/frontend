@@ -1,4 +1,4 @@
-import { StoreProfile } from "@/components/features/panel/store-profile/types";
+import type { StoreProfile } from "@/components/features/panel/store-profile/types";
 import Input from "@/components/ui/input";
 import MaskedInput from "@/components/ui/masked-input";
 import { LuPencil } from "react-icons/lu";
@@ -6,9 +6,10 @@ import { LuPencil } from "react-icons/lu";
 interface Props {
   profile: StoreProfile;
   onChange: (data: Partial<StoreProfile>) => void;
+  onEditAddress: () => void;
 }
 
-const ContactCard: React.FC<Props> = ({ profile, onChange }) => {
+const ContactCard: React.FC<Props> = ({ profile, onChange, onEditAddress }) => {
   const { street, number, neighborhood, city, state } = profile.address;
   const fullAddress = `${street}, ${number} - ${neighborhood} - ${city} - ${state}`;
 
@@ -54,6 +55,7 @@ const ContactCard: React.FC<Props> = ({ profile, onChange }) => {
             </span>
             <button
               type="button"
+              onClick={onEditAddress}
               className="shrink-0 cursor-pointer text-text-secondary transition-colors hover:text-text-primary"
             >
               <LuPencil size={16} />

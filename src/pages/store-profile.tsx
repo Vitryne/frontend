@@ -1,17 +1,24 @@
 import PanelLayout from "@/components/features/panel/components/panel-layout";
+import AddressModal from "@/components/features/panel/store-profile/components/address-modal";
 import ContactCard from "@/components/features/panel/store-profile/components/contact-card";
 import CoverLogoCard from "@/components/features/panel/store-profile/components/cover-logo-card";
-import ImageUploadModal, { ImageType } from "@/components/features/panel/store-profile/components/img-upload-modal";
+import ImageUploadModal, {
+  ImageType,
+} from "@/components/features/panel/store-profile/components/img-upload-modal";
 import PublicIdentityCard from "@/components/features/panel/store-profile/components/public-identity-card";
 import SocialCard from "@/components/features/panel/store-profile/components/social-card";
 import StorePreviewCard from "@/components/features/panel/store-profile/components/store-preview-card";
-import { StoreProfile } from "@/components/features/panel/store-profile/types";
+import {
+  StoreAddress,
+  StoreProfile,
+} from "@/components/features/panel/store-profile/types";
 import { STORE_PROFILE_MOCK } from "@/mocks/store-profile-mock";
 import { useState } from "react";
 
 const StoreProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<StoreProfile>(STORE_PROFILE_MOCK);
-  const [imageModal, setImageModal] = useState<ImageType | null>(null)
+  const [imageModal, setImageModal] = useState<ImageType | null>(null);
+  const [isAddressOpen, setIsAddressOpen] = useState(false);
 
   const handleChange = (data: Partial<StoreProfile>) => {
     setProfile((current) => ({ ...current, ...data }));
@@ -24,6 +31,11 @@ const StoreProfilePage: React.FC = () => {
     setImageModal(null);
   };
 
+  const handleAddressConfirm = (address: StoreAddress) => {
+    handleChange({ address });
+    setIsAddressOpen(false);
+  };
+
   return (
     <PanelLayout
       title="Perfil da loja"
@@ -31,13 +43,17 @@ const StoreProfilePage: React.FC = () => {
     >
       <div className="grid grid-cols-[1fr_360px] items-start gap-5">
         <div className="flex flex-col gap-4">
-          <CoverLogoCard 
+          <CoverLogoCard
             profile={profile}
             onChangeCover={() => setImageModal("cover")}
             onChangeLogo={() => setImageModal("logo")}
           />
           <PublicIdentityCard profile={profile} onChange={handleChange} />
-          <ContactCard profile={profile} onChange={handleChange} />
+          <ContactCard
+            profile={profile}
+            onChange={handleChange}
+            onEditAddress={() => setIsAddressOpen(true)}
+          />
           <SocialCard profile={profile} onChange={handleChange} />
         </div>
 
@@ -52,6 +68,14 @@ const StoreProfilePage: React.FC = () => {
         onClose={() => setImageModal(null)}
         onConfirm={handleImageConfirm}
       />
+
+      {isAddressOpen && (
+        <AddressModal
+          address={profile.address}
+          onClose={() => setIsAddressOpen(false)}
+          onConfirm={handleAddressConfirm}
+        />
+      )}
     </PanelLayout>
   );
 };
