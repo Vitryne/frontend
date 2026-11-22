@@ -5,9 +5,15 @@ import { LuUpload } from "react-icons/lu";
 
 interface Props {
   profile: StoreProfile;
+  onChangeCover: () => void;
+  onChangeLogo: () => void;
 }
 
-const CoverLogoCard: React.FC<Props> = ({ profile }) => {
+const CoverLogoCard: React.FC<Props> = ({
+  profile,
+  onChangeCover,
+  onChangeLogo,
+}) => {
   return (
     <div className="rounded-[14px] border border-border bg-surface p-5">
       <div className="flex items-center justify-between gap-3">
@@ -27,12 +33,13 @@ const CoverLogoCard: React.FC<Props> = ({ profile }) => {
           sizes="800px"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/55 to-transparent" />
 
         <ButtonSecondary
           title="Trocar capa"
           btnIcon={<LuUpload size={14} />}
           iconPosition="left"
+          onClick={onChangeCover}
           className="absolute top-3 right-3 inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg bg-surface px-3 text-[12px] font-semibold text-text-primary shadow-sm transition-colors hover:bg-surface-subtle"
         />
 
@@ -62,6 +69,7 @@ const CoverLogoCard: React.FC<Props> = ({ profile }) => {
             title="Substituir logo"
             btnIcon={<LuUpload size={14} />}
             iconPosition="left"
+            onClick={onChangeLogo}
             className="mt-1.5 inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg bg-surface-subtle px-3 text-[12px] font-semibold text-text-primary transition-colors hover:bg-border"
           />
         </div>
