@@ -3,6 +3,7 @@ import {
   AdjustStockRequestDTO,
   CreateProductRequestDTO,
   CreateStockRequestDTO,
+  DeleteProductsRequestDTO,
   EditProductRequestDTO,
   ProductManagementResponseDTO,
   ReplenishStockRequestDTO,
@@ -40,6 +41,11 @@ const ProductService = () => {
           `/product/manager/${id}/status`,
           statusRequest,
         )
+        .then((r) => r.data);
+    },
+    deleteProducts: (request: DeleteProductsRequestDTO) => {
+      return http
+        .delete<void>("/product/manager", { data: request })
         .then((r) => r.data);
     },
     addStock: (productId: number, request: CreateStockRequestDTO) => {

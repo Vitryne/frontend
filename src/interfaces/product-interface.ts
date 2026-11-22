@@ -49,6 +49,10 @@ export interface StatusRequestDTO {
   status: ProductStatus;
 }
 
+export interface DeleteProductsRequestDTO {
+  ids: number[];
+}
+
 export interface CreateStockRequestDTO {
   size: string;
   quantity: number;
