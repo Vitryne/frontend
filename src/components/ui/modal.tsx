@@ -6,7 +6,7 @@ interface Props {
   title: string;
   subtitle?: string;
   icon: React.ReactElement;
-  tone?: "primary" | "warning";
+  tone?: "primary" | "warning" | "danger";
   headerAction?: React.ReactNode;
   children?: React.ReactNode;
   footer?: React.ReactNode;
@@ -15,6 +15,7 @@ interface Props {
 const TONES = {
   primary: "bg-primary-soft text-primary",
   warning: "bg-warning-soft text-warning",
+  danger: "bg-danger-soft text-danger",
 };
 
 const Modal: React.FC<Props> = ({

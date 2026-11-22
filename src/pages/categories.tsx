@@ -3,6 +3,16 @@ import AddProductsModal from "@/components/features/panel/categories/components/
 import CategoryDetails from "@/components/features/panel/categories/components/category-details";
 import CategoryList from "@/components/features/panel/categories/components/category-list";
 import CategoryProductsTable from "@/components/features/panel/categories/components/category-product-table";
+import DeleteCategoryBlockedModal from "@/components/features/panel/categories/components/delete-category-blocked-modal";
+import DeleteCategoryModal from "@/components/features/panel/categories/components/delete-category-modal";
+import HideCategoryModal from "@/components/features/panel/categories/components/hide-category-modal";
+import MoveProductModal from "@/components/features/panel/categories/components/move-product-modal";
+import {
+  addProducts,
+  getExclusiveProducts,
+  isOnlyInCategory,
+  removeProduct,
+} from "@/components/features/panel/categories/products";
 import type {
   Category,
   CategoryProduct,
@@ -16,6 +26,12 @@ const Categories: React.FC = () => {
   const [selectedName, setSelectedName] = useState(CATEGORIES_MOCK[0].name);
   const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
   const [isAddProductsOpen, setIsAddProductsOpen] = useState(false);
+  const [isHideCategoryOpen, setIsHideCategoryOpen] = useState(false);
+  const [isDeleteCategoryOpen, setIsDeleteCategoryOpen] = useState(false);
+  const [isDeleteBlockedOpen, setIsDeleteBlockedOpen] = useState(false);
+  const [productToMove, setProductToMove] = useState<CategoryProduct | null>(
+    null,
+  );
 
   const selectedCategory =
     categories.find((category) => category.name === selectedName) ??
@@ -46,18 +62,97 @@ const Categories: React.FC = () => {
     setCategories((current) =>
       current.map((category) =>
         category.name === selectedName
-          ? {
-              ...category,
-              products: [...category.products, ...products],
-              productsCount: category.productsCount + products.length,
-              inStockCount:
-                category.inStockCount +
-                products.filter((product) => product.stock > 0).length,
-            }
+          ? addProducts(category, products)
           : category,
       ),
     );
     setIsAddProductsOpen(false);
+  };
+
+  const setCategoryVisible = (visible: boolean) => {
+    setCategories((current) =>
+      current.map((category) =>
+        category.name === selectedName ? { ...category, visible } : category,
+      ),
+    );
+  };
+
+  const handleToggleVisibility = () => {
+    if (selectedCategory.visible) {
+      setIsHideCategoryOpen(true);
+      return;
+    }
+
+    setCategoryVisible(true);
+  };
+
+  const handleHideCategory = () => {
+    setCategoryVisible(false);
+    setIsHideCategoryOpen(false);
+  };
+
+  const handleRemoveProduct = (product: CategoryProduct) => {
+    if (isOnlyInCategory(categories, selectedName, product)) {
+      setProductToMove(product);
+      return;
+    }
+
+    setCategories((current) =>
+      current.map((category) =>
+        category.name === selectedName
+          ? removeProduct(category, product)
+          : category,
+      ),
+    );
+  };
+
+  const handleMoveProduct = (targetName: string) => {
+    if (!productToMove) return;
+
+    setCategories((current) =>
+      current.map((category) => {
+        if (category.name === selectedName) {
+          return removeProduct(category, productToMove);
+        }
+        if (category.name === targetName) {
+          return addProducts(category, [productToMove]);
+        }
+        return category;
+      }),
+    );
+    setProductToMove(null);
+  };
+
+  const handleDeleteClick = () => {
+    if (categories.length === 1) {
+      setIsDeleteBlockedOpen(true);
+      return;
+    }
+
+    setIsDeleteCategoryOpen(true);
+  };
+
+  const handleDeleteCategory = (targetName: string) => {
+    const exclusiveProducts = getExclusiveProducts(
+      categories,
+      selectedCategory,
+    );
+    const remaining = categories
+      .filter((category) => category.name !== selectedName)
+      .map((category) =>
+        category.name === targetName
+          ? addProducts(category, exclusiveProducts)
+          : category,
+      );
+
+    setCategories(remaining);
+    setSelectedName(remaining[0].name);
+    setIsDeleteCategoryOpen(false);
+  };
+
+  const handleBlockedAddCategory = () => {
+    setIsDeleteBlockedOpen(false);
+    setIsAddCategoryOpen(true);
   };
 
   return (
@@ -74,10 +169,15 @@ const Categories: React.FC = () => {
         />
 
         <div className="flex flex-col gap-4">
-          <CategoryDetails category={selectedCategory} />
+          <CategoryDetails
+            category={selectedCategory}
+            onToggleVisibility={handleToggleVisibility}
+            onDelete={handleDeleteClick}
+          />
           <CategoryProductsTable
             category={selectedCategory}
             onAddProduct={() => setIsAddProductsOpen(true)}
+            onRemoveProduct={handleRemoveProduct}
           />
         </div>
       </div>
@@ -95,6 +195,38 @@ const Categories: React.FC = () => {
         categories={categories}
         onClose={() => setIsAddProductsOpen(false)}
         onConfirm={handleAddProducts}
+      />
+
+      <HideCategoryModal
+        open={isHideCategoryOpen}
+        category={selectedCategory}
+        onClose={() => setIsHideCategoryOpen(false)}
+        onConfirm={handleHideCategory}
+      />
+
+      <MoveProductModal
+        product={productToMove}
+        categoryName={selectedCategory.name}
+        options={categories
+          .filter((category) => category.name !== selectedName)
+          .map((category) => category.name)}
+        onClose={() => setProductToMove(null)}
+        onConfirm={handleMoveProduct}
+      />
+
+      <DeleteCategoryModal
+        open={isDeleteCategoryOpen}
+        category={selectedCategory}
+        categories={categories}
+        onClose={() => setIsDeleteCategoryOpen(false)}
+        onConfirm={handleDeleteCategory}
+      />
+
+      <DeleteCategoryBlockedModal
+        open={isDeleteBlockedOpen}
+        category={selectedCategory}
+        onClose={() => setIsDeleteBlockedOpen(false)}
+        onAddCategory={handleBlockedAddCategory}
       />
     </PanelLayout>
   );
