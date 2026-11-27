@@ -8,6 +8,7 @@ import MaskedInput from "@/components/ui/masked-input";
 import StepHeader from "@/components/features/store-register/components/header";
 import CheckBox from "@/components/ui/checkbox";
 import Textarea from "@/components/ui/textarea";
+import PasswordStrength from "@/components/ui/password-strength";
 
 const StepStore = ({ data, onChange, errors }: StepProps) => {
   return (
@@ -43,7 +44,7 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
 
         <Input
           title="E-mail *"
-          placeholder="lojista@vitryne.com"
+          placeholder="seuemail@exemplo.com"
           type="email"
           value={data.email}
           onChange={(email) => onChange({ email })}
@@ -54,19 +55,17 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
           <div>
             <Input
               title=" Senha *"
-              placeholder="Digite sua senha"
+              placeholder="Crie uma senha"
               type="password"
               value={data.password}
               onChange={(password) => onChange({ password })}
               error={errors.password}
             />
-            <p className="pt-2 text-[12px] text-text-secondary">
-              Mínimo 6 caracteres, com 1 número e 1 letra maiúscula.
-            </p>
+            <PasswordStrength password={data.password} />
           </div>
           <Input
             title="Confirmar senha *"
-            placeholder="Confirme sua senha"
+            placeholder="Repita sua senha"
             type="password"
             value={data.confirmPassword}
             onChange={(confirmPassword) => onChange({ confirmPassword })}
@@ -82,7 +81,7 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
           </span>
           <Input
             title="Nome da loja *"
-            placeholder="Atelier Norte"
+            placeholder="Nome da sua loja"
             value={data.name}
             onChange={(name) => onChange({ name })}
             error={errors.name}
@@ -95,7 +94,7 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
             value={data.cnpj}
             onAccept={(cnpj) => onChange({ cnpj })}
             error={errors.cnpj}
-            placeholder="34.221.876/0001-44"
+            placeholder="00.000.000/0000-00"
             title="CNPJ *"
           />
         </div>
@@ -105,7 +104,7 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
             value={data.phone}
             onAccept={(phone) => onChange({ phone })}
             error={errors.phone}
-            placeholder="Telefone para contato"
+            placeholder="(00) 00000-0000"
             title="Telefone *"
           />
         </div>
@@ -113,7 +112,7 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
         <div className="col-span-12">
           <Input
             title="Razão social *"
-            placeholder="Atelier Norte Comércio de Moda LTDA"
+            placeholder="Como consta no cartão CNPJ"
             value={data.legalName}
             onChange={(legalName) => onChange({ legalName })}
             error={errors.legalName}
@@ -123,7 +122,7 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
         <div className="col-span-12">
           <Textarea
             title="Descrição da loja"
-            placeholder="Descrição da sua loja. Ela aparecerá para o cliente."
+            placeholder="Conte em poucas palavras o que sua loja vende. Ela aparece para o cliente."
             maxLength={200}
             value={data.description}
             onChange={(description) => onChange({ description })}
@@ -136,14 +135,14 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
             value={data.zipCode}
             onAccept={(zipCode) => onChange({ zipCode })}
             error={errors.zipCode}
-            placeholder="87020-190"
+            placeholder="00000-000"
             title="CEP *"
           />
         </div>
         <div className="col-span-8">
           <Input
             title="Endereço *"
-            placeholder="R. Paranaguá"
+            placeholder="Rua, avenida..."
             value={data.street}
             onChange={(street) => onChange({ street })}
             error={errors.street}
@@ -152,7 +151,7 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
         <div className="col-span-2">
           <Input
             title="Número *"
-            placeholder="123"
+            placeholder="Nº"
             inputMode="numeric"
             value={data.number}
             onChange={(number) => onChange({ number })}
@@ -163,7 +162,7 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
         <div className="col-span-5">
           <Input
             title="Bairro *"
-            placeholder="Jardim das Flores"
+            placeholder="Bairro"
             value={data.neighborhood}
             onChange={(neighborhood) => onChange({ neighborhood })}
             error={errors.neighborhood}
@@ -172,7 +171,7 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
         <div className="col-span-5">
           <Input
             title="Cidade *"
-            placeholder="Maringá"
+            placeholder="Cidade"
             value={data.city}
             onChange={(city) => onChange({ city })}
             error={errors.city}
@@ -197,10 +196,12 @@ const StepStore = ({ data, onChange, errors }: StepProps) => {
         <span>
           Declaro que li e aceito os{" "}
           <a href="#" className="text-primary underline">
+            {" "}
             Termos de Uso
           </a>{" "}
           e a{" "}
           <a href="#" className="text-primary underline">
+            {" "}
             Política de Privacidade
           </a>
           .
