@@ -29,9 +29,9 @@ const StepBankDetails = ({ data, onChange, errors }: StepProps) => {
       <div className="flex gap-3 rounded-2xl border border-border-brand bg-primary-soft px-5 py-4">
         <FiCheck size={24} className="mt-0.5 shrink-0 text-primary" />
         <p className="text-[14px] text-primary-hover">
-          O CNPJ <span className="font-bold">34.221.876/0001-44</span> e o
-          titular precisam coincidir com a conta abaixo. Pagamentos são feitos
-          em dois dias úteis após cada pedido entregue.
+          O CNPJ <span className="font-bold">{data.cnpj}</span> e o titular
+          precisam coincidir com a conta abaixo. Pagamentos são feitos em dois
+          dias úteis após cada pedido entregue.
         </p>
       </div>
 
@@ -39,7 +39,7 @@ const StepBankDetails = ({ data, onChange, errors }: StepProps) => {
         <div className="col-span-12">
           <Input
             title="Titular da conta *"
-            placeholder="Atelier Norte Comércio de Moda LTDA"
+            placeholder="Nome ou razão social do titular"
             value={data.holderName}
             onChange={(holderName) => onChange({ holderName })}
             error={errors.holderName}
@@ -52,7 +52,7 @@ const StepBankDetails = ({ data, onChange, errors }: StepProps) => {
             value={data.holderDocument}
             onAccept={(holderDocument) => onChange({ holderDocument })}
             error={errors.holderDocument}
-            placeholder="34.221.876/0001-44"
+            placeholder="CPF ou CNPJ do titular"
             title="CPF/CNPJ do titular *"
           />
         </div>
@@ -96,20 +96,19 @@ const StepBankDetails = ({ data, onChange, errors }: StepProps) => {
         </div>
 
         <div className="col-span-3">
-          <Input
+          <MaskedInput
+            mask="0000"
             title="Agência *"
-            placeholder="3421"
-            inputMode="numeric"
+            placeholder="Sem o dígito"
             value={data.agency}
-            onChange={(agency) => onChange({ agency })}
+            onAccept={(agency) => onChange({ agency })}
             error={errors.agency}
           />
         </div>
         <div className="col-span-4">
           <Input
             title="Conta *"
-            placeholder="00264-2"
-            inputMode="numeric"
+            placeholder="Com o dígito"
             value={data.accountNumber}
             onChange={(accountNumber) => onChange({ accountNumber })}
             error={errors.accountNumber}
@@ -119,7 +118,7 @@ const StepBankDetails = ({ data, onChange, errors }: StepProps) => {
         <div className="col-span-12">
           <Input
             title="Chave PIX"
-            placeholder="pagamento@vitryne.com (opcional)"
+            placeholder="E-mail, telefone, CPF/CNPJ ou chave aleatória (opcional)"
             value={data.pixKey}
             onChange={(pixKey) => onChange({ pixKey })}
           />

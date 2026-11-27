@@ -193,7 +193,7 @@ const StepCategory = ({ data, onChange, errors }: StepProps) => {
           <div className="mt-3 w-48">
             <Input
               title="Minutos"
-              placeholder="Ex: 20"
+              placeholder="Tempo em minutos"
               error={errors.preparationTimeMinutes}
               inputMode="numeric"
               value={String(data.preparationTimeMinutes || "")}
