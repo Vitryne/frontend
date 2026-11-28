@@ -19,6 +19,8 @@ export interface OrderItem {
   name: string;
   size?: string;
   category: ItemCategory;
+  quantity: number;
+  priceInCents: number;
 }
 
 export interface Order {
@@ -26,10 +28,13 @@ export interface Order {
   customerName: string;
   items: OrderItem[];
   totalInCents: number;
+  shippingInCents: number;
   status: OrderStatus;
   createdAt: string;
+  updatedAt: string;
   paymentMethod: PaymentMethod;
   hasCoupon: boolean;
+  deliveryArea?: string;
   readyBy?: string;
   deliverBy?: string;
   pickupCode?: string;
