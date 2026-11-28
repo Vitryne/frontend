@@ -20,7 +20,7 @@ const RefuseOrderModal: React.FC<Props> = ({ order, onCancel, onConfirm }) => {
       title={`Recusar pedido #${order?.id}`}
       subtitle={
         order
-          ? `${order.customerName} · R$ ${formatMoney(order.totalInCents)}`
+          ? `${order.customerName} - R$ ${formatMoney(order.totalInCents)}`
           : ""
       }
       icon={<LuTriangleAlert size={18} />}

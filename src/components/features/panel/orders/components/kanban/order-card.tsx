@@ -7,19 +7,25 @@ import ConfirmDeadline from "@/components/features/panel/orders/components/confi
 import {
   getCourier,
   getInfoLabel,
-  getItemsLabel,
+  getItemLabel,
 } from "@/components/features/panel/orders/labels";
+
+const MAX_VISIBLE_ITEMS = 3;
 
 interface Props {
   order: Order;
   isDragging?: boolean;
+  onOpen: () => void;
   onAdvance: () => void;
   onRefuse: () => void;
 }
 
+const stopClick = (event: React.MouseEvent) => event.stopPropagation();
+
 const OrderCard: React.FC<Props> = ({
   order,
   isDragging,
+  onOpen,
   onAdvance,
   onRefuse,
 }) => {
@@ -28,10 +34,13 @@ const OrderCard: React.FC<Props> = ({
   const infoLabel = getInfoLabel(order);
   const courier = order.courierName && getCourier(order.courierName);
   const price = formatPrice(order.totalInCents);
+  const visibleItems = order.items.slice(0, MAX_VISIBLE_ITEMS);
+  const hiddenCount = order.items.length - visibleItems.length;
 
   return (
     <div
-      className={`rounded-xl border p-3 ${
+      onClick={onOpen}
+      className={`cursor-pointer rounded-xl border p-3 ${
         isDragging ? "shadow-lg" : "shadow-sm"
       } ${
         isNew
@@ -53,9 +62,18 @@ const OrderCard: React.FC<Props> = ({
       <p className="mt-1 text-[13px] font-medium text-text-primary">
         {order.customerName}
       </p>
-      <p className="mt-0.5 truncate text-[12px] text-text-tertiary">
-        {getItemsLabel(order)}
-      </p>
+      <ul className="mt-0.5 flex flex-col gap-0.5 text-[12px] text-text-tertiary">
+        {visibleItems.map((item, index) => (
+          <li key={`${item.name}-${item.size}-${index}`} className="truncate">
+            {getItemLabel(item)}
+          </li>
+        ))}
+        {hiddenCount > 0 && (
+          <li className="font-semibold text-text-secondary">
+            {`+${hiddenCount} ${hiddenCount === 1 ? "item" : "itens"}`}
+          </li>
+        )}
+      </ul>
 
       {isNew && (
         <ConfirmDeadline createdAt={order.createdAt} className="mt-2.5" />
@@ -84,20 +102,18 @@ const OrderCard: React.FC<Props> = ({
           <span className="flex size-6 items-center justify-center rounded-full bg-primary-soft-2 text-[10px] font-semibold text-primary-strong">
             {courier.initials}
           </span>
-          {courier.shortName} · entregador
+          {courier.shortName} - entregador
         </div>
       )}
 
       <div className="mt-3 flex items-center justify-between gap-2">
         <span className="text-[13px] font-bold text-text-primary">
-          <span className="text-[13px] font-bold text-text-primary">
-            R$ {price.reais}
-            <span className="text-[10px]">,{price.cents}</span>
-          </span>
+          R$ {price.reais}
+          <span className="text-[10px]">,{price.cents}</span>
         </span>
 
         {isNew && (
-          <div className="flex gap-1.5">
+          <div onClick={stopClick} className="flex gap-1.5">
             <ButtonSecondary
               title="Recusar"
               onClick={onRefuse}
@@ -114,13 +130,15 @@ const OrderCard: React.FC<Props> = ({
         {isCompleted && <LuCheck size={14} className="text-success" />}
 
         {!isNew && !isCompleted && (
-          <ButtonSecondary
-            title="Avançar"
-            btnIcon={<LuArrowRight size={14} />}
-            iconPosition="right"
-            onClick={onAdvance}
-            className="inline-flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-primary/30 bg-surface px-3 text-[12px] font-semibold text-primary transition-colors hover:bg-primary/5"
-          />
+          <div onClick={stopClick}>
+            <ButtonSecondary
+              title="Avançar"
+              btnIcon={<LuArrowRight size={14} />}
+              iconPosition="right"
+              onClick={onAdvance}
+              className="inline-flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-primary/30 bg-surface px-3 text-[12px] font-semibold text-primary transition-colors hover:bg-primary/5"
+            />
+          </div>
         )}
       </div>
     </div>

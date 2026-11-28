@@ -12,6 +12,7 @@ import OrdersColumn from "@/components/features/panel/orders/components/kanban/o
 interface Props {
   orders: Order[];
   loading?: boolean;
+  onOpen: (order: Order) => void;
   onAdvance: (order: Order) => void;
   onRefuse: (order: Order) => void;
   onMove: (order: Order, status: OrderStatus) => void;
@@ -20,6 +21,7 @@ interface Props {
 const OrdersBoard: React.FC<Props> = ({
   orders,
   loading,
+  onOpen,
   onAdvance,
   onRefuse,
   onMove,
@@ -109,6 +111,7 @@ const OrdersBoard: React.FC<Props> = ({
                         <OrderCard
                           order={order}
                           isDragging={snapshot.isDragging}
+                          onOpen={() => onOpen(order)}
                           onAdvance={() => onAdvance(order)}
                           onRefuse={() => onRefuse(order)}
                         />

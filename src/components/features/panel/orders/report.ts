@@ -1,7 +1,15 @@
 import { ORDER_COLUMNS } from "@/components/features/panel/orders/columns";
 import { PAYMENT_OPTIONS } from "@/components/features/panel/orders/filters";
-import type { Order } from "@/components/features/panel/orders/types";
+import type {
+  Order,
+  OrderItem,
+} from "@/components/features/panel/orders/types";
 import { formatMoney } from "@/lib/format";
+
+const formatItem = (item: OrderItem) => {
+  const name = item.quantity > 1 ? `${item.quantity}x ${item.name}` : item.name;
+  return item.size ? `${name} (${item.size})` : name;
+};
 
 export const buildOrdersCsv = (orders: Order[]) => {
   const header = [
@@ -19,9 +27,7 @@ export const buildOrdersCsv = (orders: Order[]) => {
     order.id,
     new Date(order.createdAt).toLocaleString("pt-BR"),
     order.customerName,
-    order.items
-      .map((item) => (item.size ? `${item.name} (${item.size})` : item.name))
-      .join(" + "),
+    order.items.map(formatItem).join(" + "),
     formatMoney(order.totalInCents),
     ORDER_COLUMNS.find((column) => column.status === order.status)?.label ?? "",
     PAYMENT_OPTIONS.find((option) => option.value === order.paymentMethod)

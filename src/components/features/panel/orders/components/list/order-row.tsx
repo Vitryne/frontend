@@ -92,7 +92,7 @@ const OrderRow: React.FC<Props> = ({ order, onAdvance, onRefuse }) => {
               <span className="flex size-6 items-center justify-center rounded-full bg-primary-soft-2 text-[10px] font-semibold text-primary-strong">
                 {courier.initials}
               </span>
-              {courier.shortName} · entregador
+              {courier.shortName} - entregador
             </span>
           )}
         </div>
