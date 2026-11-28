@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import PanelSidebar from "@/components/features/panel/components/panel-sidebar";
 import PanelTopbar from "@/components/features/panel/components/panel-topbar";
+import { useStoreName } from "@/components/hooks/use-store-name";
 import { useStoreStatus } from "@/components/hooks/use-store-status";
 import Head from "next/head";
 
@@ -12,16 +12,7 @@ interface Props {
 
 const PanelLayout: React.FC<Props> = ({ title, subtitle, children }) => {
   const { storeOpen, setStoreOpen } = useStoreStatus();
-  const [storeName, setStoreName] = useState("");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("vitryne:store-name");
-      if (saved?.trim()) {
-        setStoreName(saved.trim());
-      }
-    }
-  }, []);
+  const storeName = useStoreName();
 
   return (
     <div className="flex min-h-screen">
