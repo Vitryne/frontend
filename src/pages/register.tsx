@@ -3,6 +3,7 @@ import StepBusinessHours from "@/components/features/store-register/components/s
 import StepCategory from "@/components/features/store-register/components/steps/step-category";
 import StepIdentity from "@/components/features/store-register/components/steps/step-identity";
 import StepStore from "@/components/features/store-register/components/steps/step-store";
+import CnpjTakenModal from "@/components/features/store-register/components/cnpj-taken-modal";
 import RegisterSidebar from "@/components/features/store-register/components/register-sidebar";
 import StepFooter from "@/components/features/store-register/components/footer";
 import {
@@ -13,6 +14,7 @@ import { validateStep } from "@/lib/register-validation";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import RegisterSuccess from "@/components/features/store-register/components/steps/register-success";
 
 const STEPS = [
   { id: 0, label: "Dados da loja", Component: StepStore },
@@ -27,14 +29,25 @@ const Register = () => {
   const [stepIndex, setStepIndex] = useState(0);
   const [formData, setFormData] = useState(INITIAL_REGISTER_DATA);
   const [attempted, setAttempted] = useState<number[]>([]);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [cnpjTaken, setCnpjTaken] = useState(false);
+  const [isCnpjModalOpen, setIsCnpjModalOpen] = useState(false);
   const { label, Component } = STEPS[stepIndex];
 
-  const errors = attempted.includes(stepIndex)
+  const stepErrors = attempted.includes(stepIndex)
     ? validateStep(stepIndex, formData)
     : {};
+  const errors =
+    stepIndex === 0 && cnpjTaken
+      ? { ...stepErrors, cnpj: "CNPJ já cadastrado" }
+      : stepErrors;
 
-  const updateData = (fields: Partial<RegisterFormData>) =>
+  const updateData = (fields: Partial<RegisterFormData>) => {
+    if (fields.cnpj !== undefined && fields.cnpj !== formData.cnpj) {
+      setCnpjTaken(false);
+    }
     setFormData((prev) => ({ ...prev, ...fields }));
+  };
 
   const isFirstStep = stepIndex === 0;
   const isLastStep = stepIndex === STEPS.length - 1;
@@ -65,27 +78,50 @@ const Register = () => {
   const previousStep = () =>
     isFirstStep ? router.push("/login") : setStepIndex(stepIndex - 1);
 
+  const handleCnpjTaken = () => {
+    setCnpjTaken(true);
+    setIsCnpjModalOpen(true);
+    setStepIndex(0);
+    window.scrollTo({ top: 0 });
+  };
+
   return (
     <div className="flex min-h-screen">
       <Head>
-        <title>{`Vitryne - Cadastro - ${label}`}</title>
+        <title>{`Vitryne - Cadastro - ${isRegistered ? "Concluído" : label}`}</title>
       </Head>
 
       <RegisterSidebar
         steps={STEPS}
         stepIndex={stepIndex}
-        selectStep={(i) => setStepIndex(i)}
+        selectStep={(i) => {
+          if (!isRegistered) setStepIndex(i);
+        }}
       />
       <main className="flex-1 bg-screen py-16 px-56">
-        <Component data={formData} onChange={updateData} errors={errors} />
-        <StepFooter
-          isLastStep={isLastStep}
-          data={formData}
-          validate={validate}
-          onNext={nextStep}
-          onBack={previousStep}
-        />
+        {isRegistered ? (
+          <RegisterSuccess storeName={formData.name.trim()} />
+        ) : (
+          <>
+            <Component data={formData} onChange={updateData} errors={errors} />
+            <StepFooter
+              isLastStep={isLastStep}
+              data={formData}
+              validate={validate}
+              onNext={nextStep}
+              onBack={previousStep}
+              onRegistered={() => setIsRegistered(true)}
+              onCnpjTaken={handleCnpjTaken}
+            />
+          </>
+        )}
       </main>
+
+      <CnpjTakenModal
+        open={isCnpjModalOpen}
+        cnpj={formData.cnpj}
+        onClose={() => setIsCnpjModalOpen(false)}
+      />
     </div>
   );
 };

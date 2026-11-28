@@ -55,13 +55,18 @@ const validateBank = (d: RegisterFormData): StepErrors => {
 
   if (isBlank(d.holderName)) errors.holderName = REQUIRED;
 
-  const documentLength = digits(d.holderDocument).length;
+  const documentDigits = digits(d.holderDocument);
   if (isBlank(d.holderDocument)) errors.holderDocument = REQUIRED;
-  else if (documentLength !== 11 && documentLength !== 14)
+  else if (documentDigits.length !== 11 && documentDigits.length !== 14)
     errors.holderDocument = "CPF/CNPJ incompleto";
+  else if (documentDigits.length === 14 && documentDigits !== digits(d.cnpj))
+    errors.holderDocument = `A titularidade da conta precisa ser do CNPJ ${d.cnpj} informado na etapa 1.`;
 
   if (!d.bank) errors.bank = REQUIRED;
+
   if (isBlank(d.agency)) errors.agency = REQUIRED;
+  else if (digits(d.agency).length !== 4) errors.agency = "Agência incompleta";
+
   if (isBlank(d.accountNumber)) errors.accountNumber = REQUIRED;
 
   return errors;
