@@ -32,7 +32,7 @@ const DeactivateProductModal: React.FC<Props> = ({
       open={product !== null}
       onClose={onCancel}
       title="Desativar este produto?"
-      subtitle={product ? `${product.name} · SKU ${product.sku}` : undefined}
+      subtitle={product ? `${product.name} - SKU ${product.sku}` : undefined}
       icon={<LuEyeOff size={18} />}
       footer={
         <>

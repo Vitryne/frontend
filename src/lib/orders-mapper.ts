@@ -8,6 +8,7 @@ import type {
 import {
   BackendOrderStatus,
   BackendPaymentMethod,
+  DeliveryAddressDTO,
   OrderItemResponseDTO,
   OrderResponseDTO,
 } from "@/interfaces/orders-interface";
@@ -25,6 +26,8 @@ const formatPickupCode = (orderId: number): string => {
   const code = ((orderId * 1597) % 9000) + 1000;
   return String(code);
 };
+
+const toCents = (value?: number | null) => Math.round((value ?? 0) * 100);
 
 export const parseOrderId = (orderId: string): number | null => {
   const digits = orderId.replace(/\D/g, "");
@@ -103,17 +106,31 @@ export const toOrderItems = (
   items: OrderItemResponseDTO[] = [],
 ): OrderItem[] => {
   if (items.length === 0) {
-    return [{ name: "Pedido sem itens", category: "shirts" }];
+    return [
+      {
+        name: "Pedido sem itens",
+        category: "shirts",
+        quantity: 0,
+        priceInCents: 0,
+      },
+    ];
   }
 
-  return items.flatMap((item) => {
-    const count = Math.max(1, item.quantity || 1);
-    return Array.from({ length: count }, () => ({
-      name: item.productName,
-      size: item.size || undefined,
-      category: inferItemCategory(item.productName),
-    }));
-  });
+  return items.map((item) => ({
+    name: item.productName,
+    size: item.size || undefined,
+    category: inferItemCategory(item.productName),
+    quantity: Math.max(1, item.quantity || 1),
+    priceInCents: toCents(item.unitPrice),
+  }));
+};
+
+const toDeliveryArea = (address?: DeliveryAddressDTO | null) => {
+  if (!address) return undefined;
+
+  const parts = [address.neighborhood, address.city].filter(Boolean);
+
+  return parts.length > 0 ? parts.join(" - ") : undefined;
 };
 
 export const getStatusTrackingFields = (
@@ -153,12 +170,15 @@ export const toOrder = (dto: OrderResponseDTO): Order => {
     id: String(dto.id),
     customerName: dto.customerName?.trim() || `Cliente #${dto.userId}`,
     items: toOrderItems(dto.items),
-    totalInCents: Math.round((dto.totalAmount ?? 0) * 100),
+    totalInCents: toCents(dto.totalAmount),
+    shippingInCents: toCents(dto.shippingAmount),
     status,
     createdAt: dto.createdAt,
     acceptanceDeadline: dto.acceptanceDeadline ?? undefined,
+    updatedAt: referenceDate,
     paymentMethod: toFrontendPaymentMethod(dto.payment?.method),
     hasCoupon: false,
+    deliveryArea: toDeliveryArea(dto.deliveryAddress),
     ...getStatusTrackingFields(dto.id, status, referenceDate),
   };
 };

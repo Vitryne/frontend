@@ -4,6 +4,7 @@ import OrdersFiltersModal from "@/components/features/panel/orders/components/fi
 import OrdersReportModal from "@/components/features/panel/orders/components/filters/orders-report-modal";
 import OrdersBoard from "@/components/features/panel/orders/components/kanban/orders-board";
 import OrdersTable from "@/components/features/panel/orders/components/list/orders-table";
+import OrderDetailModal from "@/components/features/panel/orders/components/order-detail-modal";
 import OrdersError from "@/components/features/panel/orders/components/orders-error";
 import OrdersToolbar from "@/components/features/panel/orders/components/orders-toolbar";
 import PendingOrdersBanner from "@/components/features/panel/orders/components/pending-orders-banner";
@@ -41,6 +42,7 @@ const Orders: React.FC = () => {
   const [loadState, setLoadState] = useState<"loading" | "error" | "ready">(
     "loading",
   );
+  const [orderToView, setOrderToView] = useState<Order | null>(null);
   const [orderToRefuse, setOrderToRefuse] = useState<Order | null>(null);
 
   const [filters, setFilters] = useState<OrderFilters>(EMPTY_FILTERS);
@@ -140,6 +142,16 @@ const Orders: React.FC = () => {
     if (nextStatus) handleMove(order, nextStatus);
   };
 
+  const handleDetailAdvance = (order: Order) => {
+    setOrderToView(null);
+    handleAdvance(order);
+  };
+
+  const handleDetailRefuse = (order: Order) => {
+    setOrderToView(null);
+    setOrderToRefuse(order);
+  };
+
   const newOrders = orders.filter((order) => order.status === "new");
 
   const visibleOrders = filterOrders(
@@ -207,6 +219,7 @@ const Orders: React.FC = () => {
             <OrdersBoard
               orders={visibleOrders}
               loading={loadState === "loading"}
+              onOpen={setOrderToView}
               onAdvance={handleAdvance}
               onRefuse={setOrderToRefuse}
               onMove={handleMove}
@@ -214,6 +227,13 @@ const Orders: React.FC = () => {
           )}
         </>
       )}
+
+      <OrderDetailModal
+        order={orderToView}
+        onClose={() => setOrderToView(null)}
+        onAdvance={handleDetailAdvance}
+        onRefuse={handleDetailRefuse}
+      />
 
       <RefuseOrderModal
         order={orderToRefuse}

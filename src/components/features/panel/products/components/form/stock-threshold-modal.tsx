@@ -107,7 +107,7 @@ const StockThresholdModal: React.FC<Props> = ({
           >
             {invalid
               ? "Informe pelo menos 1 unidade."
-              : `Por tamanho · vigente hoje: ${units(currentThreshold)}`}
+              : `Por tamanho - vigente hoje: ${units(currentThreshold)}`}
           </p>
         </div>
 

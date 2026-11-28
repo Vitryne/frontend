@@ -41,6 +41,16 @@ export interface OrderItemResponseDTO {
   subtotal: number;
 }
 
+export interface DeliveryAddressDTO {
+  zipCode: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  complement?: string | null;
+  city: string;
+  state: string;
+}
+
 export interface OrderResponseDTO {
   id: number;
   userId: number;
@@ -50,7 +60,10 @@ export interface OrderResponseDTO {
   status: BackendOrderStatus | string;
   acceptanceDeadline?: string | null;
   cancellation?: OrderCancellationDTO | null;
+  itemsSubtotal: number;
+  shippingAmount: number;
   totalAmount: number;
+  deliveryAddress?: DeliveryAddressDTO | null;
   payment: PaymentResponseDTO;
   items: OrderItemResponseDTO[];
   createdAt: string;

@@ -53,7 +53,7 @@ const Dashboard: React.FC = ({}) => {
       title="Dashboard"
       subtitle={
         today
-          ? `Resumo da Atelier Norte - ${today} · Maringá`
+          ? `Resumo da Atelier Norte - ${today} - Maringá`
           : "Resumo da Atelier NOrte"
       }
     >
