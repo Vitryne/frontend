@@ -2,11 +2,17 @@ import LogoutModal from "@/components/features/panel/components/logout-modal";
 import PauseStoreModal from "@/components/features/panel/components/pause-store-modal";
 import LogoSvg from "@/components/ui/logo-svg";
 import Switch from "@/components/ui/switch";
-import { clearToken } from "@/lib/auth-storage";
+import Tooltip from "@/components/ui/tooltip";
+import {
+  clearToken,
+  getRoleLabel,
+  getSessionUser,
+  type SessionUser,
+} from "@/lib/auth-storage";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   LuClipboardList,
   LuLayoutDashboard,
@@ -61,6 +67,11 @@ const PanelSidebar: React.FC<Props> = ({
   const router = useRouter();
   const [isPauseOpen, setIsPauseOpen] = useState(false);
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const [user, setUser] = useState<SessionUser | null>(null);
+
+  useEffect(() => {
+    setUser(getSessionUser());
+  }, []);
 
   const isActive = (href: string) =>
     router.pathname === href || router.pathname.startsWith(`${href}/`);
@@ -165,13 +176,17 @@ const PanelSidebar: React.FC<Props> = ({
 
       <div className="flex items-center gap-3 border-t border-border px-2 pt-4">
         <span className="flex size-8 items-center justify-center rounded-full bg-primary-soft text-[.7rem] font-bold text-primary-hover">
-          ME
+          {user?.email.slice(0, 2).toUpperCase()}
         </span>
-        <div className="flex-1">
-          <p className="text-[.85rem] font-bold text-text-primary">
-            Maria Estrela
+        <div className="min-w-0 flex-1">
+          <Tooltip content={user?.email} onlyWhenTruncated>
+            <p className="truncate text-[.85rem] font-bold text-text-primary">
+              {user?.email}
+            </p>
+          </Tooltip>
+          <p className="text-[.7rem] text-text-disabled">
+            {user && getRoleLabel(user.role)}
           </p>
-          <p className="text-[.7rem] text-text-disabled">Administradora</p>
         </div>
         <button
           type="button"

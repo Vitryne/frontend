@@ -168,7 +168,7 @@ export const toOrder = (dto: OrderResponseDTO): Order => {
 
   return {
     id: String(dto.id),
-    customerName: dto.customerName?.trim() || `Cliente #${dto.userId}`,
+    customerName: dto.customerName?.trim() || `${dto.userId}`,
     items: toOrderItems(dto.items),
     totalInCents: toCents(dto.totalAmount),
     shippingInCents: toCents(dto.shippingAmount),
