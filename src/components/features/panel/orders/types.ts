@@ -31,6 +31,7 @@ export interface Order {
   shippingInCents: number;
   status: OrderStatus;
   createdAt: string;
+  acceptanceDeadline?: string;
   updatedAt: string;
   paymentMethod: PaymentMethod;
   hasCoupon: boolean;

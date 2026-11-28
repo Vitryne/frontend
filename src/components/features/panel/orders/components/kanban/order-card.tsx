@@ -75,9 +75,7 @@ const OrderCard: React.FC<Props> = ({
         )}
       </ul>
 
-      {isNew && (
-        <ConfirmDeadline createdAt={order.createdAt} className="mt-2.5" />
-      )}
+      {isNew && <ConfirmDeadline order={order} className="mt-2.5" />}
 
       {infoLabel && (
         <p className="mt-2.5 flex items-center gap-1.5 text-[11px] text-text-secondary">

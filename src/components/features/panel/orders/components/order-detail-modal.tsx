@@ -85,7 +85,7 @@ const OrderDetailModal: React.FC<Props> = ({
     >
       <div className="flex flex-col gap-5 pt-4">
         {isNew ? (
-          <ConfirmDeadline createdAt={order.createdAt} />
+          <ConfirmDeadline order={order} />
         ) : (
           statusLabel && (
             <div>
