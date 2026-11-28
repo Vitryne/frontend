@@ -1,9 +1,12 @@
+import LogoutModal from "@/components/features/panel/components/logout-modal";
+import PauseStoreModal from "@/components/features/panel/components/pause-store-modal";
 import LogoSvg from "@/components/ui/logo-svg";
 import Switch from "@/components/ui/switch";
 import { clearToken } from "@/lib/auth-storage";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import {
   LuClipboardList,
   LuLayoutDashboard,
@@ -56,9 +59,33 @@ const PanelSidebar: React.FC<Props> = ({
   onToggleStore,
 }) => {
   const router = useRouter();
+  const [isPauseOpen, setIsPauseOpen] = useState(false);
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
 
   const isActive = (href: string) =>
     router.pathname === href || router.pathname.startsWith(`${href}/`);
+
+  const handleToggleStore = (open: boolean) => {
+    if (open) {
+      onToggleStore(true);
+      return;
+    }
+
+    setIsPauseOpen(true);
+  };
+
+  const handleConfirmPause = () => {
+    setIsPauseOpen(false);
+    onToggleStore(false);
+  };
+
+  const handleConfirmLogout = () => {
+    setIsLogoutOpen(false);
+    clearToken();
+    localStorage.removeItem("vitryne:store-name");
+    onToggleStore(true);
+    router.replace("/login");
+  };
 
   return (
     <div className="sticky top-0 flex h-screen w-60 shrink-0 flex-col gap-6 bg-white px-4 py-6 shadow-[4px_0_16px_rgba(0,0,0,0.04)]">
@@ -97,9 +124,9 @@ const PanelSidebar: React.FC<Props> = ({
             <span
               className={`size-1.5 rounded-full ${storeOpen ? "bg-success" : "bg-text-disabled"}`}
             />
-            {storeOpen ? "Loja aberta" : "Loja fechada"}
+            {storeOpen ? "Loja aberta" : "Loja pausada"}
           </span>
-          <Switch checked={storeOpen} onChange={onToggleStore} />
+          <Switch checked={storeOpen} onChange={handleToggleStore} />
         </div>
       </div>
 
@@ -146,14 +173,26 @@ const PanelSidebar: React.FC<Props> = ({
           </p>
           <p className="text-[.7rem] text-text-disabled">Administradora</p>
         </div>
-        <Link
-          href="/login"
-          onClick={clearToken}
-          className="rounded-lg p-1.5 text-text-disabled transition-colors hover:bg-surface-subtle hover:text-text-primary"
+        <button
+          type="button"
+          onClick={() => setIsLogoutOpen(true)}
+          className="cursor-pointer rounded-lg p-1.5 text-text-disabled transition-colors hover:bg-surface-subtle hover:text-text-primary"
         >
           <LuLogOut size={16} />
-        </Link>
+        </button>
       </div>
+
+      <PauseStoreModal
+        open={isPauseOpen}
+        onClose={() => setIsPauseOpen(false)}
+        onConfirm={handleConfirmPause}
+      />
+
+      <LogoutModal
+        open={isLogoutOpen}
+        onClose={() => setIsLogoutOpen(false)}
+        onConfirm={handleConfirmLogout}
+      />
     </div>
   );
 };
