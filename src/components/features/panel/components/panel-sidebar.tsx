@@ -82,6 +82,7 @@ const PanelSidebar: React.FC<Props> = ({
   const handleConfirmLogout = () => {
     setIsLogoutOpen(false);
     clearToken();
+    localStorage.removeItem("vitryne:store-name");
     onToggleStore(true);
     router.replace("/login");
   };
