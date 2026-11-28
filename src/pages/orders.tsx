@@ -18,6 +18,7 @@ import type {
   OrderStatus,
   OrdersView,
 } from "@/components/features/panel/orders/types";
+import { useOrdersStream } from "@/components/hooks/use-orders-stream";
 import ButtonPrimary from "@/components/ui/button-primary";
 import { BackendOrderStatus } from "@/interfaces/orders-interface";
 import {
@@ -67,6 +68,26 @@ const Orders: React.FC = () => {
       })
       .catch(() => setLoadState("error"));
   }, [loadState]);
+
+  const refreshOrders = () => {
+    OrdersService()
+      .listStoreOrders()
+      .then((data) => setOrders(data.map(toOrder)))
+      .catch(() => {});
+  };
+
+  useOrdersStream({
+    onEvent: ({ order: dto }) => {
+      const incoming = toOrder(dto);
+
+      setOrders((current) =>
+        current.some((item) => item.id === incoming.id)
+          ? current.map((item) => (item.id === incoming.id ? incoming : item))
+          : [incoming, ...current],
+      );
+    },
+    onReconnect: refreshOrders,
+  });
 
   const handleViewChange = (nextView: OrdersView) => {
     router.push(
