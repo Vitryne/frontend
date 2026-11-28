@@ -15,6 +15,8 @@ import Pagination from "@/components/ui/pagination";
 import { ProductStatus } from "@/interfaces/product-interface";
 import { toProduct } from "@/lib/product-mapper";
 import ProductService from "@/service/product-service";
+import Alert from "@/components/ui/alert";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Products: React.FC = ({}) => {
@@ -30,6 +32,8 @@ const Products: React.FC = ({}) => {
   const [productToDeactivate, setProductToDeactivate] =
     useState<Product | null>(null);
   const [blockedProducts, setBlockedProducts] = useState<Product[]>([]);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
 
   useEffect(() => {
     if (loadState !== "loading") return;
@@ -127,23 +131,46 @@ const Products: React.FC = ({}) => {
     selectedProducts.forEach((product) => updateProductStatus(product, active));
   };
 
-  const handleDeleteSelected = () => {
+  const handleDeleteSelected = async () => {
+    if (deleting) return;
+
     const selectedProducts = products.filter((product) =>
       selectedSkus.includes(product.sku),
     );
-    const hasOrders = selectedProducts.some(
-      (product) => (product.ordersCount ?? 0) > 0,
-    );
+    const ids = selectedProducts
+      .map((product) => product.id)
+      .filter((id): id is number => id !== undefined);
 
-    if (hasOrders) {
-      setBlockedProducts(selectedProducts);
-      return;
+    if (ids.length === 0) return;
+
+    setDeleting(true);
+    setDeleteError("");
+
+    try {
+      await ProductService().deleteProducts({ ids });
+      setProducts((current) =>
+        current.filter((product) => !selectedSkus.includes(product.sku)),
+      );
+      setSelectedSkus([]);
+    } catch (err) {
+      const status = axios.isAxiosError(err) ? err.response?.status : undefined;
+
+      if (status === 409) {
+        setBlockedProducts(selectedProducts);
+      } else if (status === 404) {
+        setDeleteError(
+          "Algum produto selecionado não existe mais. A lista foi atualizada.",
+        );
+        setSelectedSkus([]);
+        setLoadState("loading");
+      } else {
+        setDeleteError(
+          "Não foi possível excluir os produtos. Tente novamente.",
+        );
+      }
+    } finally {
+      setDeleting(false);
     }
-
-    setProducts((current) =>
-      current.filter((product) => !selectedSkus.includes(product.sku)),
-    );
-    setSelectedSkus([]);
   };
 
   const handleConfirmDeactivateBlocked = () => {
@@ -230,6 +257,12 @@ const Products: React.FC = ({}) => {
           onDelete={handleDeleteSelected}
           onClear={() => setSelectedSkus([])}
         />
+      )}
+
+      {deleteError && (
+        <div className="mb-4">
+          <Alert variant="warning" title="Exclusão" message={deleteError} />
+        </div>
       )}
 
       <ProductTable
