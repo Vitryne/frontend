@@ -12,7 +12,7 @@ interface Props {
 
 const PanelLayout: React.FC<Props> = ({ title, subtitle, children }) => {
   const { storeOpen, setStoreOpen } = useStoreStatus();
-  const [storeName, setStoreName] = useState("Atelier Norte");
+  const [storeName, setStoreName] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
