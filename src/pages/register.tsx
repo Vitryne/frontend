@@ -13,6 +13,7 @@ import { validateStep } from "@/lib/register-validation";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import RegisterSuccess from "@/components/features/store-register/components/steps/register-success";
 
 const STEPS = [
   { id: 0, label: "Dados da loja", Component: StepStore },
@@ -27,6 +28,7 @@ const Register = () => {
   const [stepIndex, setStepIndex] = useState(0);
   const [formData, setFormData] = useState(INITIAL_REGISTER_DATA);
   const [attempted, setAttempted] = useState<number[]>([]);
+  const [isRegistered, setIsRegistered] = useState(false);
   const { label, Component } = STEPS[stepIndex];
 
   const errors = attempted.includes(stepIndex)
@@ -68,23 +70,32 @@ const Register = () => {
   return (
     <div className="flex min-h-screen">
       <Head>
-        <title>{`Vitryne - Cadastro - ${label}`}</title>
+        <title>{`Vitryne - Cadastro - ${isRegistered ? "Concluído" : label}`}</title>
       </Head>
 
       <RegisterSidebar
         steps={STEPS}
         stepIndex={stepIndex}
-        selectStep={(i) => setStepIndex(i)}
+        selectStep={(i) => {
+          if (!isRegistered) setStepIndex(i);
+        }}
       />
       <main className="flex-1 bg-screen py-16 px-56">
-        <Component data={formData} onChange={updateData} errors={errors} />
-        <StepFooter
-          isLastStep={isLastStep}
-          data={formData}
-          validate={validate}
-          onNext={nextStep}
-          onBack={previousStep}
-        />
+        {isRegistered ? (
+          <RegisterSuccess storeName={formData.name.trim()} />
+        ) : (
+          <>
+            <Component data={formData} onChange={updateData} errors={errors} />
+            <StepFooter
+              isLastStep={isLastStep}
+              data={formData}
+              validate={validate}
+              onNext={nextStep}
+              onBack={previousStep}
+              onRegistered={() => setIsRegistered(true)}
+            />
+          </>
+        )}
       </main>
     </div>
   );
