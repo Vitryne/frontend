@@ -41,7 +41,7 @@ const CoverLogoCard: React.FC<Props> = ({ profile }) => {
             {profile.name}
           </p>
           <p className="text-[12px] text-white/80">
-            {profile.mainCategory} · {profile.address.city}
+            {profile.mainCategory} - {profile.address.city}
           </p>
         </div>
       </div>

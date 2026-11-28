@@ -40,7 +40,7 @@ const MoveProductModal: React.FC<Props> = ({
       open
       onClose={handleClose}
       title="Remover da categoria?"
-      subtitle={`${product.name} · SKU ${product.sku}`}
+      subtitle={`${product.name} - SKU ${product.sku}`}
       icon={<LuBox size={20} />}
       footer={
         <>

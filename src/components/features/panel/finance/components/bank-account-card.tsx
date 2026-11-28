@@ -26,7 +26,7 @@ const BankAccountCard: React.FC<Props> = ({ account }) => {
             {account.bank} - {account.type}
           </p>
           <p className="text-[11px] text-text-tertiary">
-            Ag. {account.agency} · CC ●●●●●●● {account.accountLastDigits}
+            Ag. {account.agency} - CC ●●●●●●● {account.accountLastDigits}
           </p>
         </div>
         <ButtonSecondary

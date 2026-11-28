@@ -46,7 +46,7 @@ const DeleteCategoryModal: React.FC<Props> = ({
       onClose={handleClose}
       tone="danger"
       title={`Excluir a categoria ${category.name}?`}
-      subtitle={`${category.productsCount} ${category.productsCount === 1 ? "produto" : "produtos"} · ${category.visible ? "visível na vitrine" : "oculta na vitrine"}`}
+      subtitle={`${category.productsCount} ${category.productsCount === 1 ? "produto" : "produtos"} - ${category.visible ? "visível na vitrine" : "oculta na vitrine"}`}
       icon={<LuTrash2 size={20} />}
       footer={
         <>

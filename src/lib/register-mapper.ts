@@ -58,7 +58,7 @@ export const toRegisterDTO = (
     holderName: v.holderName.trim(),
     holderDocument: onlyDigits(v.holderDocument),
     accountType: v.accountType,
-    bankCode: v.bank.split(" · ")[0],
+    bankCode: v.bank.split(" - ")[0],
     agency: v.agency.trim(),
     accountNumber: v.accountNumber.trim(),
     pixKey: v.pixKey.trim(),

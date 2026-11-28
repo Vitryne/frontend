@@ -34,7 +34,7 @@ const DeleteBlockedModal: React.FC<Props> = ({
       }
       subtitle={
         single
-          ? `${single.name} · SKU ${single.sku}`
+          ? `${single.name} - SKU ${single.sku}`
           : `${products.length} produtos selecionados`
       }
       icon={<LuTriangleAlert size={18} />}

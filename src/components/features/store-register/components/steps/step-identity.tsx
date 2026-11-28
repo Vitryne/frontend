@@ -34,7 +34,7 @@ const StepIdentity = ({ data, onChange }: StepProps) => {
   const bannerPreview = usePreviewUrl(data.bannerFile);
 
   const storeName = data.name || "Nome da loja";
-  const subtitle = [data.mainCategory, data.city].filter(Boolean).join(" · ");
+  const subtitle = [data.mainCategory, data.city].filter(Boolean).join(" - ");
 
   return (
     <div>
@@ -49,7 +49,7 @@ const StepIdentity = ({ data, onChange }: StepProps) => {
             Logo da loja
           </p>
           <span className="text-[11px] text-text-tertiary">
-            JPG ou PNG · até 5MB · 512x512px mínimo
+            JPG ou PNG - até 5MB - 512x512px mínimo
           </span>
         </div>
 
@@ -98,7 +98,7 @@ const StepIdentity = ({ data, onChange }: StepProps) => {
             Banner público
           </p>
           <span className="text-[11px] text-text-tertiary">
-            JPG · até 5MB · 1600x480px
+            JPG - até 5MB - 1600x480px
           </span>
         </div>
 

@@ -45,7 +45,7 @@ const EditProduct: React.FC = ({}) => {
     loadState === "loading"
       ? "Carregando produto..."
       : product
-        ? `${product.name} · SKU ${product.sku}`
+        ? `${product.name} - SKU ${product.sku}`
         : undefined;
 
   return (

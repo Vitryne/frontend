@@ -169,7 +169,7 @@ const AddProductsModal: React.FC<Props> = ({
                         {product.name}
                       </p>
                       <p className="text-[11px] text-text-tertiary">
-                        SKU {product.sku} · {categoryName}
+                        SKU {product.sku} - {categoryName}
                       </p>
                     </div>
 

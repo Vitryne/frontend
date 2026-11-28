@@ -385,7 +385,7 @@ const ProductForm: React.FC<Props> = ({ product }) => {
 
           <Card
             title="Galeria de fotos"
-            aside={`${photos.length} de 8 fotos · JPG, PNG ou WebP até 5 MB`}
+            aside={`${photos.length} de 8 fotos - JPG, PNG ou WebP até 5 MB`}
           >
             <PhotoGallery photos={photos} onChange={setPhotos} />
           </Card>
@@ -394,8 +394,8 @@ const ProductForm: React.FC<Props> = ({ product }) => {
             title="Tamanhos e estoque"
             aside={
               totalStock > 0
-                ? `${totalStock} ${totalStock === 1 ? "unidade" : "unidades"} · alerta em ${alertThreshold} unidades`
-                : `Informe a quantidade por tamanho · alerta em ${alertThreshold} unidades`
+                ? `${totalStock} ${totalStock === 1 ? "unidade" : "unidades"} - alerta em ${alertThreshold} unidades`
+                : `Informe a quantidade por tamanho - alerta em ${alertThreshold} unidades`
             }
           >
             <SizesStock
@@ -451,7 +451,7 @@ const ProductForm: React.FC<Props> = ({ product }) => {
       <StockThresholdModal
         open={thresholdModalOpen}
         subtitle={
-          product ? `${product.name} · SKU ${product.sku}` : "Novo produto"
+          product ? `${product.name} - SKU ${product.sku}` : "Novo produto"
         }
         currentThreshold={alertThreshold}
         otherProductsCount={PRODUCTS_MOCK.length - 1}

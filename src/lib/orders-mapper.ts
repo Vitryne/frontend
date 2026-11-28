@@ -133,7 +133,7 @@ const toDeliveryArea = (address?: DeliveryAddressDTO | null) => {
 
   const parts = [address.neighborhood, address.city].filter(Boolean);
 
-  return parts.length > 0 ? parts.join(" · ") : undefined;
+  return parts.length > 0 ? parts.join(" - ") : undefined;
 };
 
 export const getStatusTrackingFields = (

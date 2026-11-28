@@ -235,7 +235,7 @@ const Products: React.FC = ({}) => {
       subtitle={
         loadState === "loading"
           ? "Carregando produtos..."
-          : `${products.length} produtos · ${categories.length} categorias · ${criticalCount} com estoque crítico`
+          : `${products.length} produtos - ${categories.length} categorias - ${criticalCount} com estoque crítico`
       }
     >
       <ProductFilters
