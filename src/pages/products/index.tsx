@@ -11,6 +11,7 @@ import {
   Product,
   ProductStatusFilter,
 } from "@/components/features/panel/products/types";
+import { useStoreName } from "@/components/hooks/use-store-name";
 import Pagination from "@/components/ui/pagination";
 import { ProductStatus } from "@/interfaces/product-interface";
 import { toProduct } from "@/lib/product-mapper";
@@ -20,6 +21,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Products: React.FC = ({}) => {
+  const storeName = useStoreName();
   const [products, setProducts] = useState<Product[]>([]);
   const [loadState, setLoadState] = useState<"loading" | "error" | "ready">(
     "loading",
@@ -224,7 +226,7 @@ const Products: React.FC = ({}) => {
   if (loadState === "ready" && products.length === 0) {
     return (
       <PanelLayout title="Produtos" subtitle="Nenhum produto cadastrado">
-        <ProductEmpty storeName="Atelier Norte" />
+        <ProductEmpty storeName={storeName} />
       </PanelLayout>
     );
   }
