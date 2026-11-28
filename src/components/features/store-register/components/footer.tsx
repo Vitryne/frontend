@@ -14,6 +14,7 @@ interface Props {
   onNext: () => void;
   onBack: () => void;
   onRegistered: () => void;
+  onCnpjTaken: () => void;
 }
 
 const StepFooter: React.FC<Props> = ({
@@ -23,6 +24,7 @@ const StepFooter: React.FC<Props> = ({
   onNext,
   onBack,
   onRegistered,
+  onCnpjTaken,
 }) => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -40,6 +42,15 @@ const StepFooter: React.FC<Props> = ({
       await registerService.registerStore(toRegisterDTO(data));
       onRegistered();
     } catch (e) {
+      if (
+        axios.isAxiosError(e) &&
+        e.response?.status === 409 &&
+        e.response.data?.message === "CNPJ já cadastrado"
+      ) {
+        onCnpjTaken();
+        return;
+      }
+
       const message = axios.isAxiosError(e)
         ? e.response?.data?.message
         : undefined;

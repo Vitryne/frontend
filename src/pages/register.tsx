@@ -3,6 +3,7 @@ import StepBusinessHours from "@/components/features/store-register/components/s
 import StepCategory from "@/components/features/store-register/components/steps/step-category";
 import StepIdentity from "@/components/features/store-register/components/steps/step-identity";
 import StepStore from "@/components/features/store-register/components/steps/step-store";
+import CnpjTakenModal from "@/components/features/store-register/components/cnpj-taken-modal";
 import RegisterSidebar from "@/components/features/store-register/components/register-sidebar";
 import StepFooter from "@/components/features/store-register/components/footer";
 import {
@@ -29,14 +30,24 @@ const Register = () => {
   const [formData, setFormData] = useState(INITIAL_REGISTER_DATA);
   const [attempted, setAttempted] = useState<number[]>([]);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [cnpjTaken, setCnpjTaken] = useState(false);
+  const [isCnpjModalOpen, setIsCnpjModalOpen] = useState(false);
   const { label, Component } = STEPS[stepIndex];
 
-  const errors = attempted.includes(stepIndex)
+  const stepErrors = attempted.includes(stepIndex)
     ? validateStep(stepIndex, formData)
     : {};
+  const errors =
+    stepIndex === 0 && cnpjTaken
+      ? { ...stepErrors, cnpj: "CNPJ já cadastrado" }
+      : stepErrors;
 
-  const updateData = (fields: Partial<RegisterFormData>) =>
+  const updateData = (fields: Partial<RegisterFormData>) => {
+    if (fields.cnpj !== undefined && fields.cnpj !== formData.cnpj) {
+      setCnpjTaken(false);
+    }
     setFormData((prev) => ({ ...prev, ...fields }));
+  };
 
   const isFirstStep = stepIndex === 0;
   const isLastStep = stepIndex === STEPS.length - 1;
@@ -67,6 +78,13 @@ const Register = () => {
   const previousStep = () =>
     isFirstStep ? router.push("/login") : setStepIndex(stepIndex - 1);
 
+  const handleCnpjTaken = () => {
+    setCnpjTaken(true);
+    setIsCnpjModalOpen(true);
+    setStepIndex(0);
+    window.scrollTo({ top: 0 });
+  };
+
   return (
     <div className="flex min-h-screen">
       <Head>
@@ -93,10 +111,17 @@ const Register = () => {
               onNext={nextStep}
               onBack={previousStep}
               onRegistered={() => setIsRegistered(true)}
+              onCnpjTaken={handleCnpjTaken}
             />
           </>
         )}
       </main>
+
+      <CnpjTakenModal
+        open={isCnpjModalOpen}
+        cnpj={formData.cnpj}
+        onClose={() => setIsCnpjModalOpen(false)}
+      />
     </div>
   );
 };
