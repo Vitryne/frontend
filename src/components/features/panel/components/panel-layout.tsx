@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import PanelSidebar from "@/components/features/panel/components/panel-sidebar";
 import PanelTopbar from "@/components/features/panel/components/panel-topbar";
+import { useStoreStatus } from "@/components/hooks/use-store-status";
 import Head from "next/head";
 
 interface Props {
@@ -10,8 +11,8 @@ interface Props {
 }
 
 const PanelLayout: React.FC<Props> = ({ title, subtitle, children }) => {
-  const [storeOpen, setStoreOpen] = useState(true);
-  const [storeName, setStoreName] = useState("Atelier Norte");
+  const { storeOpen, setStoreOpen } = useStoreStatus();
+  const [storeName, setStoreName] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
