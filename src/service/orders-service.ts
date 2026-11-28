@@ -4,12 +4,14 @@ import type {
   OrderStatus,
 } from "@/components/features/panel/orders/types";
 import {
-  BackendOrderStatus,
   OrderResponseDTO,
+  RejectOrderRequestDTO,
+  StoreRejectionReason,
   UpdateOrderStatusRequestDTO,
 } from "@/interfaces/orders-interface";
 import {
   parseOrderId,
+  toActiveOrders,
   toBackendOrderStatus,
   toOrder,
 } from "@/lib/orders-mapper";
@@ -34,12 +36,17 @@ const OrdersService = () => {
         .patch<OrderResponseDTO>(`/store/orders/${orderId}/status`, request)
         .then((r) => r.data);
     },
+    rejectStoreOrder: (orderId: number, request: RejectOrderRequestDTO) => {
+      return http
+        .post<OrderResponseDTO>(`/store/orders/${orderId}/reject`, request)
+        .then((r) => r.data);
+    },
   };
 };
 
 export const getOrders = async (): Promise<Order[]> => {
   const data = await OrdersService().listStoreOrders();
-  return data.map(toOrder);
+  return toActiveOrders(data);
 };
 
 export const updateOrderStatus = async (
@@ -58,15 +65,16 @@ export const updateOrderStatus = async (
   return toOrder(updated);
 };
 
-export const refuseOrder = async (id: string): Promise<void> => {
+export const refuseOrder = async (
+  id: string,
+  reason: StoreRejectionReason,
+): Promise<void> => {
   const orderId = parseOrderId(id);
   if (!orderId) {
     throw new Error("ID do pedido inválido");
   }
 
-  await OrdersService().updateStoreOrderStatus(orderId, {
-    status: BackendOrderStatus.CANCELED,
-  });
+  await OrdersService().rejectStoreOrder(orderId, { reason });
 };
 
 export default OrdersService;

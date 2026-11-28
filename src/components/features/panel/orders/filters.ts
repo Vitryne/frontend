@@ -82,7 +82,7 @@ export const filterOrders = (orders: Order[], filters: OrderFilters) =>
       filters.onlyExpiring &&
       !(
         order.status === "new" &&
-        getRemainingSeconds(getConfirmDeadline(order.createdAt)) < 10 * 60
+        getRemainingSeconds(getConfirmDeadline(order)) < 10 * 60
       )
     )
       return false;

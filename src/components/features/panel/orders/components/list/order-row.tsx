@@ -65,9 +65,7 @@ const OrderRow: React.FC<Props> = ({ order, onAdvance, onRefuse }) => {
 
       <td className="px-2 py-3">
         <div className="flex items-center gap-3 text-[11px] text-text-secondary">
-          {isNew && (
-            <ConfirmDeadline createdAt={order.createdAt} className="w-50" />
-          )}
+          {isNew && <ConfirmDeadline order={order} className="w-50" />}
 
           {order.status === "ready" && order.pickupCode && (
             <span className="inline-flex items-center gap-2 rounded-lg bg-primary-soft px-2.5 py-1">

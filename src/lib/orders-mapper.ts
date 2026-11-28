@@ -37,20 +37,17 @@ export const toFrontendOrderStatus = (
   status: BackendOrderStatus | string,
 ): OrderStatus => {
   switch (status.toUpperCase()) {
-    case BackendOrderStatus.NEW:
-    case "PENDING":
+    case BackendOrderStatus.AWAITING_ACCEPTANCE:
       return "new";
     case BackendOrderStatus.CONFIRMED:
       return "confirmed";
     case BackendOrderStatus.PREPARING:
       return "preparing";
-    case BackendOrderStatus.READY:
+    case BackendOrderStatus.READY_FOR_PICKUP:
       return "ready";
     case BackendOrderStatus.OUT_FOR_DELIVERY:
-    case "DELIVERING":
       return "delivering";
     case BackendOrderStatus.DELIVERED:
-    case "COMPLETED":
       return "completed";
     default:
       return "confirmed";
@@ -62,13 +59,13 @@ export const toBackendOrderStatus = (
 ): BackendOrderStatus => {
   switch (status) {
     case "new":
-      return BackendOrderStatus.NEW;
+      return BackendOrderStatus.AWAITING_ACCEPTANCE;
     case "confirmed":
       return BackendOrderStatus.CONFIRMED;
     case "preparing":
       return BackendOrderStatus.PREPARING;
     case "ready":
-      return BackendOrderStatus.READY;
+      return BackendOrderStatus.READY_FOR_PICKUP;
     case "delivering":
       return BackendOrderStatus.OUT_FOR_DELIVERY;
     case "completed":
@@ -145,6 +142,9 @@ export const getStatusTrackingFields = (
   }
 };
 
+export const isCanceledOrder = (dto: OrderResponseDTO): boolean =>
+  dto.status.toUpperCase() === BackendOrderStatus.CANCELED;
+
 export const toOrder = (dto: OrderResponseDTO): Order => {
   const status = toFrontendOrderStatus(dto.status);
   const referenceDate = dto.updatedAt || dto.createdAt;
@@ -156,8 +156,12 @@ export const toOrder = (dto: OrderResponseDTO): Order => {
     totalInCents: Math.round((dto.totalAmount ?? 0) * 100),
     status,
     createdAt: dto.createdAt,
+    acceptanceDeadline: dto.acceptanceDeadline ?? undefined,
     paymentMethod: toFrontendPaymentMethod(dto.payment?.method),
     hasCoupon: false,
     ...getStatusTrackingFields(dto.id, status, referenceDate),
   };
 };
+
+export const toActiveOrders = (dtos: OrderResponseDTO[]): Order[] =>
+  dtos.filter((dto) => !isCanceledOrder(dto)).map(toOrder);

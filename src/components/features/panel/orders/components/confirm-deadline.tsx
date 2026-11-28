@@ -1,15 +1,16 @@
 import { getConfirmDeadline } from "@/components/features/panel/orders/columns";
+import type { Order } from "@/components/features/panel/orders/types";
 import { useCountdown } from "@/components/features/panel/orders/use-countdown";
 import { formatCountdown } from "@/lib/format";
 import { LuClock3 } from "react-icons/lu";
 
 interface Props {
-  createdAt: string;
+  order: Pick<Order, "createdAt" | "acceptanceDeadline">;
   className?: string;
 }
 
-const ConfirmDeadline: React.FC<Props> = ({ createdAt, className }) => {
-  const remaining = useCountdown(getConfirmDeadline(createdAt));
+const ConfirmDeadline: React.FC<Props> = ({ order, className }) => {
+  const remaining = useCountdown(getConfirmDeadline(order));
 
   return (
     <div

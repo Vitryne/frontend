@@ -20,9 +20,11 @@ import type {
 } from "@/components/features/panel/orders/types";
 import { useOrdersStream } from "@/components/hooks/use-orders-stream";
 import ButtonPrimary from "@/components/ui/button-primary";
-import { BackendOrderStatus } from "@/interfaces/orders-interface";
+import type { StoreRejectionReason } from "@/interfaces/orders-interface";
 import {
+  isCanceledOrder,
   parseOrderId,
+  toActiveOrders,
   toBackendOrderStatus,
   toOrder,
 } from "@/lib/orders-mapper";
@@ -56,7 +58,7 @@ const Orders: React.FC = () => {
     OrdersService()
       .listStoreOrders()
       .then((data) => {
-        setOrders(data.map(toOrder));
+        setOrders(toActiveOrders(data));
         if (
           typeof window !== "undefined" &&
           data.length > 0 &&
@@ -72,12 +74,19 @@ const Orders: React.FC = () => {
   const refreshOrders = () => {
     OrdersService()
       .listStoreOrders()
-      .then((data) => setOrders(data.map(toOrder)))
+      .then((data) => setOrders(toActiveOrders(data)))
       .catch(() => {});
   };
 
   useOrdersStream({
     onEvent: ({ order: dto }) => {
+      if (isCanceledOrder(dto)) {
+        setOrders((current) =>
+          current.filter((item) => item.id !== String(dto.id)),
+        );
+        return;
+      }
+
       const incoming = toOrder(dto);
 
       setOrders((current) =>
@@ -142,7 +151,7 @@ const Orders: React.FC = () => {
     newOrders.forEach((order) => handleMove(order, "confirmed"));
   };
 
-  const handleConfirmRefuse = async () => {
+  const handleConfirmRefuse = async (reason: StoreRejectionReason) => {
     if (!orderToRefuse) return;
 
     const order = orderToRefuse;
@@ -154,9 +163,7 @@ const Orders: React.FC = () => {
     setOrders((current) => current.filter((item) => item.id !== order.id));
 
     try {
-      await OrdersService().updateStoreOrderStatus(orderId, {
-        status: BackendOrderStatus.CANCELED,
-      });
+      await OrdersService().rejectStoreOrder(orderId, { reason });
     } catch {
       setOrders((current) => [...current, order]);
     }

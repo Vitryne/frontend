@@ -1,7 +1,4 @@
-import {
-  CONFIRM_WINDOW_MINUTES,
-  getConfirmDeadline,
-} from "@/components/features/panel/orders/columns";
+import { getConfirmDeadline } from "@/components/features/panel/orders/columns";
 import type { Order } from "@/components/features/panel/orders/types";
 import {
   getRemainingSeconds,
@@ -21,7 +18,7 @@ const PendingOrdersBanner: React.FC<Props> = ({ orders, action }) => {
   if (orders.length === 0) return null;
 
   const remainings = orders.map((order) =>
-    getRemainingSeconds(getConfirmDeadline(order.createdAt), now),
+    getRemainingSeconds(getConfirmDeadline(order), now),
   );
   const expiredCount = remainings.filter((seconds) => seconds === 0).length;
   const urgent = remainings.filter(
@@ -44,7 +41,7 @@ const PendingOrdersBanner: React.FC<Props> = ({ orders, action }) => {
         <p className="font-semibold text-text-primary inline">
           {`${orders.length} ${orders.length === 1 ? "novo pedido" : "novos pedidos"} `}
         </p>
-        aguardando confirmação - prazo de {CONFIRM_WINDOW_MINUTES} min
+        aguardando confirmação
       </p>
 
       {pill && (

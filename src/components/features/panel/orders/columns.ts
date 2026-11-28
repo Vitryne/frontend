@@ -46,9 +46,13 @@ export const ORDER_COLUMNS: {
   },
 ];
 
-export const getConfirmDeadline = (createdAt: string) =>
+export const getConfirmDeadline = (order: {
+  createdAt: string;
+  acceptanceDeadline?: string;
+}) =>
+  order.acceptanceDeadline ??
   new Date(
-    new Date(createdAt).getTime() + CONFIRM_WINDOW_MINUTES * 60000,
+    new Date(order.createdAt).getTime() + CONFIRM_WINDOW_MINUTES * 60000,
   ).toISOString();
 
 export const getNextStatus = (status: OrderStatus) => {

@@ -28,6 +28,7 @@ export interface Order {
   totalInCents: number;
   status: OrderStatus;
   createdAt: string;
+  acceptanceDeadline?: string;
   paymentMethod: PaymentMethod;
   hasCoupon: boolean;
   readyBy?: string;
